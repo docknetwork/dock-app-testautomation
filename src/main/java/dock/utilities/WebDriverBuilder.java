@@ -23,7 +23,6 @@ import io.appium.java_client.remote.MobileCapabilityType;
 
 public class WebDriverBuilder {
     public final static int IMPLICIT_WAIT_TIME = 15;
-    private static final String executionMode = LocalPropertiesReader.getExecutionMode();
     private static final String gridHubName = LocalPropertiesReader.getGridHubName();
     private static WebDriverBuilder instance = null;
     private final Logger log = LoggerFactory.getLogger(WebDriverBuilder.class);
@@ -57,8 +56,7 @@ public class WebDriverBuilder {
         caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
         caps.setCapability(MobileCapabilityType.UDID, LocalPropertiesReader.getAndroidUdid());
         caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, LocalPropertiesReader.getAndroidOSVersion());
-        caps.setCapability(MobileCapabilityType.APP, "/Users/riffatshahzad/Downloads/app-release.apk");
-
+        caps.setCapability(MobileCapabilityType.APP,  System.getProperty("user.dir") + "/src/test/resources/apps/app-release.apk");
         try {
             driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), caps);
         }

@@ -13,9 +13,9 @@ public class CreateWallet extends BaseTestCaseAndroid {
 
     @Test(groups = TestGroup.Antrag_Strecke, description = "Test to verify Wallet Creation")
     public void createWallet() {
-        WebDriver driver = getDriverInstance();
+        AndroidDriver driver = getDriverInstance();
 
-       WalletHomePage walletHomePage = new WalletHomePage((AndroidDriver) driver);
+       WalletHomePage walletHomePage = new WalletHomePage(driver);
         walletHomePage.createNewWallet();
         try {
             Thread.sleep(5000);

@@ -4,7 +4,6 @@ package dock.android.pageobjects;
  * @author Riffat Shahzad
  */
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,12 +47,12 @@ public class BaseTestCaseAndroid {
     @AfterMethod(alwaysRun = true)
     public synchronized void closeApp() {
         try {
-            WebDriver driver = threadInstanceWebDriver.get();
+            AndroidDriver driver = threadInstanceWebDriver.get();
             if (executionMode.equals("grid")) {
                 driver.quit();
                 log.info("Driver has been closed");
             }
-            else if (quitDriver) {
+            else if (quitDriver && driver !=null) {
                 driver.quit();
                 log.info("Driver has been closed");
             }
