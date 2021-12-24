@@ -1,9 +1,5 @@
 package dock.android.pageobjects;
 
-/**
- * @author Riffat Shahzad
- */
-
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

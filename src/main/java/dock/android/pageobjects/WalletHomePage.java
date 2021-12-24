@@ -4,10 +4,6 @@ import org.openqa.selenium.By;
 
 import io.appium.java_client.android.AndroidDriver;
 
-/**
- * @author Riffat Shahzad on 24.12.21
- */
-
 public class WalletHomePage extends BasePage{
 
     public WalletHomePage(final AndroidDriver driver) {

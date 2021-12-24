@@ -1,10 +1,5 @@
 package dock.ios.pageobjects;
 
-/*
-  @author Riffat Shahzad
- */
-
-
 import static io.appium.java_client.touch.offset.PointOption.point;
 
 import java.time.Duration;

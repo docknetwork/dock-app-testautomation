@@ -1,9 +1,5 @@
 package dock.utilities;
 
-/**
- * @author Riffat Shahzad
- */
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -19,7 +15,6 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.remote.MobileCapabilityType;
-
 
 public class WebDriverBuilder {
     public final static int IMPLICIT_WAIT_TIME = 15;

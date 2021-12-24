@@ -1,9 +1,5 @@
 package dock.utilities;
 
-/**
- * @author Riffat Shahzad
- */
-
 import java.security.SecureRandom;
 import java.util.Random;
 

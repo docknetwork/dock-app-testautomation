@@ -30,7 +30,6 @@ import dock.ios.pageobjects.BaseTestCaseIOS;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 
-
 public class TestListener implements ITestListener {
     public static final String LOG_BASE_FOLDER = "build/reports/" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     private final boolean retryMode = Boolean.valueOf(LocalPropertiesReader.getRetryMode());

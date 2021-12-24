@@ -1,9 +1,5 @@
 package dock.utilities;
 
-/**
- * @author Riffat Shahzad
- */
-
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;

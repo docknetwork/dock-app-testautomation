@@ -1,9 +1,5 @@
 package dock.utilities;
 
-/**
- * @author Riffat Shahzad
- */
-
 import static dock.utilities.TestListener.LOG_BASE_FOLDER;
 import static dock.utilities.TestListener.createScreenshot;
 import static dock.utilities.TestListener.prepareLinkLocationForReporting;

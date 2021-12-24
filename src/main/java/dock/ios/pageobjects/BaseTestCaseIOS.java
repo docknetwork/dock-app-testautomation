@@ -1,9 +1,5 @@
 package dock.ios.pageobjects;
 
-/**
- * @author Riffat Shahzad
- */
-
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 

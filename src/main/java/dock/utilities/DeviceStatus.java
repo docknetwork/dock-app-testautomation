@@ -1,9 +1,5 @@
 package dock.utilities;
 
-/**
- * @author Riffat Shahzad
- */
-
 public class DeviceStatus {
 
     private String statusAndroid1;
