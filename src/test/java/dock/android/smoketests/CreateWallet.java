@@ -11,7 +11,7 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class CreateWallet extends BaseTestCaseAndroid {
 
-    @Test(groups = TestGroup.Antrag_Strecke, description = "Test to verify Wallet Creation")
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Wallet Creation")
     public void createWallet() {
         AndroidDriver driver = getDriverInstance();
 
