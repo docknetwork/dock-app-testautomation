@@ -51,6 +51,26 @@ public class WebDriverBuilder {
         caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
         caps.setCapability(MobileCapabilityType.UDID, LocalPropertiesReader.getAndroidUdid());
         caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, LocalPropertiesReader.getAndroidOSVersion());
+        caps.setCapability(MobileCapabilityType.FULL_RESET, false);
+        caps.setCapability("appPackage", "com.dockapp");
+        caps.setCapability("appActivity", "com.dockapp.MainActivity");
+        //caps.setCapability(MobileCapabilityType.APP,  System.getProperty("user.dir") + "/src/test/resources/apps/app-release.apk");
+        try {
+            driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), caps);
+        }
+        catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return driver;
+    }
+
+    public AndroidDriver getAndroidDriverByAppReset() {
+        AndroidDriver driver = null;
+        DesiredCapabilities caps = new DesiredCapabilities();
+        // simulator
+        caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
+        caps.setCapability(MobileCapabilityType.UDID, LocalPropertiesReader.getAndroidUdid());
+        caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, LocalPropertiesReader.getAndroidOSVersion());
         caps.setCapability(MobileCapabilityType.APP,  System.getProperty("user.dir") + "/src/test/resources/apps/app-release.apk");
         try {
             driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), caps);
