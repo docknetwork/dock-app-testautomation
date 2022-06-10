@@ -19,6 +19,5 @@ public class CreateWallet {
 
         // Create a new Account
         walletHomePage.createNewAccount("test1");
-
     }
 }
