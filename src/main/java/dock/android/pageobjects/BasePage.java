@@ -410,6 +410,16 @@ public class BasePage {
         return status;
     }
 
+    public boolean isDisplayedByText(String text) {
+        By element = By.xpath("//*[contains(@text,'"+text+"')]");
+        boolean status = getElement(element).isDisplayed();
+        if (status)
+            log.info(text + " is displayed.");
+        else
+            log.info(text + " is not displayed.");
+        return status;
+    }
+
     public boolean contains(By locator, String expectedText) {
         String actualText = getElement(locator).getText();
         if (actualText.contains(expectedText)) {
