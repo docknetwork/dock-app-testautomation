@@ -13,7 +13,7 @@
     <test name="Wallet Tests - Android">
         <parameter name="deviceType" value="Android"/>
         <classes>
-            <class name="dock.android.smoketests.CreateWallet"/>
+            <class name="dock.android.smoketests.CreateWalletAndNewAccount"/>
         </classes>
     </test>
 </suite>

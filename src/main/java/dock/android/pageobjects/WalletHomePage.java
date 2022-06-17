@@ -12,6 +12,8 @@ public class WalletHomePage extends BasePage {
     public By importExistingWallet = Selector.contentDesc("ImportExistingBtn");
     public By btnImportWallet = Selector.contentDesc("importWallet.submitBtn");
     private By btnNext = By.xpath("//*[contains(@text,'Next')]");
+    public By labelAccountNext = By.xpath("//*[contains(@text,'test1')]");
+    public By labelDockBalance = By.xpath("//android.widget.TextView[contains(@text,'DOCK')]");
     private By btnSkip = By.xpath("//*[contains(@text,'Skip')]");
     private By txtBxPassword = By.xpath("//*[contains(@text,'Password')]");
     private By btnCreateNewAccount = By.xpath("//*[contains(@text,'Create new account')]");
@@ -52,6 +54,10 @@ public class WalletHomePage extends BasePage {
         clickNext();
         clickSkip();
         return this;
+    }
+
+    public String getDockBalance(){
+        return getText(labelDockBalance);
     }
 
     public WalletHomePage importWallet() {
