@@ -11,18 +11,19 @@ import io.appium.java_client.android.AndroidDriver;
 public class WalletHomePage extends BasePage {
     public By importExistingWallet = Selector.contentDesc("ImportExistingBtn");
     public By btnImportWallet = Selector.contentDesc("importWallet.submitBtn");
-    private By btnNext = By.xpath("//*[contains(@text,'Next')]");
     public By btnSend = By.xpath("//android.widget.TextView[contains(@text,'Send')]");
     public By btnCredentials = By.xpath("//android.widget.TextView[contains(@text,'Credentials')]");
     public By btnReceive = By.xpath("//android.widget.TextView[contains(@text,'Receive')]");
     public By labelAccountNext = By.xpath("//*[contains(@text,'test1')]");
     public By labelDockBalance = By.xpath("//android.widget.TextView[contains(@text,'DOCK')]");
+    private By btnNext = By.xpath("//*[contains(@text,'Next')]");
     private By btnSkip = By.xpath("//*[contains(@text,'Skip')]");
     private By txtBxPassword = By.xpath("//*[contains(@text,'Password')]");
     private By btnCreateNewAccount = By.xpath("//*[contains(@text,'Create new account')]");
     private By txtBxAccountName = By.xpath("//*[contains(@text,'Account name')]");
     private By btnDoThisLater = By.xpath("//*[contains(@text,'Do this later')]");
-    private By btnTokens =  By.xpath("//*[contains(@text,'Tokens')]");;
+    private By btnTokens = By.xpath("//*[contains(@text,'Tokens')]");
+    ;
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -71,7 +72,7 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
-    public String getDockBalance(){
+    public String getDockBalance() {
         return getText(labelDockBalance);
     }
 
@@ -102,9 +103,10 @@ public class WalletHomePage extends BasePage {
             File assetDir = new File(classpathRoot, "src/test/resources/configfiles/");
             File walletBackUpFile = new File(assetDir.getCanonicalPath(), fileName);
             // actually push the file
-            driver.pushFile("/sdcard/" + fileName, walletBackUpFile);
+            String directoryPath = "/sdcard/Download/";
+            driver.pushFile(directoryPath + fileName, walletBackUpFile);
             driver.context("NATIVE_APP");
-            driver.pullFile("/sdcard/" + fileName);
+            driver.pullFile(directoryPath + fileName);
             click(By.xpath("//*[contains(@text,'" + fileName + "')]"));
         }
         catch (IOException e) {
@@ -128,12 +130,12 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
-    public int generateRandomNumber(){
+    public int generateRandomNumber() {
         int min = 50;
         int max = 100;
         //Generate random int value from 50 to 100
-        System.out.println("Random value in int from "+min+" to "+max+ ":");
-        int random_int = (int)Math.floor(Math.random()*(max-min+1)+min);
+        System.out.println("Random value in int from " + min + " to " + max + ":");
+        int random_int = (int) Math.floor(Math.random() * (max - min + 1) + min);
         return random_int;
     }
 }

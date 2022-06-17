@@ -37,11 +37,11 @@ public class ImportWalletWithExistingAccountAndCredentials extends BaseTestCaseA
         // Work around for refresh, create a new account, so imported account get displayed
         walletHomePage.createNewAccount(accountName);
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
-        Assert.assertTrue(walletHomePage.getDockBalance().contains("0"));
         Assert.assertTrue(walletHomePage.isDisplayed(walletHomePage.btnSend));
         Assert.assertTrue(walletHomePage.isDisplayed(walletHomePage.btnReceive));
 
         // Verify Import of old account
-        Assert.assertTrue(walletHomePage.isDisplayedByText("test1"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("TestAutomation"));
+        Assert.assertTrue(walletHomePage.getDockBalance().contains("9.33 DOCK"));
     }
 }
