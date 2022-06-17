@@ -102,9 +102,9 @@ public class WalletHomePage extends BasePage {
             File assetDir = new File(classpathRoot, "src/test/resources/configfiles/");
             File walletBackUpFile = new File(assetDir.getCanonicalPath(), fileName);
             // actually push the file
-            driver.pushFile("/sdcard/Download/" + fileName, walletBackUpFile);
+            driver.pushFile("/sdcard/" + fileName, walletBackUpFile);
             driver.context("NATIVE_APP");
-            driver.pullFile("/sdcard/Download/" + fileName);
+            driver.pullFile("/sdcard/" + fileName);
             click(By.xpath("//*[contains(@text,'" + fileName + "')]"));
         }
         catch (IOException e) {
