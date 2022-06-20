@@ -23,7 +23,9 @@ public class WalletHomePage extends BasePage {
     private By txtBxAccountName = By.xpath("//*[contains(@text,'Account name')]");
     private By btnDoThisLater = By.xpath("//*[contains(@text,'Do this later')]");
     private By btnTokens = By.xpath("//*[contains(@text,'Tokens')]");
-    ;
+    private By btnPlus = By.id("accountsScreen.addAccountMenuBtn");
+    private By optionImportExistingAccount = By.id("importExistingOption");
+    private By btnAlreadyHaveAWallet = By.id("ImportExistingBtn");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -61,6 +63,21 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage clickTokens() {
         click(btnTokens);
+        return this;
+    }
+
+    public WalletHomePage clickPlusButtonToCreatAccount() {
+        click(btnPlus);
+        return this;
+    }
+
+    public WalletHomePage clickImportExistingAccount() {
+        click(optionImportExistingAccount);
+        return this;
+    }
+
+    public WalletHomePage clickAlreadyHaveAWallet(){
+        click(btnAlreadyHaveAWallet);
         return this;
     }
 
