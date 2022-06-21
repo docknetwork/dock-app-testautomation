@@ -70,7 +70,9 @@ public class WebDriverBuilder {
         caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
         caps.setCapability(MobileCapabilityType.UDID, LocalPropertiesReader.getAndroidUdid());
         caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, LocalPropertiesReader.getAndroidOSVersion());
-        caps.setCapability(MobileCapabilityType.APP,  System.getProperty("user.dir") + "/src/test/resources/apps/app-release.apk");
+        caps.setCapability(MobileCapabilityType.NO_RESET, false);
+        caps.setCapability("appPackage", "com.dockapp");
+        caps.setCapability("appActivity", "com.dockapp.MainActivity");
         try {
             driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), caps);
         }

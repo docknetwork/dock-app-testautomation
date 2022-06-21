@@ -22,10 +22,11 @@ public class ImportAccountViaJson extends BaseTestCaseAndroid {
                 .clickImportExistingAccount()
                 .clickUploadJsonFile()
                 .uploadFile("importAccount.json")
-                .enterPassword("12345678Qw!")
+                .enterPassword("123456789Qw!")
                 .clickNext()
-                .enterAccountAccountInfo(accountName);
+                .enterNewAccountName(accountName)
+                .clickNext();
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
-        Assert.assertTrue(walletHomePage.getDockBalance().contains("0 DOCK"));
+        Assert.assertTrue(walletHomePage.getDockBalance().contains("3 DOCK"));
     }
 }

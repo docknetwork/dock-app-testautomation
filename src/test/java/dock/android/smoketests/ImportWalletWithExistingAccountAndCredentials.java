@@ -6,13 +6,14 @@ import org.testng.annotations.Test;
 import dock.android.pageobjects.BaseTestCaseAndroid;
 import dock.android.pageobjects.WalletHomePage;
 import dock.utilities.TestGroup;
+import dock.utilities.WebDriverBuilder;
 import io.appium.java_client.android.AndroidDriver;
 
 public class ImportWalletWithExistingAccountAndCredentials extends BaseTestCaseAndroid {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify Wallet Import Wallet, import of existing account and credentials")
     public void verifyImportWalletWithExistingAccountAndCredentials() {
-        AndroidDriver driver = getDriverInstance();
+        AndroidDriver driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
 
         // Import Existing wallet via wallet-backup.Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
@@ -35,6 +36,7 @@ public class ImportWalletWithExistingAccountAndCredentials extends BaseTestCaseA
         String accountName = "test" + walletHomePage.generateRandomNumber();
 
         // Work around for refresh, create a new account, so imported account get displayed
+        walletHomePage.clickPlusButtonToCreatAccount();
         walletHomePage.createNewAccount(accountName);
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
         Assert.assertTrue(walletHomePage.isDisplayed(walletHomePage.btnSend));

@@ -16,11 +16,11 @@ public class WalletHomePage extends BasePage {
     public By btnReceive = By.xpath("//android.widget.TextView[contains(@text,'Receive')]");
     public By labelAccountNext = By.xpath("//*[contains(@text,'test1')]");
     public By labelDockBalance = By.xpath("//android.widget.TextView[contains(@text,'DOCK')]");
-    private By btnNext = By.xpath("//*[contains(@text,'Next')]");
+    private By btnNext = By.xpath("//android.widget.TextView[contains(@text,'Next')]");
     private By btnSkip = By.xpath("//*[contains(@text,'Skip')]");
     private By txtBxPassword = By.xpath("//*[contains(@text,'Password')]");
     private By btnCreateNewAccount = By.xpath("//*[contains(@text,'Create new account')]");
-    private By txtBxAccountName = By.xpath("//*[contains(@text,'Account name')]");
+    private By txtBxAccountName = By.xpath("//android.widget.EditText[contains(@text,'Account name')]");
     private By btnDoThisLater = By.xpath("//*[contains(@text,'Do this later')]");
     private By btnTokens = By.xpath("//*[contains(@text,'Tokens')]");
     private By btnPlus = Selector.contentResourceID("accountsScreen.addAccountMenuBtn");
@@ -98,7 +98,7 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage createNewAccount(String testName) {
         click(btnCreateNewAccount);
-        enterAccountAccountInfo(testName);
+        sendText(txtBxAccountName, testName);
         clickNext();
         clickSkip();
         return this;
@@ -106,6 +106,11 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage enterAccountAccountInfo(String testName) {
         sendText(txtBxAccountName, testName);
+        return this;
+    }
+
+    public WalletHomePage enterNewAccountName(String testName) {
+        sendText(Selector.contentDesc("ImportAccountNameInput"), testName);
         return this;
     }
 
@@ -158,6 +163,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickNext() {
+        waitABit(2000);
         click(btnNext);
         return this;
     }
@@ -171,7 +177,6 @@ public class WalletHomePage extends BasePage {
         int min = 50;
         int max = 100;
         //Generate random int value from 50 to 100
-        System.out.println("Random value in int from " + min + " to " + max + ":");
         int random_int = (int) Math.floor(Math.random() * (max - min + 1) + min);
         return random_int;
     }
