@@ -13,4 +13,9 @@ public class Selector {
     public static By contentDesc(@Nonnull String desc) {
         return By.xpath(".//*[@content-desc = '" + desc + "']");
     }
+
+    @Nonnull
+    public static By contentResourceID(@Nonnull String id) {
+        return By.xpath(".//*[@resource-id = '" + id + "']");
+    }
 }

@@ -1,5 +1,6 @@
 package dock.android.smoketests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import dock.android.pageobjects.BaseTestCaseAndroid;
@@ -13,22 +14,18 @@ public class ImportAccountViaJson extends BaseTestCaseAndroid {
     public void verifyImportAccountViaJson() {
         AndroidDriver driver = getDriverInstance();
 
-        // Import Existing wallet via wallet-backup.Json
+        // Import Existing account via Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
-        walletHomePage.enterPassCode()
+        String accountName = "test" + walletHomePage.generateRandomNumber();
+        walletHomePage.enterPassCodeOneTime()
                 .clickPlusButtonToCreatAccount()
                 .clickImportExistingAccount()
-                .clickAlreadyHaveAWallet();
-        String accountName = "test" + walletHomePage.generateRandomNumber();
-
-        // Work around for refresh, create a new account, so imported account get displayed
-        //walletHomePage.createNewAccount(accountName);
-        //Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
-        //Assert.assertTrue(walletHomePage.isDisplayed(walletHomePage.btnSend));
-        //Assert.assertTrue(walletHomePage.isDisplayed(walletHomePage.btnReceive));
-        //
-        //// Verify Import of old account
-        //Assert.assertTrue(walletHomePage.isDisplayedByText("TestAutomation"));
-        //Assert.assertTrue(walletHomePage.getDockBalance().contains("9.33 DOCK"));
+                .clickUploadJsonFile()
+                .uploadFile("importAccount.json")
+                .enterPassword("12345678Qw!")
+                .clickNext()
+                .enterAccountAccountInfo(accountName);
+        Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
+        Assert.assertTrue(walletHomePage.getDockBalance().contains("0 DOCK"));
     }
 }

@@ -23,9 +23,10 @@ public class WalletHomePage extends BasePage {
     private By txtBxAccountName = By.xpath("//*[contains(@text,'Account name')]");
     private By btnDoThisLater = By.xpath("//*[contains(@text,'Do this later')]");
     private By btnTokens = By.xpath("//*[contains(@text,'Tokens')]");
-    private By btnPlus = By.id("accountsScreen.addAccountMenuBtn");
-    private By optionImportExistingAccount = By.id("importExistingOption");
+    private By btnPlus = Selector.contentResourceID("accountsScreen.addAccountMenuBtn");
+    private By optionImportExistingAccount = Selector.contentResourceID("importExistingOption");
     private By btnAlreadyHaveAWallet = By.id("ImportExistingBtn");
+    private By uploadJsonFile = By.xpath("//*[contains(@text,'Upload JSON file')]");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -34,12 +35,12 @@ public class WalletHomePage extends BasePage {
     public WalletHomePage createNewWallet() {
         click(By.xpath("//*[contains(@text,'Create a new wallet')]"));
         click(Selector.contentDesc("CreateWalletBtn"));
-        enterPassCode();
+        enterPassCodeTwoTimes();
         clickDoThisLater();
         return this;
     }
 
-    public WalletHomePage enterPassCode() {
+    public WalletHomePage enterPassCodeTwoTimes() {
         // Type password
         for (int i = 1; i <= 6; i++) {
             click(Selector.contentDesc("keyboardNumber" + i));
@@ -47,6 +48,14 @@ public class WalletHomePage extends BasePage {
         // ReType password
         for (int j = 1; j <= 6; j++) {
             click(Selector.contentDesc("keyboardNumber" + j));
+        }
+        return this;
+    }
+
+    public WalletHomePage enterPassCodeOneTime() {
+        // Type password
+        for (int i = 1; i <= 6; i++) {
+            click(Selector.contentDesc("keyboardNumber" + i));
         }
         return this;
     }
@@ -61,8 +70,14 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+
     public WalletHomePage clickTokens() {
         click(btnTokens);
+        return this;
+    }
+
+    public WalletHomePage clickUploadJsonFile() {
+        click(uploadJsonFile);
         return this;
     }
 
@@ -76,16 +91,21 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
-    public WalletHomePage clickAlreadyHaveAWallet(){
+    public WalletHomePage clickAlreadyHaveAWallet() {
         click(btnAlreadyHaveAWallet);
         return this;
     }
 
     public WalletHomePage createNewAccount(String testName) {
         click(btnCreateNewAccount);
-        sendText(txtBxAccountName, testName);
+        enterAccountAccountInfo(testName);
         clickNext();
         clickSkip();
+        return this;
+    }
+
+    public WalletHomePage enterAccountAccountInfo(String testName) {
+        sendText(txtBxAccountName, testName);
         return this;
     }
 
@@ -99,7 +119,7 @@ public class WalletHomePage extends BasePage {
         uploadFile("dockWalletBackup.json");
         enterPassword("123456789Qw!");
         clickNext();
-        enterPassCode();
+        enterPassCodeTwoTimes();
         clickDoThisLater();
         return this;
     }

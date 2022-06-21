@@ -21,7 +21,7 @@ public class ImportWalletWithExistingAccountAndCredentials extends BaseTestCaseA
                 .uploadFile("dockWalletBackup.json")
                 .enterPassword("123456789Qw!")
                 .clickNext()
-                .enterPassCode()
+                .enterPassCodeTwoTimes()
                 .clickDoThisLater()
                 .clickCredentials();
 
