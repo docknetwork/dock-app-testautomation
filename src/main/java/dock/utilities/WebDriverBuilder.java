@@ -65,6 +65,7 @@ public class WebDriverBuilder {
 
     public AndroidDriver getAndroidDriverByAppReset() {
         AndroidDriver driver = null;
+        System.setProperty("testType", "android1");
         DesiredCapabilities caps = new DesiredCapabilities();
         // simulator
         caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());

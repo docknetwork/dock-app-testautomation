@@ -10,10 +10,16 @@
                 class-name="org.uncommons.reportng.JUnitXMLReporter"/>
     </listeners>
 
-    <test name="Wallet Tests - Android">
-        <parameter name="deviceType" value="Android"/>
+    <test name="Wallet Tests execution without App-Reset - Android">
         <classes>
             <class name="dock.android.smoketests.CreateWalletAndNewAccount"/>
+        </classes>
+    </test>
+
+    <test name="Wallet Tests After App Reset- Android">
+        <classes>
+            <class name="dock.android.smoketests.ImportAccountViaJson"/>
+            <class name="dock.android.smoketests.ImportWalletWithExistingAccountAndCredentials"/>
         </classes>
     </test>
 </suite>
