@@ -17,6 +17,7 @@ public class WalletHomePage extends BasePage {
     public By labelAccountNext = By.xpath("//*[contains(@text,'test1')]");
     public By labelDockBalance = By.xpath("//android.widget.TextView[contains(@text,'DOCK')]");
     private By btnNext = By.xpath("//android.widget.TextView[contains(@text,'Next')]");
+    private By optionCreateNewAccount = By.xpath("//android.widget.TextView[contains(@text,'Create new account')]");
     private By btnSkip = By.xpath("//*[contains(@text,'Skip')]");
     private By txtBxPassword = By.xpath("//*[contains(@text,'Password')]");
     private By btnCreateNewAccount = By.xpath("//*[contains(@text,'Create new account')]");
@@ -27,6 +28,7 @@ public class WalletHomePage extends BasePage {
     private By optionImportExistingAccount = Selector.contentResourceID("importExistingOption");
     private By btnAlreadyHaveAWallet = By.id("ImportExistingBtn");
     private By uploadJsonFile = By.xpath("//*[contains(@text,'Upload JSON file')]");
+    private By optionDeleteAccount = By.xpath("//android.widget.TextView[contains(@text,'Delete account')]");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -76,6 +78,16 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage clickCreateNewAccountFromAddAccountWidget() {
+        click(optionCreateNewAccount);
+        return this;
+    }
+
+    public WalletHomePage clickDeleteAccountFromAddAccountWidget() {
+        click(optionDeleteAccount);
+        return this;
+    }
+
     public WalletHomePage clickUploadJsonFile() {
         click(uploadJsonFile);
         return this;
@@ -99,12 +111,11 @@ public class WalletHomePage extends BasePage {
     public WalletHomePage createNewAccount(String testName) {
         click(btnCreateNewAccount);
         sendText(txtBxAccountName, testName);
-        clickNext();
-        clickSkip();
+        clickNext().clickSkip();
         return this;
     }
 
-    public WalletHomePage enterAccountAccountInfo(String testName) {
+    public WalletHomePage enterNewAccountInfo(String testName) {
         sendText(txtBxAccountName, testName);
         return this;
     }
@@ -170,6 +181,13 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage clickSkip() {
         click(btnSkip);
+        return this;
+    }
+
+    public WalletHomePage clickRemoveAccount(){
+        driver.findElement(Selector.contentResourceID("AccountDetailsScreen"))
+                .findElements(By.className("android.view.ViewGroup")).get(1)
+                .click();
         return this;
     }
 

@@ -2,6 +2,7 @@ package dock.android.smoketests;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
 import dock.android.pageobjects.WalletHomePage;
@@ -27,7 +28,7 @@ public class CreateWalletAndNewAccount {
         Assert.assertTrue(walletHomePage.getDockBalance().contains("0"));
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterTest(alwaysRun = true)
     public synchronized void closeApp() {
         driver.quit();
     }

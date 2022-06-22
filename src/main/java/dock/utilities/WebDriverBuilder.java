@@ -55,7 +55,7 @@ public class WebDriverBuilder {
         caps.setCapability("appPackage", "com.dockapp");
         caps.setCapability("appActivity", "com.dockapp.MainActivity");
         try {
-            driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), caps);
+            driver = new AndroidDriver(new URL(LocalPropertiesReader.getGridHubName()), caps);
         }
         catch (MalformedURLException e) {
             e.printStackTrace();
@@ -75,7 +75,7 @@ public class WebDriverBuilder {
         caps.setCapability("appPackage", "com.dockapp");
         caps.setCapability("appActivity", "com.dockapp.MainActivity");
         try {
-            driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), caps);
+            driver = new AndroidDriver(new URL(LocalPropertiesReader.getGridHubName()), caps);
         }
         catch (MalformedURLException e) {
             e.printStackTrace();
