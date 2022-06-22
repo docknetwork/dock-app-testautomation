@@ -9,7 +9,7 @@ import dock.utilities.TestGroup;
 import dock.utilities.WebDriverBuilder;
 import io.appium.java_client.android.AndroidDriver;
 
-public class ImportWalletWithExistingAccountAndCredentials extends BaseTestCaseAndroid {
+public class ImportWalletWithExistingAccountAndCredentials {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify Wallet Import Wallet, import of existing account and credentials")
     public void verifyImportWalletWithExistingAccountAndCredentials() {
@@ -23,27 +23,16 @@ public class ImportWalletWithExistingAccountAndCredentials extends BaseTestCaseA
                 .enterPassword("123456789Qw!")
                 .clickNext()
                 .enterPassCodeTwoTimes()
-                .clickDoThisLater()
-                .clickCredentials();
-
-        // Verify that Account is imported
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Bsc in Computer Science"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Hans M\u00FCller"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("5/9/2021"));
-
-        // Verify import of old account
-        walletHomePage.clickTokens();
-        String accountName = "test" + walletHomePage.generateRandomNumber();
-
-        // Work around for refresh, create a new account, so imported account get displayed
-        walletHomePage.clickPlusButtonToCreatAccount();
-        walletHomePage.createNewAccount(accountName);
-        Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
-        Assert.assertTrue(walletHomePage.isDisplayed(walletHomePage.btnSend));
-        Assert.assertTrue(walletHomePage.isDisplayed(walletHomePage.btnReceive));
+                .clickDoThisLater();
 
         // Verify Import of old account
         Assert.assertTrue(walletHomePage.isDisplayedByText("TestAutomation"));
         Assert.assertTrue(walletHomePage.getDockBalance().contains("9.33 DOCK"));
+
+        // Verify that Account is imported
+        walletHomePage.clickCredentials();
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Bsc in Computer Science"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Hans M\u00FCller"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("5/9/2021"));
     }
 }

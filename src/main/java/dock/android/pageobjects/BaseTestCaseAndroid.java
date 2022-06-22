@@ -8,8 +8,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 
 import dock.utilities.LocalPropertiesReader;
-import dock.utilities.WebDriverBuilder;
 import dock.utilities.TestListener;
+import dock.utilities.WebDriverBuilder;
 import io.appium.java_client.android.AndroidDriver;
 
 @Listeners(TestListener.class)
@@ -48,7 +48,7 @@ public class BaseTestCaseAndroid {
                 driver.quit();
                 log.info("Driver has been closed");
             }
-            else if (quitDriver && driver !=null) {
+            else if (quitDriver && driver != null) {
                 driver.quit();
                 log.info("Driver has been closed");
             }
