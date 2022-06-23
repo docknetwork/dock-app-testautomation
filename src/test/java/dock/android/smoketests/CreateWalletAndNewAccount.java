@@ -1,7 +1,6 @@
 package dock.android.smoketests;
 
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
@@ -12,12 +11,10 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class CreateWalletAndNewAccount {
 
-    AndroidDriver driver;
+    AndroidDriver driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
 
     @Test(priority = 1, groups = TestGroup.SmokeTest, description = "Test to verify Wallet Creation and new Account")
     public void verifyCreateWalletAndCreateNewAccount() {
-        driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
-
         // Create new Wallet
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         walletHomePage.createNewWallet();

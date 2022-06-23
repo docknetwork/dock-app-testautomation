@@ -13,13 +13,14 @@
     <test name="Wallet Tests execution without App-Reset - Android">
         <classes>
             <class name="dock.android.smoketests.CreateWalletAndNewAccount"/>
+            <class name="dock.android.smoketests.ImportWalletWithExistingAccountAndCredentials"/>
         </classes>
     </test>
 
     <test name="Wallet Tests After App Reset- Android">
         <classes>
             <class name="dock.android.smoketests.ImportAccountViaJson"/>
-            <class name="dock.android.smoketests.ImportWalletWithExistingAccountAndCredentials"/>
+            <class name="dock.android.smoketests.DeleteAccount"/>
         </classes>
     </test>
 </suite>

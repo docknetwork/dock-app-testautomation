@@ -185,9 +185,10 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickRemoveAccount(){
-        driver.findElement(Selector.contentResourceID("AccountDetailsScreen"))
+        /*driver.findElement(Selector.contentResourceID("AccountDetailsScreen"))
                 .findElements(By.className("android.view.ViewGroup")).get(1)
-                .click();
+                .click();*/
+        click(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup"));
         return this;
     }
 

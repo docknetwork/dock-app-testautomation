@@ -1,5 +1,6 @@
 package dock.android.smoketests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import dock.android.pageobjects.BaseTestCaseAndroid;
@@ -9,7 +10,7 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class DeleteAccount extends BaseTestCaseAndroid {
 
-    @Test(priority = 2, groups = TestGroup.SmokeTest, description = "Test to verify Delete Account Fucntionality")
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Delete Account Fucntionality")
     public void verifyDeleteAccount() {
         AndroidDriver driver = getDriverInstance();
 
@@ -27,5 +28,8 @@ public class DeleteAccount extends BaseTestCaseAndroid {
         // Try to remove the new created account
         walletHomePage.clickRemoveAccount()
                 .clickDeleteAccountFromAddAccountWidget();
+
+        // Verify account has been removed
+        Assert.assertFalse(walletHomePage.checkElementExistByXpath(accountName));
     }
 }

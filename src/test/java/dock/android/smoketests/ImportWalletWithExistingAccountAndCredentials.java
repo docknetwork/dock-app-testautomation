@@ -10,11 +10,12 @@ import dock.utilities.WebDriverBuilder;
 import io.appium.java_client.android.AndroidDriver;
 
 public class ImportWalletWithExistingAccountAndCredentials {
-    AndroidDriver driver;
 
-    @Test(priority = 0, groups = TestGroup.SmokeTest, description = "Test to verify Wallet Import Wallet, import of existing account and credentials")
+    AndroidDriver driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
+
+    @Test(priority = 2, groups = TestGroup.SmokeTest, description = "Test to verify Wallet Import Wallet, import of existing account and credentials")
     public void verifyImportWalletWithExistingAccountAndCredentials() {
-        driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
+
 
         // Import Existing wallet via wallet-backup.Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);

@@ -10,7 +10,7 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class ImportAccountViaJson extends BaseTestCaseAndroid {
 
-    @Test(priority = 2, groups = TestGroup.SmokeTest, description = "Test to verify Import Account functionality via Json")
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Import Account functionality via Json")
     public void verifyImportAccountViaJson() {
         AndroidDriver driver = getDriverInstance();
 
