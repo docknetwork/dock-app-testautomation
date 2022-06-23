@@ -1,4 +1,4 @@
-package dock.android.smoketests;
+package dock.android.smoketests.appResetFalse;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

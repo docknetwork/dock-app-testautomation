@@ -1,7 +1,9 @@
-package dock.android.smoketests;
+package dock.android.smoketests.appResetTrue;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import dock.android.pageobjects.WalletHomePage;
@@ -11,7 +13,12 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class CreateWalletAndNewAccount {
 
-    AndroidDriver driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
+    AndroidDriver driver;
+
+    @BeforeMethod
+    public synchronized void openApp() {
+        driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
+    }
 
     @Test(priority = 1, groups = TestGroup.SmokeTest, description = "Test to verify Wallet Creation and new Account")
     public void verifyCreateWalletAndCreateNewAccount() {
@@ -25,7 +32,7 @@ public class CreateWalletAndNewAccount {
         Assert.assertTrue(walletHomePage.getDockBalance().contains("0"));
     }
 
-    @AfterTest(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public synchronized void closeApp() {
         driver.quit();
     }

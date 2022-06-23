@@ -1,7 +1,8 @@
-package dock.android.smoketests;
+package dock.android.smoketests.appResetTrue;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import dock.android.pageobjects.WalletHomePage;
@@ -11,11 +12,15 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class ImportWalletWithExistingAccountAndCredentials {
 
-    AndroidDriver driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
+    AndroidDriver driver;
+
+    @BeforeMethod
+    public synchronized void openApp() {
+        driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
+    }
 
     @Test(priority = 2, groups = TestGroup.SmokeTest, description = "Test to verify Wallet Import Wallet, import of existing account and credentials")
     public void verifyImportWalletWithExistingAccountAndCredentials() {
-
 
         // Import Existing wallet via wallet-backup.Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
