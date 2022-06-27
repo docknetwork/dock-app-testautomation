@@ -29,6 +29,8 @@ public class WalletHomePage extends BasePage {
     private By btnAlreadyHaveAWallet = By.id("ImportExistingBtn");
     private By uploadJsonFile = By.xpath("//*[contains(@text,'Upload JSON file')]");
     private By optionDeleteAccount = By.xpath("//android.widget.TextView[contains(@text,'Delete account')]");
+    private By btnPlusCredential = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
+    private By btnThreeDots = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -72,6 +74,16 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage removeCredentials(){
+        click(btnThreeDots);
+        clickByXpathAndroidWidgetTextView("Remove");
+        return this;
+    }
+
+    public WalletHomePage clickPlusBtnCredentials() {
+        click(btnPlusCredential);
+        return this;
+    }
 
     public WalletHomePage clickTokens() {
         click(btnTokens);
@@ -184,7 +196,7 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
-    public WalletHomePage clickRemoveAccount(){
+    public WalletHomePage clickRemoveAccount() {
         /*driver.findElement(Selector.contentResourceID("AccountDetailsScreen"))
                 .findElements(By.className("android.view.ViewGroup")).get(1)
                 .click();*/

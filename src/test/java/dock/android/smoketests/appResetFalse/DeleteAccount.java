@@ -23,7 +23,7 @@ public class DeleteAccount extends BaseTestCaseAndroid {
                 .enterNewAccountInfo(accountName)
                 .clickNext()
                 .clickSkip()
-                .clickByXpathTextView(accountName);
+                .clickByXpathAndroidWidgetTextView(accountName);
 
         // Try to remove the new created account
         walletHomePage.clickRemoveAccount()
