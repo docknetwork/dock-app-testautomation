@@ -141,6 +141,10 @@ public class WalletHomePage extends BasePage {
         return getText(labelDockBalance);
     }
 
+    public String getDockBalance(int accountNo) {
+        return getElements(labelDockBalance).get(--accountNo).getText();
+    }
+
     public WalletHomePage importWallet() {
         clickImportExistingWallet();
         clickBtnImportWallet();
