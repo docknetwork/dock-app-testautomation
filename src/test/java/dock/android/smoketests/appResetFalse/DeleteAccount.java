@@ -10,7 +10,7 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class DeleteAccount extends BaseTestCaseAndroid {
 
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Delete Account Fucntionality")
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Delete Account functionality")
     public void verifyDeleteAccount() {
         AndroidDriver driver = getDriverInstance();
 
