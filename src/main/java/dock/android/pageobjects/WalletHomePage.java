@@ -223,7 +223,7 @@ public class WalletHomePage extends BasePage {
 
     public int generateRandomNumber() {
         int min = 50;
-        int max = 100;
+        int max = 10000;
         //Generate random int value from 50 to 100
         int random_int = (int) Math.floor(Math.random() * (max - min + 1) + min);
         return random_int;
