@@ -100,6 +100,17 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage clickRemoveAccountAfterThreeDotsClick() {
+        clickByXpathAndroidWidgetTextView("Remove");
+        waitForElementInVisibility("Accounts Removed");
+        return this;
+    }
+
+    public WalletHomePage clickDetails() {
+        clickByXpathAndroidWidgetTextView("Details");
+        return this;
+    }
+
     public WalletHomePage clickUploadJsonFile() {
         click(uploadJsonFile);
         return this;
@@ -201,16 +212,18 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickRemoveAccount() {
-        /*driver.findElement(Selector.contentResourceID("AccountDetailsScreen"))
-                .findElements(By.className("android.view.ViewGroup")).get(1)
-                .click();*/
         click(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup"));
+        return this;
+    }
+
+    public WalletHomePage clickThreeDotsFromTopRightCorner() {
+        click(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup"));
         return this;
     }
 
     public int generateRandomNumber() {
         int min = 50;
-        int max = 100;
+        int max = 10000;
         //Generate random int value from 50 to 100
         int random_int = (int) Math.floor(Math.random() * (max - min + 1) + min);
         return random_int;

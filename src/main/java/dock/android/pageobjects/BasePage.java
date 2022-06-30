@@ -323,7 +323,13 @@ public class BasePage {
 
     public BasePage waitElementVisibility(String locator) {
         final String selector = "new UiSelector().text(\"" + locator + "\").className(\"android.widget.TextView\")";
-        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(MobileBy.AndroidUIAutomator(selector)));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(MobileBy.AndroidUIAutomator(selector)));
+        return this;
+    }
+
+    public BasePage waitForElementInVisibility(String locator) {
+        final String selector = "new UiSelector().text(\"" + locator + "\").className(\"android.widget.TextView\")";
+        new WebDriverWait(driver, 5).until(ExpectedConditions.invisibilityOfElementLocated(MobileBy.AndroidUIAutomator(selector)));
         return this;
     }
 
