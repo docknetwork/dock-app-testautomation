@@ -40,7 +40,7 @@ public class ImportWalletWithExistingAccountAndCredentials {
         walletHomePage.clickCredentials();
         Assert.assertTrue(walletHomePage.isDisplayedByText("Bsc in Computer Science"));
         Assert.assertTrue(walletHomePage.isDisplayedByText("Hans M\u00FCller"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("5/9/2021"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("May 9, 2021"));
     }
 
     @AfterMethod(alwaysRun = true)

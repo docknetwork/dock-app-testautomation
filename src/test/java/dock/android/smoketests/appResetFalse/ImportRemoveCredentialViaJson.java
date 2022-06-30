@@ -22,12 +22,12 @@ public class ImportRemoveCredentialViaJson extends BaseTestCaseAndroid {
                 .uploadFile("credImport.json");
         Assert.assertTrue(walletHomePage.isDisplayedByText("Enterprise in the Community"));
         Assert.assertTrue(walletHomePage.isDisplayedByText("NSC Balgowlah Boys Campus"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("6/26/2022"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Jun 26, 2022"));
 
         // Remove the added Cred and verify its removed properly
         walletHomePage.removeCredentials();
         Assert.assertFalse(walletHomePage.checkElementExistByXpath("Enterprise in the Community"));
         Assert.assertFalse(walletHomePage.checkElementExistByXpath("NSC Balgowlah Boys Campus"));
-        Assert.assertFalse(walletHomePage.checkElementExistByXpath("6/26/2022"));
+        Assert.assertFalse(walletHomePage.checkElementExistByXpath("Jun 26, 2022"));
     }
 }
