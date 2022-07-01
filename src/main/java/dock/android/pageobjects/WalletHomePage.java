@@ -74,7 +74,7 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
-    public WalletHomePage removeCredentials(){
+    public WalletHomePage removeCredentials() {
         click(btnThreeDots);
         clickByXpathAndroidWidgetTextView("Remove");
         return this;
@@ -97,6 +97,11 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage clickDeleteAccountFromAddAccountWidget() {
         click(optionDeleteAccount);
+        return this;
+    }
+
+    public WalletHomePage clickAccountDetails(String accountName) {
+        clickByXpathAndroidWidgetTextView(accountName);
         return this;
     }
 

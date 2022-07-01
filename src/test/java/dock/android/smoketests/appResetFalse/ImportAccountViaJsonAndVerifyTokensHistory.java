@@ -11,10 +11,10 @@ import dock.utilities.TestGroup;
 import dock.utilities.WebDriverBuilder;
 import io.appium.java_client.android.AndroidDriver;
 
-public class ImportAccountViaJson extends BaseTestCaseAndroid {
+public class ImportAccountViaJsonAndVerifyTokensHistory extends BaseTestCaseAndroid {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify Import Account functionality via Json")
-    public void verifyImportAccountViaJson() {
+    public void verifyImportAccountViaJsonAndTokensHistory() {
         AndroidDriver driver = getDriverInstance();
         // Import Existing account via Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
@@ -30,5 +30,9 @@ public class ImportAccountViaJson extends BaseTestCaseAndroid {
                 .clickNext();
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
         Assert.assertTrue(walletHomePage.getDockBalance().contains("3 DOCK"));
+
+        // Click the imported account to see the history
+        walletHomePage.clickAccountDetails(accountName);
+        Assert.assertTrue(walletHomePage.isDisplayedByText("3 DOCK"));
     }
 }
