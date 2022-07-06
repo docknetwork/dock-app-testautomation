@@ -34,7 +34,5 @@ jobs:
       with:
         arguments: build
 
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Install and Run Appium Server
-      uses: moatazeldebsy/appium-server-gitHub-action@V1.0.4
+    - name: "Run UI Tests"
+      uses: faruktoptas/android-github-actions-emulator@latest
