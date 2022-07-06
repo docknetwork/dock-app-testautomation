@@ -1,48 +1,40 @@
-name: Build, Test and Distribute
-on: [push]
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [21, 23, 29]
     steps:
-      - uses: actions/checkout@v1
-      - name: Build
-        uses: vgaidarji/android-github-actions-build@v1.0.1
-        env:
-          FABRIC_API_KEY: ${{ secrets.FABRIC_API_KEY }}
-          FABRIC_API_SECRET: ${{ secrets.FABRIC_API_SECRET }}
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: Gradle cache
+        uses: gradle/gradle-build-action@v2
+
+      - name: AVD cache
+        uses: actions/cache@v3
+        id: avd-cache
         with:
-          args: "sdkmanager 'platforms;android-26' && ./gradlew assembleDebug -PpreDexEnable=false"
-      - name: Check
-        uses: vgaidarji/android-github-actions-build@v1.0.1
-        env:
-          FABRIC_API_KEY: ${{ secrets.FABRIC_API_KEY }}
-          FABRIC_API_SECRET: ${{ secrets.FABRIC_API_SECRET }}
-        with:
-          args: "./gradlew testDebug jacocoTestReport checkstyle pmd jdepend lintDebug buildDashboard -PpreDexEnable=false"
-      - name: Distribute
-        uses: vgaidarji/android-github-actions-build@v1.0.1
-        env:
-          FABRIC_API_KEY: ${{ secrets.FABRIC_API_KEY }}
-          FABRIC_API_SECRET: ${{ secrets.FABRIC_API_SECRET }}
-        with:
-          args: "./gradlew crashlyticsUploadDistributionDebug -PpreDexEnable=false"
-      - name: Publish Code Coverage
-        uses: vgaidarji/android-github-actions-build@v1.0.1
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        with:
-          args: "./gradlew coveralls -PpreDexEnable=false"
-  androidTest:
-    runs-on: macOS-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Instrumentation Tests
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
-        env:
-          FABRIC_API_KEY: ${{ secrets.FABRIC_API_KEY }}
-          FABRIC_API_SECRET: ${{ secrets.FABRIC_API_SECRET }}
         with:
-          api-level: 29
-          arch: x86
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: run tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          script: ./gradlew connectedAndroidTest --stacktrace
+          script: ./gradlew connectedCheck
