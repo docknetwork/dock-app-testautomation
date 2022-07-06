@@ -14,4 +14,4 @@ jobs:
           api-level: 29
           arch: x86
           disable-animations: true
-          script: adbdevice && ./gradlew test --stacktrace
+          script: ./gradlew test --stacktrace
