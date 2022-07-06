@@ -3,14 +3,12 @@ package dock.utilities;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -52,6 +50,7 @@ public class WebDriverBuilder {
         caps.setCapability(MobileCapabilityType.UDID, LocalPropertiesReader.getAndroidUdid());
         caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, LocalPropertiesReader.getAndroidOSVersion());
         caps.setCapability(MobileCapabilityType.NO_RESET, true);
+        caps.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/src/test/resources/apps/app-release.apk");
         caps.setCapability("appPackage", "com.dockapp");
         caps.setCapability("appActivity", "com.dockapp.MainActivity");
         try {
@@ -72,6 +71,7 @@ public class WebDriverBuilder {
         caps.setCapability(MobileCapabilityType.UDID, LocalPropertiesReader.getAndroidUdid());
         caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, LocalPropertiesReader.getAndroidOSVersion());
         caps.setCapability(MobileCapabilityType.NO_RESET, false);
+        caps.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/src/test/resources/apps/app-release.apk");
         caps.setCapability("appPackage", "com.dockapp");
         caps.setCapability("appActivity", "com.dockapp.MainActivity");
         try {
