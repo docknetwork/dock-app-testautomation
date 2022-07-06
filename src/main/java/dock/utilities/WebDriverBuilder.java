@@ -60,7 +60,7 @@ public class WebDriverBuilder {
         caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, "7.1.1");
         caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         caps.setCapability(MobileCapabilityType.NO_RESET, true);
-        caps.setCapability(MobileCapabilityType.APP, prepareAbsoluteFilePathForSeleniumGrid("/src/test/resources/apps/app-release.apk"));
+        caps.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir")+"/apps/app-release.apk");
         caps.setCapability("appPackage", "com.dockapp");
 
         try {
@@ -89,7 +89,7 @@ public class WebDriverBuilder {
         caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, "7.1.1");
         caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         caps.setCapability(MobileCapabilityType.NO_RESET, false);
-        caps.setCapability(MobileCapabilityType.APP, prepareAbsoluteFilePathForSeleniumGrid("/src/test/resources/apps/app-release.apk"));
+        caps.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir")+"/apps/app-release.apk");
         // caps.setCapability("appPackage", "com.dockapp");
         try {
             driver = new AndroidDriver<>(new URL(LocalPropertiesReader.getGridHubName()), caps);
