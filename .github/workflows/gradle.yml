@@ -11,13 +11,22 @@ jobs:
           chmod +x ./scripts/RunAppiumServer.sh # install and run appium server in the background
           ./scripts/RunAppiumServer.sh
 
-      - name: Instrumentation Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        env:
-          FABRIC_API_KEY: ${{ secrets.FABRIC_API_KEY }}
-          FABRIC_API_SECRET: ${{ secrets.FABRIC_API_SECRET }}
+#      - name: Instrumentation Tests
+#        uses: reactivecircus/android-emulator-runner@v2
+#        env:
+#          FABRIC_API_KEY: ${{ secrets.FABRIC_API_KEY }}
+#          FABRIC_API_SECRET: ${{ secrets.FABRIC_API_SECRET }}
+#        with:
+#          api-level: 29
+#          arch: x86
+#          disable-animations: true
+#          script: ./gradlew test --stacktrace --scan -DsuitXmlFile=mainSuite.xml
+
+      - name: Run Appium Tests
+        uses: reactivecircus/android-emulator-runner@v1 # install and create the Emulator
         with:
-          api-level: 29
-          arch: x86
-          disable-animations: true
-          script: ./gradlew test --stacktrace --scan -DsuitXmlFile=mainSuite.xml
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
+          arch: x86_64
+          profile: Nexus 6
+          script: ./gradlew test --stacktrace --scan --info -DsuitXmlFile=mainSuite.xml
