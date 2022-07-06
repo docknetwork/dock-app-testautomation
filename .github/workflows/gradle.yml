@@ -5,6 +5,12 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Install and Run Appium Server
+        run: |
+          chmod +x ./scripts/RunAppiumServer.sh # install and run appium server in the background
+          ./scripts/RunAppiumServer.sh
+
       - name: Instrumentation Tests
         uses: reactivecircus/android-emulator-runner@v2
         env:
@@ -14,4 +20,4 @@ jobs:
           api-level: 29
           arch: x86
           disable-animations: true
-          script: ./gradlew test --stacktrace -DsuitXmlFile=mainSuite.xml
+          script: ./gradlew test --stacktrace --scan -DsuitXmlFile=mainSuite.xml
