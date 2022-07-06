@@ -35,4 +35,4 @@ jobs:
         arguments: build
 
     - name: "Run UI Tests"
-      uses: faruktoptas/android-github-actions-emulator@latest
+      uses: faruktoptas/android-github-actions-emulator@1.1.0
