@@ -11,14 +11,8 @@
     </listeners>
 
     <test name="Wallet Tests execution without App-Reset - Android">
-        <packages>
-            <package name="dock.android.smoketests.appResetTrue.*"/>
-        </packages>
-    </test>
-
-    <test name="Wallet Tests After App Reset- Android">
-        <packages>
-            <package name="dock.android.smoketests.appResetFalse.*"/>
-        </packages>
+        <classes>
+            <class name="dock.android.smoketests.appResetFalse.Demo"/>
+        </classes>
     </test>
 </suite>

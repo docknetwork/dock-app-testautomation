@@ -2,6 +2,7 @@ name: Appium CI
 # on push we will trigger our code
 on: [push]
 
+
 jobs:
   build:
     runs-on: macos-latest # the machine type
@@ -26,4 +27,4 @@ jobs:
           target: ${{ matrix.target }}
           arch: x86_64
           profile: Nexus 6
-          script: ./gradlew test --stacktrace --scan --info -DsuitXmlFile=mainSuite.xml
+          script: ./gradlew test --info # running our test with info to check the results
