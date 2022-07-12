@@ -56,7 +56,7 @@ public class WebDriverBuilder {
             caps.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/app-release.apk");
             caps.setCapability("automationName", "UiAutomator1");
             caps.setCapability("platformName", "Android");
-            caps.setCapability("platformVersion", "7.1.1");
+            //caps.setCapability("platformVersion", "7.1.1");
             caps.setCapability("deviceName", "Android Emulator");
         }
         caps.setCapability("appPackage", "com.dockapp");
@@ -84,7 +84,7 @@ public class WebDriverBuilder {
             caps.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/app-release.apk");
             caps.setCapability("automationName", "UiAutomator1");
             caps.setCapability("platformName", "Android");
-            caps.setCapability("platformVersion", "7.1.1");
+            //caps.setCapability("platformVersion", "7.1.1");
             caps.setCapability("deviceName", "Android Emulator");
         }
         caps.setCapability("appPackage", "com.dockapp");

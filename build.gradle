@@ -73,7 +73,7 @@ test {
 
     useTestNG() {
         useDefaultListeners = true
-        suiteXmlFiles << file("src/test/resources/suites/" + suiteFileName)
+        suiteXmlFiles << file("src/test/resources/suites/mainSuite.xml")
         setSuiteXmlFiles(suiteXmlFiles)
     }
 

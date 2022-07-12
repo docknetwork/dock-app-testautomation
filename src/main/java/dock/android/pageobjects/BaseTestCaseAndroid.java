@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 
 import dock.utilities.LocalPropertiesReader;
@@ -18,6 +19,11 @@ public class BaseTestCaseAndroid {
     private static final ThreadLocal<AndroidDriver> threadInstanceWebDriver = new ThreadLocal<AndroidDriver>();
     private static final String executionMode = LocalPropertiesReader.getExecutionMode();
     protected Logger log = LoggerFactory.getLogger(this.getClass());
+
+    @BeforeSuite(alwaysRun = true)
+    public synchronized void installApp() {
+
+    }
 
     @BeforeMethod(alwaysRun = true)
     public synchronized void openApp() {
@@ -44,7 +50,7 @@ public class BaseTestCaseAndroid {
     public synchronized void closeApp() {
         try {
             AndroidDriver driver = threadInstanceWebDriver.get();
-            if (executionMode.equals("grid")) {
+            if (executionMode.equals("grid") && driver != null) {
                 driver.quit();
                 log.info("Driver has been closed");
             }
