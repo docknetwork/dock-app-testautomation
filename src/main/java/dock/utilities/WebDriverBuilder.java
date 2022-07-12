@@ -46,12 +46,19 @@ public class WebDriverBuilder {
     public AndroidDriver getAndroidDriver() {
         AndroidDriver driver = null;
         DesiredCapabilities caps = new DesiredCapabilities();
-        // simulator
-        caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
-        caps.setCapability(MobileCapabilityType.UDID, LocalPropertiesReader.getAndroidUdid());
-        caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, LocalPropertiesReader.getAndroidOSVersion());
         caps.setCapability(MobileCapabilityType.NO_RESET, true);
-        caps.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/app-release.apk");
+        if (LocalPropertiesReader.getExecutionMode().equals("local")) {
+            caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
+            caps.setCapability(MobileCapabilityType.UDID, LocalPropertiesReader.getAndroidUdid());
+            caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, LocalPropertiesReader.getAndroidOSVersion());
+        }
+        else {
+            caps.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/app-release.apk");
+            caps.setCapability("automationName", "UiAutomator1");
+            caps.setCapability("platformName", "Android");
+            caps.setCapability("platformVersion", "7.1.1");
+            caps.setCapability("deviceName", "Android Emulator");
+        }
         caps.setCapability("appPackage", "com.dockapp");
         caps.setCapability("appActivity", "com.dockapp.MainActivity");
         try {
@@ -67,12 +74,19 @@ public class WebDriverBuilder {
         AndroidDriver driver = null;
         System.setProperty("testType", "android1");
         DesiredCapabilities caps = new DesiredCapabilities();
-        // simulator
-        caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
-        caps.setCapability(MobileCapabilityType.UDID, LocalPropertiesReader.getAndroidUdid());
-        caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, LocalPropertiesReader.getAndroidOSVersion());
         caps.setCapability(MobileCapabilityType.NO_RESET, false);
-        caps.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/app-release.apk");
+        if (LocalPropertiesReader.getExecutionMode().equals("local")) {
+            caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
+            caps.setCapability(MobileCapabilityType.UDID, LocalPropertiesReader.getAndroidUdid());
+            caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, LocalPropertiesReader.getAndroidOSVersion());
+        }
+        else {
+            caps.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/app-release.apk");
+            caps.setCapability("automationName", "UiAutomator1");
+            caps.setCapability("platformName", "Android");
+            caps.setCapability("platformVersion", "7.1.1");
+            caps.setCapability("deviceName", "Android Emulator");
+        }
         caps.setCapability("appPackage", "com.dockapp");
         caps.setCapability("appActivity", "com.dockapp.MainActivity");
         try {
