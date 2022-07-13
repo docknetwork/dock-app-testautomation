@@ -30,3 +30,4 @@ test-output/
 *.ipa
 /*/build/allure-results
 allure-results/*
+src/test/resources/configfiles/local.properties
