@@ -1,6 +1,6 @@
 name: Appium CI
 # on push we will trigger our code
-on: [push]
+on: [deployment]
 
 jobs:
   build:
