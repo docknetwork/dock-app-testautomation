@@ -10,9 +10,12 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class WalletHomePage extends BasePage {
     public By importExistingWallet = Selector.contentDesc("ImportExistingBtn");
+    public By copyAddress = By.xpath("//android.view.ViewGroup[@content-desc=\"ReceiveTokenScreen\"]/android.widget.Button[1]");
+    public By shareAddress = By.xpath("//android.widget.Button[@content-desc=\"ReceiveTokenShareAddress\"]");
     public By btnImportWallet = Selector.contentDesc("importWallet.submitBtn");
     public By btnSend = By.xpath("//android.widget.TextView[contains(@text,'Send')]");
     public By btnCredentials = By.xpath("//android.widget.TextView[contains(@text,'Credentials')]");
+
     public By btnReceive = By.xpath("//android.widget.TextView[contains(@text,'Receive')]");
     public By labelAccountNext = By.xpath("//*[contains(@text,'test1')]");
     public By labelDockBalance = By.xpath("//android.widget.TextView[contains(@text,'DOCK')]");
@@ -113,6 +116,23 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage clickDetails() {
         clickByXpathAndroidWidgetTextView("Details");
+        return this;
+    }
+
+    public WalletHomePage clickReceive() {
+        waitABit(2000);
+        clickByXpathAndroidWidgetTextView("Receive");
+        return this;
+    }
+
+    public WalletHomePage clickCopyAddress() {
+        waitABit(2000);
+        driver.findElement(copyAddress).click();
+        return this;
+    }
+
+    public WalletHomePage clickShareAddress() {
+        click(shareAddress);
         return this;
     }
 

@@ -1,5 +1,6 @@
 package dock.android.smoketests.appResetFalse;
 
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -8,7 +9,7 @@ import dock.android.pageobjects.WalletHomePage;
 import dock.utilities.TestGroup;
 import io.appium.java_client.android.AndroidDriver;
 
-public class ImportAccountViaJsonAndVerifyTokensHistory extends BaseTestCaseAndroid {
+public class AccountTests extends BaseTestCaseAndroid {
     String accountName;
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify Import Account functionality via Json")
@@ -34,16 +35,22 @@ public class ImportAccountViaJsonAndVerifyTokensHistory extends BaseTestCaseAndr
         Assert.assertTrue(walletHomePage.isDisplayedByText("3 DOCK"));
     }
 
- //   @Test(dependsOnMethods = "verifyImportAccountViaJsonAndTokensHistory", groups = TestGroup.SmokeTest, description = "Test to verify Receive Button")
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Receive Button")
+    @Test(dependsOnMethods = "verifyImportAccountViaJsonAndTokensHistory", groups = TestGroup.SmokeTest, description = "Test to verify Receive Button")
+    // @Test(groups = TestGroup.SmokeTest, description = "Test to verify Receive Button")
 
     public void verifyReceiveButton() {
         AndroidDriver driver = getDriverInstance();
-        accountName = "TestAutomation";
+        accountName = "test3";
 
         // Import Existing account via Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         walletHomePage.enterPassCodeOneTime()
-                .clickAccountDetails(accountName);
+                .clickAccountDetails(accountName)
+                .clickReceive()
+                .clickCopyAddress();
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Copied"));
+
+        walletHomePage.clickShareAddress();
+        Assert.assertTrue(walletHomePage.isDisplayed(By.xpath(".//*[@resource-id = 'android:id/sem_chooser_chip_button1']")));
     }
 }
