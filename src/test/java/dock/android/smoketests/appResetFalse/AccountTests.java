@@ -36,12 +36,8 @@ public class AccountTests extends BaseTestCaseAndroid {
     }
 
     @Test(dependsOnMethods = "verifyImportAccountViaJsonAndTokensHistory", groups = TestGroup.SmokeTest, description = "Test to verify Receive Button")
-    // @Test(groups = TestGroup.SmokeTest, description = "Test to verify Receive Button")
-
     public void verifyReceiveButton() {
         AndroidDriver driver = getDriverInstance();
-        accountName = "test3";
-
         // Import Existing account via Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         walletHomePage.enterPassCodeOneTime()
@@ -52,5 +48,32 @@ public class AccountTests extends BaseTestCaseAndroid {
 
         walletHomePage.clickShareAddress();
         Assert.assertTrue(walletHomePage.isDisplayed(By.xpath(".//*[@resource-id = 'android:id/sem_chooser_chip_button1']")));
+    }
+
+    @Test(dependsOnMethods = "verifyImportAccountViaJsonAndTokensHistory", groups = TestGroup.SmokeTest, description = "Test to verify Receive Button")
+    public void verifyMaxTokensSendButton() {
+        AndroidDriver driver = getDriverInstance();
+        String recipient = "3DyCKfVoGZL8iTWruPtekwhDy9SFqaq9gHtbWF3QGYXDzHSK";
+
+        // Import Existing account via Json
+        WalletHomePage walletHomePage = new WalletHomePage(driver);
+        walletHomePage.enterPassCodeOneTime()
+                .clickAccountDetails(accountName)
+                .clickSend()
+                .enterAddress(recipient)
+                .clickNext()
+                .clickSendMax()
+                .clickNext();
+
+        //Verify max token amount is displayed which is 3 Dock tokens
+        Assert.assertTrue(walletHomePage.isDisplayedByText("3 DOCK"));
+
+        // Click Next and verify the widget of Confirm
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Confirm"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText(recipient));
+        Assert.assertTrue(walletHomePage.getDockTokenFee() > 0);
+        Assert.assertTrue(walletHomePage.isDisplayedByText("OK"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Cancel"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("3 DOCK"));
     }
 }

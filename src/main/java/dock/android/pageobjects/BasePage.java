@@ -22,9 +22,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
-import dock.utilities.WebDriverBuilder;
 import dock.android.Selector;
 import dock.utilities.TestListener;
+import dock.utilities.WebDriverBuilder;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
@@ -416,8 +416,16 @@ public class BasePage {
         return status;
     }
 
+    public float getDockTokenFee() {
+        WebElement tokenfee = driver.findElement(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.TextView[8]"));
+        float actualFee = Float.valueOf(tokenfee.getText()
+                .replace("DOCK", "").trim());
+        log.info("Actual fee is: " + actualFee);
+        return actualFee;
+    }
+
     public boolean isDisplayedByText(String text) {
-        By element = By.xpath("//*[contains(@text,'"+text+"')]");
+        By element = By.xpath("//*[contains(@text,'" + text + "')]");
         boolean status = getElement(element).isDisplayed();
         if (status)
             log.info(text + " is displayed.");

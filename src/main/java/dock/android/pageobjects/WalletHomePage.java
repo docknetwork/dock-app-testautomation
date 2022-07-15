@@ -25,6 +25,7 @@ public class WalletHomePage extends BasePage {
     private By txtBxPassword = By.xpath("//*[contains(@text,'Password')]");
     private By btnCreateNewAccount = By.xpath("//*[contains(@text,'Create new account')]");
     private By txtBxAccountName = By.xpath("//android.widget.EditText[contains(@text,'Account name')]");
+    private By txtBxSendAddress = By.xpath("//android.widget.EditText[contains(@text,'Recipient address')]");
     private By btnDoThisLater = By.xpath("//*[contains(@text,'Do this later')]");
     private By btnTokens = By.xpath("//*[contains(@text,'Tokens')]");
     private By btnPlus = Selector.contentResourceID("accountsScreen.addAccountMenuBtn");
@@ -125,6 +126,17 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage clickSend() {
+        waitABit(2000);
+        clickByXpathAndroidWidgetTextView("Send");
+        return this;
+    }
+
+    public WalletHomePage clickSendMax() {
+        clickByXpathAndroidWidgetTextView("Send Max");
+        return this;
+    }
+
     public WalletHomePage clickCopyAddress() {
         waitABit(2000);
         driver.findElement(copyAddress).click();
@@ -165,6 +177,12 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage enterNewAccountInfo(String testName) {
         sendText(txtBxAccountName, testName);
+        return this;
+    }
+
+    public WalletHomePage enterAddress(String address) {
+        waitABit(2000);
+        sendText(txtBxSendAddress, address);
         return this;
     }
 
