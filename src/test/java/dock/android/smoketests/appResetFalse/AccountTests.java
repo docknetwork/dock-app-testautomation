@@ -76,4 +76,20 @@ public class AccountTests extends BaseTestCaseAndroid {
         Assert.assertTrue(walletHomePage.isDisplayedByText("Cancel"));
         Assert.assertTrue(walletHomePage.isDisplayedByText("3 DOCK"));
     }
+
+    @Test(dependsOnMethods = "verifyImportAccountViaJsonAndTokensHistory", groups = TestGroup.SmokeTest, description = "Test to verify Buy Token")
+    public void verifyBuyToken() {
+        AndroidDriver driver = getDriverInstance();
+
+        // Import Existing account via Json
+        WalletHomePage walletHomePage = new WalletHomePage(driver);
+        walletHomePage.enterPassCodeOneTime()
+                .clickAccountDetails(accountName)
+                .clickBuy()
+                .clickContinueTransak()
+                .clickBuyNow();
+
+        // Verify that Buy Dock button is displayed
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Buy DOCK"));
+    }
 }
