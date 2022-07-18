@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import dock.utilities.Selector;
 import io.appium.java_client.android.AndroidDriver;
@@ -35,6 +36,7 @@ public class WalletHomePage extends BasePage {
     private By optionDeleteAccount = By.xpath("//android.widget.TextView[contains(@text,'Delete account')]");
     private By btnPlusCredential = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
     private By btnThreeDots = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
+    private By btnContinueTransak = By.xpath("//android.widget.Button[@content-desc=\"ContinueToTransak\"]");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -129,6 +131,24 @@ public class WalletHomePage extends BasePage {
     public WalletHomePage clickSend() {
         waitABit(2000);
         clickByXpathAndroidWidgetTextView("Send");
+        return this;
+    }
+
+    public WalletHomePage clickBuy() {
+        waitABit(2000);
+        clickByXpathAndroidWidgetTextViewWithoutScrolling("Buy");
+        return this;
+    }
+
+    public WalletHomePage clickContinueTransak() {
+        waitABit(2000);
+        click(btnContinueTransak);
+        return this;
+    }
+
+    public WalletHomePage clickBuyNow() {
+        waitABit(5000);
+        click(By.xpath("//android.widget.Button[contains(@text,'Buy Now')]"));
         return this;
     }
 

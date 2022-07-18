@@ -298,6 +298,11 @@ public class BasePage {
         log.info("Value selected: " + Value);
     }
 
+    public void clickByXpathAndroidWidgetTextViewWithoutScrolling(String Value) {
+        getElement(By.xpath("//android.widget.TextView[contains(@text,'" + Value + "')]")).click();
+        log.info("Value selected: " + Value);
+    }
+
     public void clickByXpathAndroidWidgetTextView(String Value) {
         scrollIntoViewByTextContains(Value);
         getElement(By.xpath("//android.widget.TextView[contains(@text,'" + Value + "')]")).click();
