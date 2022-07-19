@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import dock.utilities.Selector;
 import io.appium.java_client.android.AndroidDriver;
@@ -24,6 +23,7 @@ public class WalletHomePage extends BasePage {
     private By optionCreateNewAccount = By.xpath("//android.widget.TextView[contains(@text,'Create new account')]");
     private By btnSkip = By.xpath("//*[contains(@text,'Skip')]");
     private By txtBxPassword = By.xpath("//*[contains(@text,'Password')]");
+    private By txtBxConfirmPassword = By.xpath("//*[contains(@text,'Confirm password')]");
     private By btnCreateNewAccount = By.xpath("//*[contains(@text,'Create new account')]");
     private By txtBxAccountName = By.xpath("//android.widget.EditText[contains(@text,'Account name')]");
     private By txtBxSendAddress = By.xpath("//android.widget.EditText[contains(@text,'Recipient address')]");
@@ -131,6 +131,15 @@ public class WalletHomePage extends BasePage {
     public WalletHomePage clickSend() {
         waitABit(2000);
         clickByXpathAndroidWidgetTextView("Send");
+        return this;
+    }
+
+    public WalletHomePage clickSettings() {
+        clickByXpathAndroidWidgetTextView("Settings");
+        return this;
+    }
+    public WalletHomePage clickBackupWallet() {
+        clickByXpathAndroidWidgetTextView("Backup wallet");
         return this;
     }
 
@@ -260,6 +269,11 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage enterPassword(String password) {
         sendText(txtBxPassword, password);
+        return this;
+    }
+
+    public WalletHomePage enterConfirmPassword(String password) {
+        sendText(txtBxConfirmPassword, password);
         return this;
     }
 
