@@ -251,6 +251,10 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage uploadFile(String fileName) {
         try {
+            waitABit(3000);
+            driver.findElement(By.xpath("//android.widget.ImageButton[@content-desc=\"Show roots\"]")).click();
+            getElement(By.xpath("//android.widget.TextView[@text='Downloads']")).click();
+            waitABit(2000);
             File classpathRoot = new File(System.getProperty("user.dir"));
             File assetDir = new File(classpathRoot, "src/test/resources/configfiles/");
             File walletBackUpFile = new File(assetDir.getCanonicalPath(), fileName);
@@ -278,7 +282,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickNext() {
-        waitABit(2000);
+        waitABit(3000);
         click(btnNext);
         return this;
     }
