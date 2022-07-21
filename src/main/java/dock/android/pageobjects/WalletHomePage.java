@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 
 import dock.utilities.Selector;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
 
 public class WalletHomePage extends BasePage {
     public By importExistingWallet = Selector.contentDesc("ImportExistingBtn");
@@ -134,10 +135,22 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage clickRemoveOnFinalNotificationMessage() {
+        AndroidElement remove = (AndroidElement) driver.findElements(By.xpath("//android.widget.TextView[contains(@text,'Remove')]")).get(1);
+        remove.click();
+        return this;
+    }
+
     public WalletHomePage clickSettings() {
         clickByXpathAndroidWidgetTextView("Settings");
         return this;
     }
+
+    public WalletHomePage clickRemoveWallet() {
+        click(By.xpath("//*[contains(@text,'Remove wallet')]"));
+        return this;
+    }
+
     public WalletHomePage clickBackupWallet() {
         clickByXpathAndroidWidgetTextView("Backup wallet");
         return this;
