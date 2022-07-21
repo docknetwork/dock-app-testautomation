@@ -222,6 +222,19 @@ public class BasePage {
         return this;
     }
 
+    public BasePage swipeDownUntillElementVisibileByExactText(String elementText) {
+        int count = 1;
+        boolean visibility = checkElementExist(By.xpath("//*[text()= '" + elementText + "']"));
+        while (!visibility) {
+            swipeDown();
+            count++;
+            visibility = checkElementExist(By.xpath("//*[contains(@text , '" + elementText + "')]"));
+            if (count == 9) {
+                break;
+            }
+        }
+        return this;
+    }
 
     public BasePage swipeDownUntillElementVisibileByContains(String elementText) {
         int count = 1;
@@ -230,7 +243,7 @@ public class BasePage {
             swipeDown();
             count++;
             visibility = checkElementExist(By.xpath("//*[contains(@text , '" + elementText + "')]"));
-            if (count == 9) {
+            if (count == 20) {
                 break;
             }
         }

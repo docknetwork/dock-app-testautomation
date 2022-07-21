@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import dock.utilities.Selector;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
 
 public class WalletHomePage extends BasePage {
     public By importExistingWallet = Selector.contentDesc("ImportExistingBtn");
@@ -37,6 +40,7 @@ public class WalletHomePage extends BasePage {
     private By btnPlusCredential = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
     private By btnThreeDots = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
     private By btnContinueTransak = By.xpath("//android.widget.Button[@content-desc=\"ContinueToTransak\"]");
+    private By btnSave = By.xpath("//android.widget.Button[contains(@text,'Save')]");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -47,6 +51,29 @@ public class WalletHomePage extends BasePage {
         click(Selector.contentDesc("CreateWalletBtn"));
         enterPassCodeTwoTimes();
         clickDoThisLater();
+        return this;
+    }
+
+    public WalletHomePage removeWalletComplete() {
+        enterPassCodeOneTime()
+                .clickSettings()
+                .clickRemoveWallet()
+                .enterPassCodeOneTime()
+                .clickSkip()
+                .clickRemoveOnFinalNotificationMessage();
+        Assert.assertTrue(isDisplayed(importExistingWallet));
+        return this;
+    }
+
+    public WalletHomePage importWalletComplete() {
+        clickImportExistingWallet()
+                .clickBtnImportWallet()
+                .uploadFile("walletBackup-Mike.json")
+                .enterPassword("Test1234!")
+                .clickNext()
+                .enterPassCodeTwoTimes()
+                .clickDoThisLater();
+        Assert.assertTrue(isDisplayedByText("Bob"));
         return this;
     }
 
@@ -134,10 +161,22 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage clickRemoveOnFinalNotificationMessage() {
+        AndroidElement remove = (AndroidElement) driver.findElements(By.xpath("//android.widget.TextView[contains(@text,'Remove')]")).get(1);
+        remove.click();
+        return this;
+    }
+
     public WalletHomePage clickSettings() {
         clickByXpathAndroidWidgetTextView("Settings");
         return this;
     }
+
+    public WalletHomePage clickRemoveWallet() {
+        click(By.xpath("//*[contains(@text,'Remove wallet')]"));
+        return this;
+    }
+
     public WalletHomePage clickBackupWallet() {
         clickByXpathAndroidWidgetTextView("Backup wallet");
         return this;
@@ -251,6 +290,10 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage uploadFile(String fileName) {
         try {
+            waitABit(3000);
+            driver.findElement(By.xpath("//android.widget.ImageButton[@content-desc=\"Show roots\"]")).click();
+            getElement(By.xpath("//android.widget.TextView[@text='Downloads']")).click();
+            waitABit(2000);
             File classpathRoot = new File(System.getProperty("user.dir"));
             File assetDir = new File(classpathRoot, "src/test/resources/configfiles/");
             File walletBackUpFile = new File(assetDir.getCanonicalPath(), fileName);
@@ -278,8 +321,13 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickNext() {
-        waitABit(2000);
+        waitABit(3000);
         click(btnNext);
+        return this;
+    }
+
+    public WalletHomePage clickSave() {
+        click(btnSave);
         return this;
     }
 
