@@ -28,19 +28,7 @@ public class BackupWallet {
 
         // Import Existing wallet via wallet-backup.Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
-        walletHomePage.clickImportExistingWallet()
-                .clickBtnImportWallet()
-                .uploadFile("walletBackup-Mike.json")
-                .enterPassword("Test1234!")
-                .clickNext()
-                .enterPassCodeTwoTimes()
-                .clickDoThisLater();
-
-        // Verify Import of old account
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Bob"));
-        Assert.assertTrue(walletHomePage.getDockBalance().contains("0.2065 DOCK"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("frank"));
-        Assert.assertTrue(walletHomePage.getDockBalance(2).contains("0.435 DOCK"));
+        walletHomePage.importWalletComplete();
 
         // Try to Backup the Wallet
         walletHomePage.enterPassCodeOneTime()
@@ -55,6 +43,8 @@ public class BackupWallet {
         Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
         Assert.assertTrue(walletHomePage.isDisplayedByText("Link Sharing"));
 
+
+        // Needs to handle When Maycon is finished
         walletHomePage.waitABit(3000);
         walletHomePage.swipeDownUntillElementVisibileByExactText("Drive");
         WebElement ele = (WebElement) driver.findElements(By.xpath("//*[contains(@text,'Drive')]")).get(1);
@@ -63,18 +53,14 @@ public class BackupWallet {
         String fileName = driver.findElement(By.className("android.widget.EditText")).getText();
         System.out.println(fileName);
 
-        walletHomePage.waitABit(3000);
-        driver.findElement(By.xpath("//android.widget.Button[contains(@text,'Save')]")).click();
+        walletHomePage.clickSave();
         walletHomePage.waitABit(7000);
 
-        driver.findElement(By.xpath("//*[contains(@text,'Remove wallet')]")).click();
-        walletHomePage.enterPassCodeOneTime();
-        driver.findElement(By.xpath("//*[contains(@text,'Skip')]")).click();
-        walletHomePage.waitABit(3000);
-        driver.findElement(By.xpath("//android.widget.TextView[contains(@text,'Remove')]")).click();
-        walletHomePage.waitABit(3000);
-
-        walletHomePage.clickImportExistingWallet()
+        walletHomePage.clickRemoveWallet()
+                .enterPassCodeOneTime()
+                .clickSkip()
+                .clickRemoveOnFinalNotificationMessage()
+                .clickImportExistingWallet()
                 .clickBtnImportWallet();
         walletHomePage.clickByXpathAndroidWidgetTextView(fileName);
 
