@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import dock.utilities.Selector;
@@ -231,6 +230,16 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage clickAccountRecoveryPhrase() {
+        clickByXpathAndroidWidgetTextView("Account recovery phrase");
+        return this;
+    }
+
+    public WalletHomePage enterMememicPhrase(String value) {
+        sendText(By.xpath("//android.widget.EditText[@content-desc=\"EnterText\"]"), value);
+        return this;
+    }
+
     public WalletHomePage clickAlreadyHaveAWallet() {
         click(btnAlreadyHaveAWallet);
         return this;
@@ -260,6 +269,8 @@ public class WalletHomePage extends BasePage {
     }
 
     public String getDockBalance() {
+        String balance = getText(labelDockBalance);
+        log.info("Balance is: " + balance);
         return getText(labelDockBalance);
     }
 
@@ -292,7 +303,8 @@ public class WalletHomePage extends BasePage {
         try {
             waitABit(3000);
             driver.findElement(By.xpath("//android.widget.ImageButton[@content-desc=\"Show roots\"]")).click();
-            getElement(By.xpath("//android.widget.TextView[@text='Downloads']")).click();
+            AndroidElement downlaods = getElements(By.xpath("//android.widget.TextView[@text='Downloads']")).get(1);
+            downlaods.click();
             waitABit(2000);
             File classpathRoot = new File(System.getProperty("user.dir"));
             File assetDir = new File(classpathRoot, "src/test/resources/configfiles/");

@@ -26,7 +26,7 @@ public class AccountTests extends BaseTestCaseAndroid {
                 .enterPassword("123456789Qw!")
                 .clickNext()
                 .enterNewAccountName(accountName)
-                .clickNext();
+                .clickNext().waitABit(2000);
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
         Assert.assertTrue(walletHomePage.getDockBalance().contains("3 DOCK"));
 
@@ -92,4 +92,23 @@ public class AccountTests extends BaseTestCaseAndroid {
         // Verify that Buy Dock button is displayed
         Assert.assertTrue(walletHomePage.isDisplayedByText("Buy DOCK"));
     }
+
+    @Test(groups = TestGroup.SmokeTest, description = "Test to create account verification via Memic")
+    public void verifyCreateAccountViaMemic() {
+        AndroidDriver driver = getDriverInstance();
+
+        WalletHomePage walletHomePage = new WalletHomePage(driver);
+        accountName = "test" + walletHomePage.generateRandomNumber();
+        walletHomePage.enterPassCodeOneTime()
+                .clickPlusButtonToCreatAccount()
+                .clickImportExistingAccount()
+                .clickAccountRecoveryPhrase()
+                .enterMememicPhrase("argue glow aerobic acoustic artefact exact flush fetch skill void direct rib")
+                .clickNext()
+                        .enterNewAccountName(accountName)
+                                .clickNext();
+        Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
+    }
+
+
 }
