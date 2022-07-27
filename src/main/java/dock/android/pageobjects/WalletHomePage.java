@@ -36,6 +36,7 @@ public class WalletHomePage extends BasePage {
     private By btnAlreadyHaveAWallet = By.id("ImportExistingBtn");
     private By uploadJsonFile = By.xpath("//*[contains(@text,'Upload JSON file')]");
     private By optionDeleteAccount = By.xpath("//android.widget.TextView[contains(@text,'Delete account')]");
+    private By optionExportAccount = By.xpath("//android.widget.TextView[contains(@text,'Export account')]");
     private By btnPlusCredential = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
     private By btnThreeDots = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
     private By btnContinueTransak = By.xpath("//android.widget.Button[@content-desc=\"ContinueToTransak\"]");
@@ -127,8 +128,18 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
-    public WalletHomePage clickDeleteAccountFromAddAccountWidget() {
+    public WalletHomePage clickDeleteAccountFromOptionsWidget() {
         click(optionDeleteAccount);
+        return this;
+    }
+
+    public WalletHomePage clickExportAccountFromOptionsWidget() {
+        click(optionExportAccount);
+        return this;
+    }
+
+    public WalletHomePage clickExportAccountAsJson() {
+        clickByXpathAndroidWidgetTextView("JSON");
         return this;
     }
 

@@ -12,29 +12,6 @@ import io.appium.java_client.android.AndroidDriver;
 public class AccountTests extends BaseTestCaseAndroid {
     String accountName;
 
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Import Account functionality via Json")
-    public void verifyImportAccountViaJsonAndTokensHistory() {
-        AndroidDriver driver = getDriverInstance();
-        // Import Existing account via Json
-        WalletHomePage walletHomePage = new WalletHomePage(driver);
-        accountName = "test" + walletHomePage.generateRandomNumber();
-        walletHomePage.enterPassCodeOneTime()
-                .clickPlusButtonToCreatAccount()
-                .clickImportExistingAccount()
-                .clickUploadJsonFile()
-                .uploadFile("importAccount.json")
-                .enterPassword("123456789Qw!")
-                .clickNext()
-                .enterNewAccountName(accountName)
-                .clickNext().waitABit(2000);
-        Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
-        Assert.assertTrue(walletHomePage.getDockBalance().contains("3 DOCK"));
-
-        // Click the imported account to see the history
-        walletHomePage.clickAccountDetails(accountName);
-        Assert.assertTrue(walletHomePage.isDisplayedByText("3 DOCK"));
-    }
-
     @Test(dependsOnMethods = "verifyImportAccountViaJsonAndTokensHistory", groups = TestGroup.SmokeTest, description = "Test to verify Receive Button")
     public void verifyReceiveButton() {
         AndroidDriver driver = getDriverInstance();
@@ -110,5 +87,20 @@ public class AccountTests extends BaseTestCaseAndroid {
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
     }
 
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify account export as Json")
+    public void verifyExportAccountAsJson() {
+        AndroidDriver driver = getDriverInstance();
 
+        WalletHomePage walletHomePage = new WalletHomePage(driver);
+        accountName = "test" + walletHomePage.generateRandomNumber();
+        walletHomePage.enterPassCodeOneTime()
+                .clickPlusButtonToCreatAccount()
+                .clickImportExistingAccount()
+                .clickAccountRecoveryPhrase()
+                .enterMememicPhrase("argue glow aerobic acoustic artefact exact flush fetch skill void direct rib")
+                .clickNext()
+                .enterNewAccountName(accountName)
+                .clickNext();
+        Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
+    }
 }
