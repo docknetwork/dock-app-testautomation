@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import dock.android.pageobjects.BaseTestCaseAndroid;
 import dock.android.pageobjects.WalletHomePage;
 import dock.utilities.TestGroup;
+import dock.utilities.WebDriverBuilder;
 import io.appium.java_client.android.AndroidDriver;
 
 public class AccountTests extends BaseTestCaseAndroid {
@@ -17,8 +18,9 @@ public class AccountTests extends BaseTestCaseAndroid {
         AndroidDriver driver = getDriverInstance();
         // Import Existing account via Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
+        walletHomePage.createNewWallet();
         accountName = "test" + walletHomePage.generateRandomNumber();
-        walletHomePage.enterPassCodeOneTime()
+        walletHomePage
                 .clickPlusButtonToCreatAccount()
                 .clickImportExistingAccount()
                 .clickUploadJsonFile()
@@ -26,8 +28,9 @@ public class AccountTests extends BaseTestCaseAndroid {
                 .enterPassword("123456789Qw!")
                 .clickNext()
                 .enterNewAccountName(accountName)
-                .clickNext().waitABit(2000);
+                .clickNext();
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
+        walletHomePage.scrollIntoViewByTextContains(accountName);
         Assert.assertTrue(walletHomePage.getDockBalance().contains("3 DOCK"));
 
         // Click the imported account to see the history
@@ -92,23 +95,4 @@ public class AccountTests extends BaseTestCaseAndroid {
         // Verify that Buy Dock button is displayed
         Assert.assertTrue(walletHomePage.isDisplayedByText("Buy DOCK"));
     }
-
-    @Test(groups = TestGroup.SmokeTest, description = "Test to create account verification via Memic")
-    public void verifyCreateAccountViaMemic() {
-        AndroidDriver driver = getDriverInstance();
-
-        WalletHomePage walletHomePage = new WalletHomePage(driver);
-        accountName = "test" + walletHomePage.generateRandomNumber();
-        walletHomePage.enterPassCodeOneTime()
-                .clickPlusButtonToCreatAccount()
-                .clickImportExistingAccount()
-                .clickAccountRecoveryPhrase()
-                .enterMememicPhrase("argue glow aerobic acoustic artefact exact flush fetch skill void direct rib")
-                .clickNext()
-                        .enterNewAccountName(accountName)
-                                .clickNext();
-        Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
-    }
-
-
 }

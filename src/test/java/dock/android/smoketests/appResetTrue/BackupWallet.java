@@ -31,8 +31,7 @@ public class BackupWallet {
         walletHomePage.importWalletComplete();
 
         // Try to Backup the Wallet
-        walletHomePage.enterPassCodeOneTime()
-                .clickSettings()
+        walletHomePage.clickSettings()
                 .clickBackupWallet()
                 .enterPassword(password)
                 .enterConfirmPassword(password)
@@ -43,33 +42,32 @@ public class BackupWallet {
         Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
         Assert.assertTrue(walletHomePage.isDisplayedByText("Link Sharing"));
 
-
         // Needs to handle When Maycon is finished
-        walletHomePage.waitABit(3000);
-        walletHomePage.swipeDownUntillElementVisibileByExactText("Drive");
-        WebElement ele = (WebElement) driver.findElements(By.xpath("//*[contains(@text,'Drive')]")).get(1);
-        ele.click();
-
-        String fileName = driver.findElement(By.className("android.widget.EditText")).getText();
-        System.out.println(fileName);
-
-        walletHomePage.clickSave();
-        walletHomePage.waitABit(7000);
-
-        walletHomePage.clickRemoveWallet()
-                .enterPassCodeOneTime()
-                .clickSkip()
-                .clickRemoveOnFinalNotificationMessage()
-                .clickImportExistingWallet()
-                .clickBtnImportWallet();
-        walletHomePage.clickByXpathAndroidWidgetTextView(fileName);
-
-        walletHomePage.enterPassword("123456789Qw!")
-                .clickNext()
-                .enterPassCodeTwoTimes()
-                .clickDoThisLater();
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Bob"));
-        Assert.assertTrue(walletHomePage.getDockBalance().contains("0.2065 DOCK"));
+        //walletHomePage.waitABit(3000);
+        //walletHomePage.swipeDownUntillElementVisibileByExactText("Drive");
+        //WebElement ele = (WebElement) driver.findElements(By.xpath("//*[contains(@text,'Drive')]")).get(1);
+        //ele.click();
+        //
+        //String fileName = driver.findElement(By.className("android.widget.EditText")).getText();
+        //System.out.println(fileName);
+        //
+        //walletHomePage.clickSave();
+        //walletHomePage.waitABit(7000);
+        //
+        //walletHomePage.clickRemoveWallet()
+        //        .enterPassCodeOneTime()
+        //        .clickSkip()
+        //        .clickRemoveOnFinalNotificationMessage()
+        //        .clickImportExistingWallet()
+        //        .clickBtnImportWallet();
+        //walletHomePage.clickByXpathAndroidWidgetTextView(fileName);
+        //
+        //walletHomePage.enterPassword("123456789Qw!")
+        //        .clickNext()
+        //        .enterPassCodeTwoTimes()
+        //        .clickDoThisLater();
+        //Assert.assertTrue(walletHomePage.isDisplayedByText("Bob"));
+        //Assert.assertTrue(walletHomePage.getDockBalance().contains("0.2065 DOCK"));
     }
 
     @AfterMethod(alwaysRun = true)

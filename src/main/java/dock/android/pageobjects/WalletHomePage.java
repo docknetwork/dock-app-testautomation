@@ -2,6 +2,7 @@ package dock.android.pageobjects;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -36,6 +37,7 @@ public class WalletHomePage extends BasePage {
     private By btnAlreadyHaveAWallet = By.id("ImportExistingBtn");
     private By uploadJsonFile = By.xpath("//*[contains(@text,'Upload JSON file')]");
     private By optionDeleteAccount = By.xpath("//android.widget.TextView[contains(@text,'Delete account')]");
+    private By optionExportAccount = By.xpath("//android.widget.TextView[contains(@text,'Export account')]");
     private By btnPlusCredential = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
     private By btnThreeDots = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
     private By btnContinueTransak = By.xpath("//android.widget.Button[@content-desc=\"ContinueToTransak\"]");
@@ -127,8 +129,18 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
-    public WalletHomePage clickDeleteAccountFromAddAccountWidget() {
+    public WalletHomePage clickDeleteAccountFromOptionsWidget() {
         click(optionDeleteAccount);
+        return this;
+    }
+
+    public WalletHomePage clickExportAccountFromOptionsWidget() {
+        click(optionExportAccount);
+        return this;
+    }
+
+    public WalletHomePage clickExportAccountAsJson() {
+        clickByXpathAndroidWidgetTextView("JSON");
         return this;
     }
 
@@ -303,8 +315,13 @@ public class WalletHomePage extends BasePage {
         try {
             waitABit(3000);
             driver.findElement(By.xpath("//android.widget.ImageButton[@content-desc=\"Show roots\"]")).click();
-            AndroidElement downlaods = getElements(By.xpath("//android.widget.TextView[@text='Downloads']")).get(1);
-            downlaods.click();
+            List<AndroidElement> downlaods = getElements(By.xpath("//android.widget.TextView[@text='Downloads']"));
+            if (downlaods.size() > 0) {
+                downlaods.get(1).click();
+            }
+            else {
+                downlaods.get(0).click();
+            }
             waitABit(2000);
             File classpathRoot = new File(System.getProperty("user.dir"));
             File assetDir = new File(classpathRoot, "src/test/resources/configfiles/");
@@ -315,6 +332,7 @@ public class WalletHomePage extends BasePage {
             driver.context("NATIVE_APP");
             driver.pullFile(directoryPath + fileName);
             click(By.xpath("//*[contains(@text,'" + fileName + "')]"));
+            waitABit(3000);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -323,7 +341,9 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage enterPassword(String password) {
+        waitABit(2000);
         sendText(txtBxPassword, password);
+        waitABit(2000);
         return this;
     }
 
@@ -333,8 +353,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickNext() {
-        waitABit(3000);
-        click(btnNext);
+        driver.findElement(btnNext).click();
         return this;
     }
 

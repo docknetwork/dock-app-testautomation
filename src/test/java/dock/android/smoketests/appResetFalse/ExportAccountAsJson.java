@@ -8,15 +8,15 @@ import dock.android.pageobjects.WalletHomePage;
 import dock.utilities.TestGroup;
 import io.appium.java_client.android.AndroidDriver;
 
-public class DeleteAccount extends BaseTestCaseAndroid {
+public class ExportAccountAsJson extends BaseTestCaseAndroid {
 
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Delete Account functionality")
-    public void verifyDeleteAccount() {
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Export Account as Json functionality")
+    public void verifyExportAccount() {
         AndroidDriver driver = getDriverInstance();
 
         // Create New Account
         WalletHomePage walletHomePage = new WalletHomePage(driver);
-        String accountName = "test" + walletHomePage.generateRandomNumber();
+        String accountName = "test";
         walletHomePage.enterPassCodeOneTime()
                 .clickPlusButtonToCreatAccount()
                 .clickCreateNewAccountFromAddAccountWidget()
@@ -25,11 +25,17 @@ public class DeleteAccount extends BaseTestCaseAndroid {
                 .clickSkip()
                 .clickByXpathAndroidWidgetTextView(accountName);
 
-        // Try to remove the new created account
+        // Try to export new account
+        String password = "123456789Qw!";
         walletHomePage.clickRemoveAccount()
-                .clickDeleteAccountFromOptionsWidget();
+                .clickExportAccountFromOptionsWidget()
+                .clickExportAccountAsJson()
+                .enterPassword(password)
+                .enterConfirmPassword(password)
+                .clickNext();
 
-        // Verify account has been removed
-        Assert.assertFalse(walletHomePage.checkElementExistByXpath(accountName));
+        // Verify that account***.Json is displayed
+        Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Link Sharing"));
     }
 }
