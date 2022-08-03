@@ -31,8 +31,7 @@ public class BackupWallet {
         walletHomePage.importWalletComplete();
 
         // Try to Backup the Wallet
-        walletHomePage.enterPassCodeOneTime()
-                .clickSettings()
+        walletHomePage.clickSettings()
                 .clickBackupWallet()
                 .enterPassword(password)
                 .enterConfirmPassword(password)

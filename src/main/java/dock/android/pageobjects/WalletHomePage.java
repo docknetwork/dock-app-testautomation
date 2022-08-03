@@ -2,6 +2,7 @@ package dock.android.pageobjects;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -314,8 +315,13 @@ public class WalletHomePage extends BasePage {
         try {
             waitABit(3000);
             driver.findElement(By.xpath("//android.widget.ImageButton[@content-desc=\"Show roots\"]")).click();
-            AndroidElement downlaods = getElements(By.xpath("//android.widget.TextView[@text='Downloads']")).get(1);
-            downlaods.click();
+            List<AndroidElement> downlaods = getElements(By.xpath("//android.widget.TextView[@text='Downloads']"));
+            if (downlaods.size() > 0) {
+                downlaods.get(1).click();
+            }
+            else {
+                downlaods.get(0).click();
+            }
             waitABit(2000);
             File classpathRoot = new File(System.getProperty("user.dir"));
             File assetDir = new File(classpathRoot, "src/test/resources/configfiles/");
@@ -326,6 +332,7 @@ public class WalletHomePage extends BasePage {
             driver.context("NATIVE_APP");
             driver.pullFile(directoryPath + fileName);
             click(By.xpath("//*[contains(@text,'" + fileName + "')]"));
+            waitABit(3000);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -334,7 +341,9 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage enterPassword(String password) {
+        waitABit(2000);
         sendText(txtBxPassword, password);
+        waitABit(2000);
         return this;
     }
 
@@ -344,8 +353,8 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickNext() {
-        waitABit(3000);
-        click(btnNext);
+        waitABit(5000);
+        driver.findElement(btnNext).click();
         return this;
     }
 

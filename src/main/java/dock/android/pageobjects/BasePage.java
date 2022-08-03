@@ -381,7 +381,7 @@ public class BasePage {
         element.clear();
         element.sendKeys(text);
         log.info("locator = [" + locator + "], Text = [" + text + "] has been entered.");
-        hideKeyboard();
+      //  hideKeyboard();
         return this;
     }
 
