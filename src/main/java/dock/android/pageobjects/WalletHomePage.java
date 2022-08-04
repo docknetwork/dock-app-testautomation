@@ -98,6 +98,23 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage checkAccountOrElseCreateIt(String accountName) {
+        waitElementVisibility("Accounts");
+        if (!checkElementExistByXpath(accountName)) {
+            clickPlusButtonToCreatAccount()
+                    .clickImportExistingAccount()
+                    .clickUploadJsonFile()
+                    .uploadFile("importAccount.json")
+                    .enterPassword("123456789Qw!")
+                    .clickNext()
+                    .enterNewAccountName(accountName)
+                    .clickNext();
+            waitElementVisibility("Accounts");
+            Assert.assertTrue(isDisplayedByText(accountName));
+        }
+        return this;
+    }
+
     public WalletHomePage clickDoThisLater() {
         click(btnDoThisLater);
         return this;
@@ -316,7 +333,9 @@ public class WalletHomePage extends BasePage {
             waitABit(3000);
             driver.findElement(By.xpath("//android.widget.ImageButton[@content-desc=\"Show roots\"]")).click();
             List<AndroidElement> downlaods = getElements(By.xpath("//android.widget.TextView[@text='Downloads']"));
-            if (downlaods.size() > 0) {
+            System.out.println("downloadsicon size: " + downlaods.size());
+
+            if (downlaods.size() > 1) {
                 downlaods.get(1).click();
             }
             else {

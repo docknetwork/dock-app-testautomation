@@ -15,6 +15,7 @@ import io.appium.java_client.android.AndroidDriver;
 
 @Listeners(TestListener.class)
 public class BaseTestCaseAndroid {
+    public String accountName = "testImport";
     private static final Boolean quitDriver = true;
     private static final ThreadLocal<AndroidDriver> threadInstanceWebDriver = new ThreadLocal<AndroidDriver>();
     private static final String executionMode = LocalPropertiesReader.getExecutionMode();
