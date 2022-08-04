@@ -19,7 +19,7 @@ public class ImportWalletWithExistingAccountAndCredentials {
         driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
     }
 
-    @Test(priority = 2, groups = TestGroup.SmokeTest, description = "Test to verify Wallet Import Wallet, import of existing account and credentials")
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Wallet Import Wallet, import of existing account and credentials")
     public void verifyImportWalletWithExistingAccountAndCredentials() {
 
         // Import Existing wallet via wallet-backup.Json

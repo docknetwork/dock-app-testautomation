@@ -19,7 +19,7 @@ public class ImportAccountViaJsonAndTokenHistoryVerification {
         driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
     }
 
-    @Test(priority = 1, groups = TestGroup.SmokeTest, description = "Test to verify Wallet Creation and new Account")
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Wallet Creation and new Account")
     public void verifyImportExistingAccount() {
         // Create new Wallet
         WalletHomePage walletHomePage = new WalletHomePage(driver);

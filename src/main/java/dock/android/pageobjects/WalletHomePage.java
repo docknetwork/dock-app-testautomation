@@ -22,7 +22,7 @@ public class WalletHomePage extends BasePage {
     public By btnReceive = By.xpath("//android.widget.TextView[contains(@text,'Receive')]");
     public By labelAccountNext = By.xpath("//*[contains(@text,'test1')]");
     public By labelDockBalance = By.xpath("//android.widget.TextView[contains(@text,'DOCK')]");
-    private By btnNext = By.xpath("//android.widget.TextView[contains(@text,'Next')]");
+    private By btnNext = By.xpath("//*[contains(@text,'Next')]");
     private By optionCreateNewAccount = By.xpath("//android.widget.TextView[contains(@text,'Create new account')]");
     private By btnSkip = By.xpath("//*[contains(@text,'Skip')]");
     private By txtBxPassword = By.xpath("//*[contains(@text,'Password')]");
@@ -372,7 +372,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickNext() {
-        driver.findElement(btnNext).click();
+        click(btnNext);
         return this;
     }
 

@@ -19,7 +19,7 @@ public class ImportVeryOldWalletFromV147 {
         driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
     }
 
-    @Test(priority = 2, groups = TestGroup.SmokeTest, description = "Test to verify Wallet Import Wallet which was generated from V-147")
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Wallet Import Wallet which was generated from V-147")
     public void verifyImportWalletGeneratedFromVersion147() {
 
         // Import Existing wallet via wallet-backup.Json
