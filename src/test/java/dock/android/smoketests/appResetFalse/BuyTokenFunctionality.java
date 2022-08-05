@@ -22,15 +22,18 @@ public class BuyTokenFunctionality extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
-        walletHomePage.clickPlusButtonToCreatAccount()
-                .clickImportExistingAccount()
-                .clickUploadJsonFile()
-                .uploadFile("importAccount.json")
-                .enterPassword("123456789Qw!")
-                .clickNext()
-                .enterNewAccountName(accountName)
-                .clickNext()
-                .clickAccountDetails(accountName)
+        walletHomePage.waitElementVisibility("Accounts");
+        if (!walletHomePage.checkElementExistByXpath(accountName)) {
+            walletHomePage.clickPlusButtonToCreatAccount()
+                    .clickImportExistingAccount()
+                    .clickUploadJsonFile()
+                    .uploadFile("importAccount.json")
+                    .enterPassword("123456789Qw!")
+                    .clickNext()
+                    .enterNewAccountName(accountName)
+                    .clickNext();
+        }
+        walletHomePage.clickAccountDetails(accountName)
                 .clickBuy()
                 .clickContinueTransak()
                 .clickBuyNow();

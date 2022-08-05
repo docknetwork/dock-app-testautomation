@@ -377,6 +377,7 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage clickNext() {
         click(btnNext);
+        click(btnNext);
         return this;
     }
 
