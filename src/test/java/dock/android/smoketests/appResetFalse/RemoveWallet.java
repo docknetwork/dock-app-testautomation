@@ -14,8 +14,13 @@ public class RemoveWallet extends BaseTestCaseAndroid {
     public void verifyRemoveWallet() {
         AndroidDriver driver = getDriverInstance();
         WalletHomePage walletHomePage = new WalletHomePage(driver);
-        walletHomePage.enterPassCodeOneTime()
-                .clickSettings()
+        if (walletHomePage.getWalletStatus()) {
+            walletHomePage.createNewWallet();
+        }
+        else {
+            walletHomePage.enterPassCodeOneTime();
+        }
+        walletHomePage.clickSettings()
                 .clickRemoveWallet()
                 .enterPassCodeOneTime()
                 .clickSkip()

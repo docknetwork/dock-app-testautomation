@@ -16,8 +16,13 @@ public class ImportRemoveCredentialViaJson extends BaseTestCaseAndroid {
 
         // Import Existing account via Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
-        walletHomePage.enterPassCodeOneTime()
-                .clickCredentials()
+        if (walletHomePage.getWalletStatus()) {
+            walletHomePage.createNewWallet();
+        }
+        else {
+            walletHomePage.enterPassCodeOneTime();
+        }
+        walletHomePage.clickCredentials()
                 .clickPlusBtnCredentials()
                 .uploadFile("credImport.json");
         Assert.assertTrue(walletHomePage.isDisplayedByText("Enterprise in the Community"));

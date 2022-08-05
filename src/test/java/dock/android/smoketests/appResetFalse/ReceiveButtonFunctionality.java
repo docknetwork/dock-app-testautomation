@@ -15,7 +15,12 @@ public class ReceiveButtonFunctionality extends BaseTestCaseAndroid {
         AndroidDriver driver = getDriverInstance();
         // Import Existing account via Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
-        walletHomePage.enterPassCodeOneTime();
+        if (walletHomePage.getWalletStatus()) {
+            walletHomePage.createNewWallet();
+        }
+        else {
+            walletHomePage.enterPassCodeOneTime();
+        }
         walletHomePage.checkAccountOrElseCreateIt(accountName);
         walletHomePage.clickAccountDetails(accountName)
                 .clickReceive()

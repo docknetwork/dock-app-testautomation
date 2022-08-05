@@ -16,8 +16,13 @@ public class CreateAccountViaMemicPhrase extends BaseTestCaseAndroid {
 
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         String accountName = "test" + walletHomePage.generateRandomNumber();
-        walletHomePage.enterPassCodeOneTime()
-                .clickPlusButtonToCreatAccount()
+        if (walletHomePage.getWalletStatus()) {
+            walletHomePage.createNewWallet();
+        }
+        else {
+            walletHomePage.enterPassCodeOneTime();
+        }
+        walletHomePage.clickPlusButtonToCreatAccount()
                 .clickImportExistingAccount()
                 .clickAccountRecoveryPhrase()
                 .enterMememicPhrase("argue glow aerobic acoustic artefact exact flush fetch skill void direct rib")

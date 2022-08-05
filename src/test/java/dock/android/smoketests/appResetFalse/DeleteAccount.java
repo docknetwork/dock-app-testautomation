@@ -17,8 +17,13 @@ public class DeleteAccount extends BaseTestCaseAndroid {
         // Create New Account
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         String accountName = "test" + walletHomePage.generateRandomNumber();
-        walletHomePage.enterPassCodeOneTime()
-                .clickPlusButtonToCreatAccount()
+        if (walletHomePage.getWalletStatus()) {
+            walletHomePage.createNewWallet();
+        }
+        else {
+            walletHomePage.enterPassCodeOneTime();
+        }
+        walletHomePage.clickPlusButtonToCreatAccount()
                 .clickCreateNewAccountFromAddAccountWidget()
                 .enterNewAccountInfo(accountName)
                 .clickNext()

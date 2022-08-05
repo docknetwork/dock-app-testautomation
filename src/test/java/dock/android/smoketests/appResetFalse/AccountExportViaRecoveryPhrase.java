@@ -13,11 +13,15 @@ public class AccountExportViaRecoveryPhrase extends BaseTestCaseAndroid {
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify account export as Json")
     public void verifyExportAccountAsJson() {
         AndroidDriver driver = getDriverInstance();
-
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         String accountName = "test" + walletHomePage.generateRandomNumber();
-        walletHomePage.enterPassCodeOneTime()
-                .clickPlusButtonToCreatAccount()
+        if (walletHomePage.getWalletStatus()) {
+            walletHomePage.createNewWallet();
+        }
+        else {
+            walletHomePage.enterPassCodeOneTime();
+        }
+        walletHomePage.clickPlusButtonToCreatAccount()
                 .clickImportExistingAccount()
                 .clickAccountRecoveryPhrase()
                 .enterMememicPhrase("shiver aspect midnight brush loan resemble poet sea team hill mountain spoil")

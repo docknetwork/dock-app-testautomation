@@ -47,6 +47,10 @@ public class WalletHomePage extends BasePage {
         super(driver);
     }
 
+    public boolean getWalletStatus() {
+        return checkElementExistByXpath("Create a new wallet");
+    }
+
     public WalletHomePage createNewWallet() {
         click(By.xpath("//*[contains(@text,'Create a new wallet')]"));
         click(Selector.contentDesc("CreateWalletBtn"));

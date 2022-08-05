@@ -1,6 +1,5 @@
 package dock.android.smoketests.appResetFalse;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -17,7 +16,20 @@ public class BuyTokenFunctionality extends BaseTestCaseAndroid {
 
         // Import Existing account via Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
-        walletHomePage.enterPassCodeOneTime()
+        if (walletHomePage.getWalletStatus()) {
+            walletHomePage.createNewWallet();
+        }
+        else {
+            walletHomePage.enterPassCodeOneTime();
+        }
+        walletHomePage.clickPlusButtonToCreatAccount()
+                .clickImportExistingAccount()
+                .clickUploadJsonFile()
+                .uploadFile("importAccount.json")
+                .enterPassword("123456789Qw!")
+                .clickNext()
+                .enterNewAccountName(accountName)
+                .clickNext()
                 .clickAccountDetails(accountName)
                 .clickBuy()
                 .clickContinueTransak()
