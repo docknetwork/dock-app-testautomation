@@ -270,6 +270,7 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage enterMememicPhrase(String value) {
         sendText(By.xpath("//android.widget.EditText[@content-desc=\"EnterText\"]"), value);
+        waitABit(2000);
         return this;
     }
 
