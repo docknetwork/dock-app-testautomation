@@ -29,7 +29,7 @@ public class RemoveAccountFromMainDashboard extends BaseTestCaseAndroid {
 
         // Create New Account
         String accountName = "A_Test_" + walletHomePage.generateRandomNumber();
-        walletHomePage.createNewAccount(accountName);
+        walletHomePage.createNewAccount(accountName).waitABit(3000);
 
         // Try to remove the new created account from the Accounts Dashboard
         walletHomePage.clickThreeDotsFromTopRightCorner()

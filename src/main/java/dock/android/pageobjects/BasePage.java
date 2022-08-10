@@ -238,7 +238,7 @@ public class BasePage {
 
     public BasePage swipeDownUntillElementVisibileByContains(String elementText) {
         int count = 1;
-        boolean visibility = checkElementExist(By.xpath("//*[contains(@text , '" + elementText + "')]"));
+        boolean visibility = checkElementExist(By.xpath("//*[@text()='" + elementText + "']"));
         while (!visibility) {
             swipeDown();
             count++;
@@ -317,7 +317,6 @@ public class BasePage {
     }
 
     public void clickByXpathAndroidWidgetTextView(String Value) {
-        scrollIntoViewByTextContains(Value);
         getElement(By.xpath("//android.widget.TextView[contains(@text,'" + Value + "')]")).click();
         log.info("Value selected: " + Value);
     }
@@ -419,6 +418,13 @@ public class BasePage {
         return text;
     }
 
+    public String getText(By locator, int no) {
+        String text = getElements(locator).get(1).getText();
+        log.info("Element displayed text = " + text);
+        return text;
+    }
+
+
     public String getText(WebElement element) {
         String text = element.getText();
         log.info("Element displayed text = " + text);
@@ -443,6 +449,17 @@ public class BasePage {
     }
 
     public boolean isDisplayedByText(String text) {
+        By element = By.xpath("//*[contains(@text,'" + text + "')]");
+        boolean status = getElement(element).isDisplayed();
+        if (status)
+            log.info(text + " is displayed.");
+        else
+            log.info(text + " is not displayed.");
+        return status;
+    }
+
+    public boolean isDisplayedByTextByScrollIntoView(String text) {
+        swipeDownUntillElementVisibileByExactText(text);
         By element = By.xpath("//*[contains(@text,'" + text + "')]");
         boolean status = getElement(element).isDisplayed();
         if (status)

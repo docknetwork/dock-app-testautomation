@@ -18,7 +18,6 @@ public class WalletHomePage extends BasePage {
     public By btnImportWallet = Selector.contentDesc("importWallet.submitBtn");
     public By btnSend = By.xpath("//android.widget.TextView[contains(@text,'Send')]");
     public By btnCredentials = By.xpath("//android.widget.TextView[contains(@text,'Credentials')]");
-
     public By btnReceive = By.xpath("//android.widget.TextView[contains(@text,'Receive')]");
     public By labelAccountNext = By.xpath("//*[contains(@text,'test1')]");
     public By labelDockBalance = By.xpath("//android.widget.TextView[contains(@text,'DOCK')]");
@@ -282,6 +281,7 @@ public class WalletHomePage extends BasePage {
     public WalletHomePage createNewAccount(String testName) {
         click(btnCreateNewAccount);
         sendText(txtBxAccountName, testName);
+        waitABit(2000);
         clickNext().clickSkip();
         return this;
     }
@@ -378,7 +378,7 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage clickNext() {
         click(btnNext);
-        click(btnNext);
+        driver.findElement(btnNext).click();
         return this;
     }
 
@@ -398,7 +398,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickThreeDotsFromTopRightCorner() {
-        click(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup"));
+        click(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup"));
         return this;
     }
 
