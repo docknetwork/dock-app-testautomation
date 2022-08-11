@@ -27,7 +27,7 @@ public class ReceiveButtonFunctionality extends BaseTestCaseAndroid {
                 .clickCopyAddress();
         Assert.assertTrue(walletHomePage.isDisplayedByText("Copied"));
 
-        walletHomePage.clickShareAddress();
+        walletHomePage.clickShareAddress().waitABit(3000);
         Assert.assertTrue(walletHomePage.isDisplayedByText("Copy"));
         Assert.assertTrue(walletHomePage.isDisplayedByText("Nearby Share"));
     }
