@@ -377,7 +377,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickNext() {
-        click(btnNext);
+        waitABit(2000);
         driver.findElement(btnNext).click();
         return this;
     }
