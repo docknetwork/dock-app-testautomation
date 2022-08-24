@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import dock.utilities.Selector;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 
@@ -48,6 +46,8 @@ public class WalletHomePage extends BasePage {
     private By btnCreateNewDID = By.xpath("//android.widget.TextView[contains(@text,'Create New DID')]");
     private By didDownArrowKey = By.xpath("//android.view.ViewGroup[@content-desc='CreateNewDIDScreen']/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[4]/android.widget.TextView");
     private By btnCreateDID = By.xpath("//android.widget.Button[@content-desc=\"CreateNewDIDScreenDIDCreate\"]/android.widget.TextView");
+    private By btnImportExistingDID = By.xpath("//android.widget.TextView[contains(@text,'Import existing DID')]");
+    private By txtBxPasswordDid = By.xpath("//android.widget.EditText[@content-desc=\"Password\"]");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -270,6 +270,11 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage clickImportExistingDID() {
+        click(btnImportExistingDID);
+        return this;
+    }
+
     public WalletHomePage clickPlusButtonToCreatDID() {
         click(btnPlusDID);
         return this;
@@ -413,6 +418,16 @@ public class WalletHomePage extends BasePage {
         waitABit(2000);
         return this;
     }
+
+    public WalletHomePage enterDIDPassword(String password) {
+        waitABit(2000);
+        sendText(txtBxPasswordDid, password);
+        waitABit(2000);
+        return this;
+    }
+
+
+
 
     public WalletHomePage enterConfirmPassword(String password) {
         sendText(txtBxConfirmPassword, password);
