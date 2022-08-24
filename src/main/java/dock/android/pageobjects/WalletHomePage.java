@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import dock.utilities.Selector;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 
@@ -41,6 +43,11 @@ public class WalletHomePage extends BasePage {
     private By btnThreeDots = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
     private By btnContinueTransak = By.xpath("//android.widget.Button[@content-desc=\"ContinueToTransak\"]");
     private By btnSave = By.xpath("//android.widget.Button[contains(@text,'Save')]");
+    private By btnDID = By.xpath("//android.widget.TextView[contains(@text,'DIDs')]");
+    private By btnPlusDID = By.xpath("//android.view.ViewGroup[@content-desc=\"DIDListScreen\"]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
+    private By btnCreateNewDID = By.xpath("//android.widget.TextView[contains(@text,'Create New DID')]");
+    private By didDownArrowKey = By.xpath("//android.view.ViewGroup[@content-desc='CreateNewDIDScreen']/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[4]/android.widget.TextView");
+    private By btnCreateDID = By.xpath("//android.widget.Button[@content-desc=\"CreateNewDIDScreenDIDCreate\"]/android.widget.TextView");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -232,6 +239,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickSendMax() {
+        waitABit(2000);
         clickByXpathAndroidWidgetTextView("Send Max");
         return this;
     }
@@ -257,6 +265,22 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage clickCreateNewDID() {
+        click(btnCreateNewDID);
+        return this;
+    }
+
+    public WalletHomePage clickPlusButtonToCreatDID() {
+        click(btnPlusDID);
+        return this;
+    }
+
+    public WalletHomePage clickDID() {
+        click(btnDID);
+        return this;
+    }
+
+
     public WalletHomePage clickImportExistingAccount() {
         click(optionImportExistingAccount);
         return this;
@@ -270,6 +294,25 @@ public class WalletHomePage extends BasePage {
     public WalletHomePage enterMememicPhrase(String value) {
         sendText(By.xpath("//android.widget.EditText[@content-desc=\"EnterText\"]"), value);
         waitABit(2000);
+        return this;
+    }
+
+    public WalletHomePage enterDIDName(String value) {
+        sendText(By.xpath("//android.widget.EditText[@content-desc=\"DIDName\"]"), value);
+        waitABit(2000);
+        return this;
+    }
+
+    public WalletHomePage selectDidKeyAsDIDType() {
+        click(didDownArrowKey);
+        click(didDownArrowKey);
+        click(By.xpath("//android.widget.TextView[contains(@text,'did:key')]"));
+        waitABit(2000);
+        return this;
+    }
+
+    public WalletHomePage clickCreate() {
+        click(btnCreateDID);
         return this;
     }
 
