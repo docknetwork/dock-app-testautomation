@@ -21,6 +21,7 @@ public class ImportExistingDID {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to Import existing Did option and verification of default DID alongw ith new Wallet creation")
     public void verifyImportExistingDid() {
+
         // Create new Wallet
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         walletHomePage.createNewWallet();
