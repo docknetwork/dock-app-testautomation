@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import dock.utilities.Selector;
@@ -48,6 +49,10 @@ public class WalletHomePage extends BasePage {
     private By btnCreateDID = By.xpath("//android.widget.Button[@content-desc=\"CreateNewDIDScreenDIDCreate\"]/android.widget.TextView");
     private By btnImportExistingDID = By.xpath("//android.widget.TextView[contains(@text,'Import existing DID')]");
     private By txtBxPasswordDid = By.xpath("//android.widget.EditText[@content-desc=\"Password\"]");
+    private By threeIconsDid = By.xpath("//android.view.ViewGroup[@content-desc=\"DIDListScreen\"]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup");
+    private By editDid = By.xpath("//android.widget.TextView[contains(@text,'Edit DID')]");
+    private By txtBxDid = By.xpath("//android.widget.EditText[@content-desc=\"DIDName\"]");
+    private By txtBxEditDid = By.xpath("//android.widget.EditText[@content-desc=\"EditDIDScreenDIDName\"]");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -280,6 +285,19 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage clickThreeIconsDID() {
+        click(threeIconsDid);
+        return this;
+    }
+
+    public WalletHomePage clickEditDID() {
+        waitABit(2000);
+        WebElement element = (WebElement) driver.findElements(editDid).get(1);
+        element.click();
+        waitABit(2000);
+        return this;
+    }
+
     public WalletHomePage clickDID() {
         click(btnDID);
         return this;
@@ -303,7 +321,15 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage enterDIDName(String value) {
-        sendText(By.xpath("//android.widget.EditText[@content-desc=\"DIDName\"]"), value);
+        sendText(txtBxDid, value);
+        hideKeyboard();
+        waitABit(2000);
+        return this;
+    }
+
+    public WalletHomePage enterEditDIDName(String value) {
+        sendText( txtBxEditDid, value);
+        hideKeyboard();
         waitABit(2000);
         return this;
     }
@@ -427,8 +453,6 @@ public class WalletHomePage extends BasePage {
     }
 
 
-
-
     public WalletHomePage enterConfirmPassword(String password) {
         sendText(txtBxConfirmPassword, password);
         return this;
@@ -440,8 +464,8 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
-    public WalletHomePage clickSave() {
-        click(btnSave);
+    public WalletHomePage clickSaveDIDChanges(){
+        click(By.xpath("//android.widget.Button[@content-desc=\"EditDIDScreenSave\"]"));
         return this;
     }
 
