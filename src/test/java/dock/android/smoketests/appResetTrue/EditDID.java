@@ -21,6 +21,7 @@ public class EditDID {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify Edit Did functionality")
     public void verifyEditDid() {
+
         // Create new Wallet
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         walletHomePage.createNewWallet();
