@@ -51,8 +51,10 @@ public class WalletHomePage extends BasePage {
     private By txtBxPasswordDid = By.xpath("//android.widget.EditText[@content-desc=\"Password\"]");
     private By threeIconsDid = By.xpath("//android.view.ViewGroup[@content-desc=\"DIDListScreen\"]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup");
     private By editDid = By.xpath("//android.widget.TextView[contains(@text,'Edit DID')]");
+    private By exportDid = By.xpath("//android.widget.TextView[contains(@text,'Export DID')]");
     private By txtBxDid = By.xpath("//android.widget.EditText[@content-desc=\"DIDName\"]");
     private By txtBxEditDid = By.xpath("//android.widget.EditText[@content-desc=\"EditDIDScreenDIDName\"]");
+    private By txtBxConfirmDIDPassword = By.xpath("//android.widget.EditText[@content-desc=\"ConfirmPassword\"]");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -298,6 +300,14 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage clickExportDID() {
+        waitABit(2000);
+        WebElement element = (WebElement) driver.findElements(exportDid).get(0);
+        element.click();
+        waitABit(2000);
+        return this;
+    }
+
     public WalletHomePage clickDID() {
         click(btnDID);
         return this;
@@ -328,7 +338,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage enterEditDIDName(String value) {
-        sendText( txtBxEditDid, value);
+        sendText(txtBxEditDid, value);
         hideKeyboard();
         waitABit(2000);
         return this;
@@ -458,13 +468,18 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage enterConfirmDIDPassword(String password) {
+        sendText(txtBxConfirmDIDPassword, password);
+        return this;
+    }
+
     public WalletHomePage clickNext() {
         waitABit(2000);
         driver.findElement(btnNext).click();
         return this;
     }
 
-    public WalletHomePage clickSaveDIDChanges(){
+    public WalletHomePage clickSaveDIDChanges() {
         click(By.xpath("//android.widget.Button[@content-desc=\"EditDIDScreenSave\"]"));
         return this;
     }
