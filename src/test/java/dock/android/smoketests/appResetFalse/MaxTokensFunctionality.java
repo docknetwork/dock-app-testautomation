@@ -27,7 +27,7 @@ public class MaxTokensFunctionality extends BaseTestCaseAndroid {
         walletHomePage.clickAccountDetails(accountName)
                 .clickSend()
                 .enterAddress(recipient)
-                .clickNext()
+                .clickNextDockAddress()
                 .clickSendMax()
                 .clickNext();
 

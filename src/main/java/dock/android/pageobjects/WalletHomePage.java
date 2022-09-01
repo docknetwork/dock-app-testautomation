@@ -55,6 +55,8 @@ public class WalletHomePage extends BasePage {
     private By txtBxDid = By.xpath("//android.widget.EditText[@content-desc=\"DIDName\"]");
     private By txtBxEditDid = By.xpath("//android.widget.EditText[@content-desc=\"EditDIDScreenDIDName\"]");
     private By txtBxConfirmDIDPassword = By.xpath("//android.widget.EditText[@content-desc=\"ConfirmPassword\"]");
+    private By deleteDid = By.xpath("//android.widget.TextView[contains(@text,'Delete DID')]");
+    private By delete = By.xpath("android.widget.TextView[contains(@text,'Delete')]");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -300,6 +302,23 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage clickDeleteDID() {
+        waitABit(2000);
+        WebElement element = (WebElement) driver.findElements(deleteDid).get(0);
+        element.click();
+        waitABit(2000);
+        return this;
+    }
+
+    public WalletHomePage clickDelete() {
+        waitABit(2000);
+        WebElement element = driver.findElement(delete);
+        element.click();
+        element.click();
+        waitABit(2000);
+        return this;
+    }
+
     public WalletHomePage clickExportDID() {
         waitABit(2000);
         WebElement element = (WebElement) driver.findElements(exportDid).get(0);
@@ -476,6 +495,19 @@ public class WalletHomePage extends BasePage {
     public WalletHomePage clickNext() {
         waitABit(2000);
         driver.findElement(btnNext).click();
+
+        if (checkElementExist(btnNext)) {
+            click(btnNext);
+        }
+        return this;
+    }
+
+    public WalletHomePage clickNextDockAddress() {
+        waitABit(2000);
+        driver.findElement(btnNext).click();
+        if (checkElementExist(btnNext)) {
+            click(btnNext);
+        }
         return this;
     }
 
