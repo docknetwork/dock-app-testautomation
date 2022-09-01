@@ -56,7 +56,7 @@ public class WalletHomePage extends BasePage {
     private By txtBxEditDid = By.xpath("//android.widget.EditText[@content-desc=\"EditDIDScreenDIDName\"]");
     private By txtBxConfirmDIDPassword = By.xpath("//android.widget.EditText[@content-desc=\"ConfirmPassword\"]");
     private By deleteDid = By.xpath("//android.widget.TextView[contains(@text,'Delete DID')]");
-    private By delete = By.xpath("android.widget.TextView[contains(@text,'Delete')]");
+    private By delete = By.xpath("//android.widget.TextView[contains(@text,'Delete')]");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -312,10 +312,8 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage clickDelete() {
         waitABit(2000);
-        WebElement element = driver.findElement(delete);
+        WebElement element = (WebElement) driver.findElements(delete).get(1);
         element.click();
-        element.click();
-        waitABit(2000);
         return this;
     }
 

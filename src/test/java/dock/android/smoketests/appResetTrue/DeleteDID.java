@@ -25,17 +25,13 @@ public class DeleteDID {
         // Create new Wallet
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         walletHomePage.createNewWallet();
-        String didName = "testDID" + walletHomePage.generateRandomNumber();
 
-        // Verify that a default DID is created when a new Wallet is created
-        walletHomePage.clickDID();
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Default DID"));
-
-        // Verify that DID is imported successfully via Json
-        walletHomePage.clickThreeIconsDID()
-                        .clickDeleteDID()
+        // Try to delete the default created DID
+        walletHomePage.clickDID()
+                .clickThreeIconsDID()
+                .clickDeleteDID()
                 .clickDelete();
-        Assert.assertTrue(walletHomePage.isDisplayedByText(didName));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Create New DID"));
     }
 
     @AfterMethod(alwaysRun = true)
