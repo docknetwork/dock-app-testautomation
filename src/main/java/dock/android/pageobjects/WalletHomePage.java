@@ -57,6 +57,7 @@ public class WalletHomePage extends BasePage {
     private By txtBxConfirmDIDPassword = By.xpath("//android.widget.EditText[@content-desc=\"ConfirmPassword\"]");
     private By deleteDid = By.xpath("//android.widget.TextView[contains(@text,'Delete DID')]");
     private By delete = By.xpath("//android.widget.TextView[contains(@text,'Delete')]");
+    private By btnShare = By.xpath("//android.widget.TextView[contains(@text,'Share')]");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -330,6 +331,10 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage clickShare() {
+        click(btnShare);
+        return this;
+    }
 
     public WalletHomePage clickImportExistingAccount() {
         click(optionImportExistingAccount);
