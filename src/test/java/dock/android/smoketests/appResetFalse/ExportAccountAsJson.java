@@ -32,7 +32,7 @@ public class ExportAccountAsJson extends BaseTestCaseAndroid {
 
         // Try to export new account
         String password = "123456789Qw!";
-        walletHomePage.clickRemoveAccount()
+        walletHomePage.clickThreeDotsFromTopRightCorner()
                 .clickExportAccountFromOptionsWidget()
                 .clickExportAccountAsJson()
                 .enterPassword(password)

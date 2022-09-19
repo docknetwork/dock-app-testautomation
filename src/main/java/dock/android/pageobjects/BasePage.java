@@ -528,7 +528,7 @@ public class BasePage {
     }
 
     public void turnOffImplicitWait() {
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     public void turnOnImplicitWait() {

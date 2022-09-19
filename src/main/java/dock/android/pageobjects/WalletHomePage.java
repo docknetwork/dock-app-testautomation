@@ -499,9 +499,9 @@ public class WalletHomePage extends BasePage {
         waitABit(2000);
         driver.findElement(btnNext).click();
 
-        if (checkElementExist(btnNext)) {
-            click(btnNext);
-        }
+        //if (checkElementExist(btnNext)) {
+        //    click(btnNext);
+        //}
         return this;
     }
 

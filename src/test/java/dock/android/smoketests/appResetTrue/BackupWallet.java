@@ -36,9 +36,7 @@ public class BackupWallet {
                 .clickNext();
 
         // Verify that wallet-backup***.Json is displayed
-        Assert.assertTrue(walletHomePage.isDisplayedByText("walletBackup-"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Link Sharing"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Shar"));
     }
 
     @AfterMethod(alwaysRun = true)

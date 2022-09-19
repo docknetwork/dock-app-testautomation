@@ -29,8 +29,6 @@ public class ExportDID extends BaseTestCaseAndroid {
                 .clickNext();
 
         // Verify export DID options are displayed
-        Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("did_"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Link Sharing"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Shar"));
     }
 }
