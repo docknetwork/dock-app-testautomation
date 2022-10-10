@@ -35,11 +35,11 @@ public class ImportAccountViaJsonAndTokenHistoryVerification {
                 .enterNewAccountName(accountName)
                 .clickNext().waitABit(2000);
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
-        Assert.assertTrue(walletHomePage.getDockBalance().contains("3 DOCK"));
+        Assert.assertTrue(walletHomePage.getDockBalance().contains("4 DOCK"));
 
         // Click the imported account to see the history
         walletHomePage.clickAccountDetails(accountName);
-        Assert.assertTrue(walletHomePage.isDisplayedByText("3 DOCK"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("4 DOCK"));
     }
 
     @AfterMethod(alwaysRun = true)
