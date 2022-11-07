@@ -20,7 +20,7 @@ public class RemoveAccountFromMainDashboard extends BaseTestCaseAndroid {
         driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
     }
 
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Remove Account functionality by clicking three dots from main dashboard")
+    @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify Remove Account functionality by clicking three dots from main dashboard")
     public void verifyRemoveAccountFromDashboard() {
 
         // Create new Wallet
