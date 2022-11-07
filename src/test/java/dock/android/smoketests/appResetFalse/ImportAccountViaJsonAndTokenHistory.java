@@ -21,7 +21,6 @@ public class ImportAccountViaJsonAndTokenHistory extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
-        walletHomePage.waitElementVisibility("Accounts");
         if (!walletHomePage.checkElementExistByXpath(accountName)) {
             walletHomePage.clickPlusButtonToCreatAccount()
                     .clickImportExistingAccount()
@@ -30,8 +29,7 @@ public class ImportAccountViaJsonAndTokenHistory extends BaseTestCaseAndroid {
                     .enterPassword("123456789Qw!")
                     .clickNext()
                     .enterNewAccountName(accountName)
-                    .clickNext();
-            walletHomePage.waitElementVisibility("Accounts");
+                    .clickNext().waitABit(4000);
             Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
         }
 

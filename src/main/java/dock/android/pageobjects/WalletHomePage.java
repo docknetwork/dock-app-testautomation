@@ -17,7 +17,7 @@ public class WalletHomePage extends BasePage {
     public By copyAddress = By.xpath("//android.view.ViewGroup[@content-desc=\"ReceiveTokenScreen\"]/android.widget.Button[1]");
     public By shareAddress = By.xpath("//android.widget.Button[@content-desc=\"ReceiveTokenShareAddress\"]");
     public By btnImportWallet = Selector.contentDesc("importWallet.submitBtn");
-    public By btnSend = By.xpath("//android.widget.TextView[contains(@text,'Send')]");
+    public By btnOk = By.xpath("//*[contains(@text,'OK')]");
     public By btnCredentials = By.xpath("//android.widget.TextView[contains(@text,'Credentials')]");
     public By btnReceive = By.xpath("//android.widget.TextView[contains(@text,'Receive')]");
     public By labelAccountNext = By.xpath("//*[contains(@text,'test1')]");
@@ -114,6 +114,7 @@ public class WalletHomePage extends BasePage {
         // Type password
         for (int i = 1; i <= 6; i++) {
             click(Selector.contentDesc("keyboardNumber" + i));
+            waitABit(1000);
         }
         return this;
     }
@@ -153,6 +154,11 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage clickPlusBtnCredentials() {
         click(btnPlusCredential);
+        return this;
+    }
+
+    public WalletHomePage clickOkCredentialImport() {
+        click(btnOk);
         return this;
     }
 
