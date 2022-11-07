@@ -34,7 +34,7 @@ public class ImportWalletWithExistingAccountAndCredentials {
 
         // Verify Import of old account
         Assert.assertTrue(walletHomePage.isDisplayedByText("TestAutomation"));
-        Assert.assertTrue(walletHomePage.getDockBalance().contains("6.265 DOCK"));
+        Assert.assertTrue(walletHomePage.getDockBalance().contains("0.2065 DOCK"));
 
         // Verify that Account is imported
         walletHomePage.clickCredentials();
