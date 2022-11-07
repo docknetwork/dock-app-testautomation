@@ -32,7 +32,7 @@ public class MaxTokensFunctionality extends BaseTestCaseAndroid {
                 .clickNext();
 
         //Verify max token amount is displayed which is 3 Dock tokens
-        Assert.assertTrue(walletHomePage.isDisplayedByText("3 DOCK"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("4 DOCK"));
 
         // Click Next and verify the widget of Confirm
         Assert.assertTrue(walletHomePage.isDisplayedByText("Confirm"));
@@ -40,6 +40,6 @@ public class MaxTokensFunctionality extends BaseTestCaseAndroid {
         Assert.assertTrue(walletHomePage.getDockTokenFee() > 0);
         Assert.assertTrue(walletHomePage.isDisplayedByText("OK"));
         Assert.assertTrue(walletHomePage.isDisplayedByText("Cancel"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("3 DOCK"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("4 DOCK"));
     }
 }
