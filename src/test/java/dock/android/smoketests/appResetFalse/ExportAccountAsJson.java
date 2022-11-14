@@ -10,7 +10,7 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class ExportAccountAsJson extends BaseTestCaseAndroid {
 
-    @Test(enabled=false, groups = TestGroup.SmokeTest, description = "Test to verify Export Account as Json functionality")
+    @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify Export Account as Json functionality")
     public void verifyExportAccount() {
         AndroidDriver driver = getDriverInstance();
 
