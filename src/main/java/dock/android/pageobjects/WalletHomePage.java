@@ -415,6 +415,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public String getDockBalance() {
+        waitABit(3000);
         String balance = getText(labelDockBalance);
         log.info("Balance is: " + balance);
         return getText(labelDockBalance);
