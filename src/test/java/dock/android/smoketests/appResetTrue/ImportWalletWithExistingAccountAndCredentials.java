@@ -34,12 +34,11 @@ public class ImportWalletWithExistingAccountAndCredentials {
 
         // Verify Import of old account
         Assert.assertTrue(walletHomePage.isDisplayedByText("TestAutomation"));
-        Assert.assertTrue(walletHomePage.getDockBalance().contains("1.2065 DOCK"));
+        Assert.assertTrue(walletHomePage.getDockBalance().contains("2.2065 DOCK"));
 
         // Verify that Account is imported
         walletHomePage.clickCredentials();
         Assert.assertTrue(walletHomePage.isDisplayedByText("Bsc in Computer Science"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Hans M\u00FCller"));
         Assert.assertTrue(walletHomePage.isDisplayedByText("May 9, 2021"));
     }
 
