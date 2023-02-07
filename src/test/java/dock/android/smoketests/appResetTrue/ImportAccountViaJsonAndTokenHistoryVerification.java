@@ -35,7 +35,7 @@ public class ImportAccountViaJsonAndTokenHistoryVerification {
                 .enterNewAccountName(accountName)
                 .clickNext().waitABit(2000);
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
-        Assert.assertTrue(walletHomePage.getDockBalance().contains("4 DOCK"));
+        Assert.assertTrue(walletHomePage.getDockBalance().contains("3.615 DOCK"));
 
         // Click the imported account to see the history
         walletHomePage.clickAccountDetails(accountName);

@@ -38,6 +38,6 @@ public class ImportAccountViaJsonAndTokenHistory extends BaseTestCaseAndroid {
 
         // Click the imported account to see the history
         walletHomePage.clickAccountDetails(accountName);
-        Assert.assertTrue(walletHomePage.isDisplayedByText("3 DOCK"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("3.615 DOCK"));
     }
 }
