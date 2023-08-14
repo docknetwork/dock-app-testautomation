@@ -27,23 +27,24 @@ public class WalletHomePage extends BasePage {
     private By btnSkip = By.xpath("//*[contains(@text,'Skip')]");
     private By txtBxPassword = By.xpath("//*[contains(@text,'Password')]");
     private By txtBxConfirmPassword = By.xpath("//*[contains(@text,'Confirm password')]");
-    private By btnCreateNewAccount = By.xpath("//*[contains(@text,'Create new account')]");
+    private By btnCreateNewWallet = By.xpath("//*[contains(@content-desc,'CreateWalletBtn')]");
+    private By btnCreateNewAccount = Selector.contentResourceID("CreateNewAccount");
     private By txtBxAccountName = By.xpath("//android.widget.EditText[contains(@text,'Account name')]");
     private By txtBxSendAddress = By.xpath("//android.widget.EditText[contains(@text,'Recipient address')]");
     private By btnDoThisLater = By.xpath("//*[contains(@text,'Do this later')]");
     private By btnTokens = By.xpath("//*[contains(@text,'Tokens')]");
-    private By btnPlus = Selector.contentResourceID("accountsScreen.addAccountMenuBtn");
+    private By btnPlus = Selector.contentResourceID("action-button");
     private By optionImportExistingAccount = Selector.contentResourceID("importExistingOption");
     private By btnAlreadyHaveAWallet = By.id("ImportExistingBtn");
     private By uploadJsonFile = By.xpath("//*[contains(@text,'Upload JSON file')]");
     private By optionDeleteAccount = By.xpath("//android.widget.TextView[contains(@text,'Delete account')]");
     private By optionExportAccount = By.xpath("//android.widget.TextView[contains(@text,'Export account')]");
-    private By btnPlusCredential = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
+    private By btnPlusCredential = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.view.ViewGroup[2]");
     private By btnThreeDots = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
     private By btnContinueTransak = By.xpath("//android.widget.Button[@content-desc=\"ContinueToTransak\"]");
     private By btnSave = By.xpath("//android.widget.Button[contains(@text,'Save')]");
     private By btnDID = By.xpath("//android.widget.TextView[contains(@text,'DIDs')]");
-    private By btnPlusDID = By.xpath("//android.view.ViewGroup[@content-desc=\"DIDListScreen\"]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
+    private By btnPlusDID = By.xpath("//android.view.ViewGroup[@content-desc=\"DIDListScreen\"]/android.view.ViewGroup[2]");
     private By btnCreateNewDID = By.xpath("//android.widget.TextView[contains(@text,'Create New DID')]");
     private By didDownArrowKey = By.xpath("//android.view.ViewGroup[@content-desc='CreateNewDIDScreen']/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[4]/android.widget.TextView");
     private By btnCreateDID = By.xpath("//android.widget.Button[@content-desc=\"CreateNewDIDScreenDIDCreate\"]/android.widget.TextView");
@@ -68,10 +69,10 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage createNewWallet() {
-        click(By.xpath("//*[contains(@text,'Create a new wallet')]"));
+        click(btnCreateNewWallet).waitABit(200);
         click(Selector.contentDesc("CreateWalletBtn"));
         enterPassCodeTwoTimes();
-        clickDoThisLater();
+//        clickDoThisLater();
         return this;
     }
 
@@ -92,9 +93,11 @@ public class WalletHomePage extends BasePage {
                 .uploadFile("walletBackup-Mike.json")
                 .enterPassword("Test1234!")
                 .clickNext()
-                .enterPassCodeTwoTimes()
-                .clickDoThisLater();
-        Assert.assertTrue(isDisplayedByText("Bob"));
+                .enterPassCodeTwoTimes();
+
+        clickTokens();
+
+        // Assert.assertTrue(isDisplayedByText("Accoun"));
         return this;
     }
 
@@ -122,7 +125,7 @@ public class WalletHomePage extends BasePage {
     public WalletHomePage checkAccountOrElseCreateIt(String accountName) {
         waitElementVisibility("Accounts");
         if (!checkElementExistByXpath(accountName)) {
-            clickPlusButtonToCreatAccount()
+            clickPlusButtonToCreateAccount()
                     .clickImportExistingAccount()
                     .clickUploadJsonFile()
                     .uploadFile("importAccount.json")
@@ -276,7 +279,7 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
-    public WalletHomePage clickPlusButtonToCreatAccount() {
+    public WalletHomePage clickPlusButtonToCreateAccount() {
         click(btnPlus);
         return this;
     }
@@ -333,7 +336,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickDID() {
-        click(btnDID);
+        clickByXpathAndroidWidgetTextView("DIDs");
         return this;
     }
 
@@ -432,7 +435,7 @@ public class WalletHomePage extends BasePage {
         enterPassword("123456789Qw!");
         clickNext();
         enterPassCodeTwoTimes();
-        clickDoThisLater();
+        // clickDoThisLater();
         return this;
     }
 

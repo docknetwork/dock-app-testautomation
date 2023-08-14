@@ -23,7 +23,7 @@ public class ExportAccountAsJson extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
-        walletHomePage.clickPlusButtonToCreatAccount()
+        walletHomePage.clickPlusButtonToCreateAccount()
                 .clickCreateNewAccountFromAddAccountWidget()
                 .enterNewAccountInfo(accountName)
                 .clickNext()

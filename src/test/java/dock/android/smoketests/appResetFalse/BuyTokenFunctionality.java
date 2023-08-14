@@ -22,16 +22,17 @@ public class BuyTokenFunctionality extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
+        walletHomePage.clickTokens();
         walletHomePage.waitElementVisibility("Accounts");
         if (!walletHomePage.checkElementExistByXpath(accountName)) {
-            walletHomePage.clickPlusButtonToCreatAccount()
+            walletHomePage.clickPlusButtonToCreateAccount()
                     .clickImportExistingAccount()
                     .clickUploadJsonFile()
                     .uploadFile("importAccount.json")
                     .enterPassword("123456789Qw!")
                     .clickNext()
-                    .enterNewAccountName(accountName)
-                    .clickNext();
+                    .enterNewAccountName(accountName);
+            walletHomePage.clickNext();
         }
         walletHomePage.clickAccountDetails(accountName)
                 .clickBuy()

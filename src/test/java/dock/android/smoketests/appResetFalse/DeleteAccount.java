@@ -23,7 +23,7 @@ public class DeleteAccount extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
-        walletHomePage.clickPlusButtonToCreatAccount()
+        walletHomePage.clickPlusButtonToCreateAccount()
                 .clickCreateNewAccountFromAddAccountWidget()
                 .enterNewAccountInfo(accountName)
                 .clickNext()
