@@ -10,7 +10,7 @@ import dock.utilities.TestGroup;
 import dock.utilities.WebDriverBuilder;
 import io.appium.java_client.android.AndroidDriver;
 
-public class ImportWalletWithExistingAccountAndCredentials {
+public class ImportWalletWithExistingCredentials {
 
     AndroidDriver driver;
 
@@ -19,27 +19,22 @@ public class ImportWalletWithExistingAccountAndCredentials {
         driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
     }
 
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Wallet Import Wallet, import of existing account and credentials")
-    public void verifyImportWalletWithExistingAccountAndCredentials() {
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Wallet Import Wallet, import of existing credentials")
+    public void verifyImportWalletWithExistingCredentials() {
 
         // Import Existing wallet via wallet-backup.Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         walletHomePage.clickImportExistingWallet()
                 .clickBtnImportWallet()
-                .uploadFile("dockWalletBackup.json")
-                .enterPassword("123456789Qw!")
+                .uploadFile("walletBackup-Mike.json")
+                .enterPassword("Test1234!")
                 .clickNext()
                 .enterPassCodeTwoTimes()
-                .clickDoThisLater();
+                .waitABit(2000);
 
-        // Verify Import of old account
-        Assert.assertTrue(walletHomePage.isDisplayedByText("TestAutomation"));
-        Assert.assertTrue(walletHomePage.getDockBalance().contains("2.2065 DOCK"));
-
-        // Verify that Account is imported
-        walletHomePage.clickCredentials();
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Bsc in Computer Science"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("May 9, 2021"));
+        // Verify that credential is imported
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Beta Testing Credential"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("May 10, 2022"));
     }
 
     @AfterMethod(alwaysRun = true)

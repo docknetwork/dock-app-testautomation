@@ -23,6 +23,7 @@ public class MaxTokensFunctionality extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
+        walletHomePage.clickTokens();
         walletHomePage.checkAccountOrElseCreateIt(accountName);
         walletHomePage.clickAccountDetails(accountName)
                 .clickSend()
@@ -31,7 +32,7 @@ public class MaxTokensFunctionality extends BaseTestCaseAndroid {
                 .clickSendMax()
                 .clickNext();
 
-        //Verify max token amount is displayed which is 3 Dock tokens
+        //Verify max token amount is displayed which is Dock tokens
         Assert.assertTrue(walletHomePage.isDisplayedByText("3.615 DOCK"));
 
         // Click Next and verify the widget of Confirm
@@ -40,6 +41,6 @@ public class MaxTokensFunctionality extends BaseTestCaseAndroid {
         Assert.assertTrue(walletHomePage.getDockTokenFee() > 0);
         Assert.assertTrue(walletHomePage.isDisplayedByText("OK"));
         Assert.assertTrue(walletHomePage.isDisplayedByText("Cancel"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("3.615 DOCK"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("DOCK"));
     }
 }

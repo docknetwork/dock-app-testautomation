@@ -21,7 +21,8 @@ public class AccountExportViaRecoveryPhrase extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
-        walletHomePage.clickPlusButtonToCreatAccount()
+        walletHomePage.clickTokens();
+        walletHomePage.clickPlusButtonToCreateAccount()
                 .clickImportExistingAccount()
                 .clickAccountRecoveryPhrase()
                 .enterMememicPhrase("shiver aspect midnight brush loan resemble poet sea team hill mountain spoil")

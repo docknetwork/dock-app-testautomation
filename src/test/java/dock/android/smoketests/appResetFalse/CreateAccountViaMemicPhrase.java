@@ -22,7 +22,8 @@ public class CreateAccountViaMemicPhrase extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
-        walletHomePage.clickPlusButtonToCreatAccount()
+        walletHomePage.clickTokens();
+        walletHomePage.clickPlusButtonToCreateAccount()
                 .clickImportExistingAccount()
                 .clickAccountRecoveryPhrase()
                 .enterMememicPhrase("argue glow aerobic acoustic artefact exact flush fetch skill void direct rib")
