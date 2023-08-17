@@ -106,6 +106,7 @@ public class WalletHomePage extends BasePage {
         for (int i = 1; i <= 6; i++) {
             click(Selector.contentDesc("keyboardNumber" + i));
         }
+        waitABit(200);
         // ReType password
         for (int j = 1; j <= 6; j++) {
             click(Selector.contentDesc("keyboardNumber" + j));
@@ -117,7 +118,7 @@ public class WalletHomePage extends BasePage {
         // Type password
         for (int i = 1; i <= 6; i++) {
             click(Selector.contentDesc("keyboardNumber" + i));
-            waitABit(1000);
+            waitABit(200);
         }
         return this;
     }
