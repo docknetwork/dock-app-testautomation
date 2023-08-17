@@ -224,7 +224,7 @@ public class BasePage {
 
     public BasePage swipeDownUntillElementVisibileByExactText(String elementText) {
         int count = 1;
-        boolean visibility = checkElementExist(By.xpath("//*[text()= '" + elementText + "']"));
+        boolean visibility = checkElementExist(By.xpath("//*[contains(@text , '" + elementText + "')]"));
         while (!visibility) {
             swipeDown();
             count++;

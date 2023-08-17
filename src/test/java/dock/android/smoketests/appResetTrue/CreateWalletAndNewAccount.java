@@ -24,12 +24,12 @@ public class CreateWalletAndNewAccount {
     public void verifyCreateWalletAndCreateNewAccount() {
         // Create new Wallet
         WalletHomePage walletHomePage = new WalletHomePage(driver);
-        walletHomePage.createNewWallet();
+        walletHomePage.createNewWallet().clickTokens();
 
         // Create a new Account
-        walletHomePage.createNewAccount("test1");
-        Assert.assertTrue(walletHomePage.isDisplayed(walletHomePage.labelAccountNext));
-        Assert.assertTrue(walletHomePage.getDockBalance().contains("0"));
+       walletHomePage.createNewAccount("test1");
+       Assert.assertTrue(walletHomePage.isDisplayed(walletHomePage.labelAccountNext));
+       Assert.assertTrue(walletHomePage.getDockBalance().contains("0"));
     }
 
     @AfterMethod(alwaysRun = true)

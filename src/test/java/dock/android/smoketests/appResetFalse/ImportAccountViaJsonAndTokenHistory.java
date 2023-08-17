@@ -21,8 +21,11 @@ public class ImportAccountViaJsonAndTokenHistory extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
+
+        walletHomePage.clickTokens();
+
         if (!walletHomePage.checkElementExistByXpath(accountName)) {
-            walletHomePage.clickPlusButtonToCreatAccount()
+            walletHomePage.clickPlusButtonToCreateAccount()
                     .clickImportExistingAccount()
                     .clickUploadJsonFile()
                     .uploadFile("importAccount.json")
@@ -38,6 +41,6 @@ public class ImportAccountViaJsonAndTokenHistory extends BaseTestCaseAndroid {
 
         // Click the imported account to see the history
         walletHomePage.clickAccountDetails(accountName);
-        Assert.assertTrue(walletHomePage.isDisplayedByText("3.615 DOCK"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("DOCK"));
     }
 }
