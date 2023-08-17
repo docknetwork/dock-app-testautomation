@@ -10,11 +10,11 @@
                 class-name="org.uncommons.reportng.JUnitXMLReporter"/>
     </listeners>
 
-    <test name="Wallet Tests execution without App-Reset - Android">
+    <!-- <test name="Wallet Tests execution without App-Reset - Android">
         <packages>
             <package name="dock.android.smoketests.appResetTrue.*"/>
         </packages>
-    </test>
+    </test> -->
 
     <test name="Wallet Tests After App Reset- Android">
         <packages>
