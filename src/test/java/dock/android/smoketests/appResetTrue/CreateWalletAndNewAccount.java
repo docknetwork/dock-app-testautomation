@@ -1,5 +1,7 @@
 package dock.android.smoketests.appResetTrue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
@@ -14,6 +16,7 @@ import io.appium.java_client.android.AndroidDriver;
 public class CreateWalletAndNewAccount {
 
     AndroidDriver driver;
+    protected Logger log = LoggerFactory.getLogger(this.getClass());
 
     @BeforeMethod
     public synchronized void openApp() {
@@ -24,6 +27,8 @@ public class CreateWalletAndNewAccount {
     public void verifyCreateWalletAndCreateNewAccount() {
         // Create new Wallet
         WalletHomePage walletHomePage = new WalletHomePage(driver);
+        String pageSource = driver.getPageSource();
+        log.info("page source: " + pageSource);
         walletHomePage.createNewWallet().clickTokens();
 
         // Create a new Account
