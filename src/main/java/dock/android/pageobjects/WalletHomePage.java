@@ -69,10 +69,6 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage createNewWallet() {
-        waitABit(30000);
-
-        String pageSource = driver.getPageSource();
-        log.info("page source: " + pageSource);
 
         click(btnCreateNewWallet).waitABit(200);
         click(Selector.contentDesc("CreateWalletBtn"));
