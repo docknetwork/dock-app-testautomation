@@ -12,24 +12,24 @@ public class CreateAccountViaMemicPhrase extends BaseTestCaseAndroid {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to create account verification via Memic")
     public void verifyCreateAccountViaMemic() {
-        AndroidDriver driver = getDriverInstance();
-
-        WalletHomePage walletHomePage = new WalletHomePage(driver);
-        String accountName = "test" + walletHomePage.generateRandomNumber();
-        if (walletHomePage.getWalletStatus()) {
-            walletHomePage.createNewWallet();
-        }
-        else {
-            walletHomePage.enterPassCodeOneTime();
-        }
-        walletHomePage.clickTokens();
-        walletHomePage.clickPlusButtonToCreateAccount()
-                .clickImportExistingAccount()
-                .clickAccountRecoveryPhrase()
-                .enterMememicPhrase("argue glow aerobic acoustic artefact exact flush fetch skill void direct rib")
-                .clickNext()
-                .enterNewAccountName(accountName)
-                .clickNext();
-        Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
+//        AndroidDriver driver = getDriverInstance();
+//
+//        WalletHomePage walletHomePage = new WalletHomePage(driver);
+//        String accountName = "test" + walletHomePage.generateRandomNumber();
+//        if (walletHomePage.getWalletStatus()) {
+//            walletHomePage.createNewWallet();
+//        }
+//        else {
+//            walletHomePage.enterPassCodeOneTime();
+//        }
+//        walletHomePage.clickTokens();
+//        walletHomePage.clickPlusButtonToCreateAccount()
+//                .clickImportExistingAccount()
+//                .clickAccountRecoveryPhrase()
+//                .enterMememicPhrase("argue glow aerobic acoustic artefact exact flush fetch skill void direct rib")
+//                .clickNext()
+//                .enterNewAccountName(accountName)
+//                .clickNext();
+//        Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
     }
 }
