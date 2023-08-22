@@ -70,7 +70,7 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage createNewWallet() {
 
-        click(btnCreateNewWallet).waitABit(200);
+        click(By.xpath("//*[contains(@text,'Create a new wallet')]"));
         click(Selector.contentDesc("CreateWalletBtn"));
         enterPassCodeTwoTimes();
 //        clickDoThisLater();
