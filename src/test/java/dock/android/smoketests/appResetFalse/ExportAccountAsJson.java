@@ -12,35 +12,35 @@ public class ExportAccountAsJson extends BaseTestCaseAndroid {
 
     @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify Export Account as Json functionality")
     public void verifyExportAccount() {
-        AndroidDriver driver = getDriverInstance();
-
-        // Create New Account
-        WalletHomePage walletHomePage = new WalletHomePage(driver);
-        String accountName = "test";
-        if (walletHomePage.getWalletStatus()) {
-            walletHomePage.createNewWallet();
-        }
-        else {
-            walletHomePage.enterPassCodeOneTime();
-        }
-        walletHomePage.clickPlusButtonToCreateAccount()
-                .clickCreateNewAccountFromAddAccountWidget()
-                .enterNewAccountInfo(accountName)
-                .clickNext()
-                .clickSkip()
-                .clickByXpathAndroidWidgetTextView(accountName);
-
-        // Try to export new account
-        String password = "123456789Qw!";
-        walletHomePage.clickThreeDotsFromTopRightCorner()
-                .clickExportAccountFromOptionsWidget()
-                .clickExportAccountAsJson()
-                .enterPassword(password)
-                .enterConfirmPassword(password)
-                .clickNext();
-
-        // Verify that account***.Json is displayed
-        Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Link Sharing"));
+//        AndroidDriver driver = getDriverInstance();
+//
+//        // Create New Account
+//        WalletHomePage walletHomePage = new WalletHomePage(driver);
+//        String accountName = "test";
+//        if (walletHomePage.getWalletStatus()) {
+//            walletHomePage.createNewWallet();
+//        }
+//        else {
+//            walletHomePage.enterPassCodeOneTime();
+//        }
+//        walletHomePage.clickPlusButtonToCreateAccount()
+//                .clickCreateNewAccountFromAddAccountWidget()
+//                .enterNewAccountInfo(accountName)
+//                .clickNext()
+//                .clickSkip()
+//                .clickByXpathAndroidWidgetTextView(accountName);
+//
+//        // Try to export new account
+//        String password = "123456789Qw!";
+//        walletHomePage.clickThreeDotsFromTopRightCorner()
+//                .clickExportAccountFromOptionsWidget()
+//                .clickExportAccountAsJson()
+//                .enterPassword(password)
+//                .enterConfirmPassword(password)
+//                .clickNext();
+//
+//        // Verify that account***.Json is displayed
+//        Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
+//        Assert.assertTrue(walletHomePage.isDisplayedByText("Link Sharing"));
     }
 }

@@ -12,29 +12,29 @@ public class DeleteAccount extends BaseTestCaseAndroid {
 
     @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify Delete Account functionality")
     public void verifyDeleteAccount() {
-        AndroidDriver driver = getDriverInstance();
-
-        // Create New Account
-        WalletHomePage walletHomePage = new WalletHomePage(driver);
-        String accountName = "test" + walletHomePage.generateRandomNumber();
-        if (walletHomePage.getWalletStatus()) {
-            walletHomePage.createNewWallet();
-        }
-        else {
-            walletHomePage.enterPassCodeOneTime();
-        }
-        walletHomePage.clickPlusButtonToCreateAccount()
-                .clickCreateNewAccountFromAddAccountWidget()
-                .enterNewAccountInfo(accountName)
-                .clickNext()
-                .clickSkip()
-                .clickByXpathAndroidWidgetTextView(accountName);
-
-        // Try to remove the new created account
-        walletHomePage.clickRemoveAccount()
-                .clickDeleteAccountFromOptionsWidget();
-
-        // Verify account has been removed
-        Assert.assertFalse(walletHomePage.checkElementExistByXpath(accountName));
+//        AndroidDriver driver = getDriverInstance();
+//
+//        // Create New Account
+//        WalletHomePage walletHomePage = new WalletHomePage(driver);
+//        String accountName = "test" + walletHomePage.generateRandomNumber();
+//        if (walletHomePage.getWalletStatus()) {
+//            walletHomePage.createNewWallet();
+//        }
+//        else {
+//            walletHomePage.enterPassCodeOneTime();
+//        }
+//        walletHomePage.clickPlusButtonToCreateAccount()
+//                .clickCreateNewAccountFromAddAccountWidget()
+//                .enterNewAccountInfo(accountName)
+//                .clickNext()
+//                .clickSkip()
+//                .clickByXpathAndroidWidgetTextView(accountName);
+//
+//        // Try to remove the new created account
+//        walletHomePage.clickRemoveAccount()
+//                .clickDeleteAccountFromOptionsWidget();
+//
+//        // Verify account has been removed
+//        Assert.assertFalse(walletHomePage.checkElementExistByXpath(accountName));
     }
 }
