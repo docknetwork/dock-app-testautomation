@@ -24,7 +24,7 @@ public class EditDID {
 
         // Create new Wallet
         WalletHomePage walletHomePage = new WalletHomePage(driver);
-        walletHomePage.createNewWallet().waitABit(3000);
+        walletHomePage.createNewWallet();
         String didName = "testDID" + walletHomePage.generateRandomNumber();
 
         // Verify that a default DID is created when a new Wallet is created
@@ -35,7 +35,7 @@ public class EditDID {
         walletHomePage.clickThreeIconsDID()
                         .clickEditDID()
                 .enterEditDIDName(didName)
-                .clickSaveDIDChanges().waitABit(3000);
+                .clickSaveDIDChanges().waitABit(1000);
         Assert.assertTrue(walletHomePage.isDisplayedByText(didName));
     }
 
