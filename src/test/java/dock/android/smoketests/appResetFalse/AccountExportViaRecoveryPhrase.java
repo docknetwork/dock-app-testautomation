@@ -8,12 +8,11 @@ import dock.android.pageobjects.WalletHomePage;
 import dock.utilities.TestGroup;
 import io.appium.java_client.android.AndroidDriver;
 
-public class CreateAccountViaMemicPhrase extends BaseTestCaseAndroid {
+public class AccountExportViaRecoveryPhrase extends BaseTestCaseAndroid {
 
-    @Test(groups = TestGroup.SmokeTest, description = "Test to create account verification via Memic")
-    public void verifyCreateAccountViaMemic() {
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify account export as Json")
+    public void verifyExportAccountAsJson() {
        AndroidDriver driver = getDriverInstance();
-
        WalletHomePage walletHomePage = new WalletHomePage(driver);
        String accountName = "test" + walletHomePage.generateRandomNumber();
        if (walletHomePage.getWalletStatus()) {
@@ -26,7 +25,7 @@ public class CreateAccountViaMemicPhrase extends BaseTestCaseAndroid {
        walletHomePage.clickPlusButtonToCreateAccount()
                .clickImportExistingAccount()
                .clickAccountRecoveryPhrase()
-               .enterMememicPhrase("argue glow aerobic acoustic artefact exact flush fetch skill void direct rib")
+               .enterMememicPhrase("shiver aspect midnight brush loan resemble poet sea team hill mountain spoil")
                .clickNext()
                .enterNewAccountName(accountName)
                .clickNext();
