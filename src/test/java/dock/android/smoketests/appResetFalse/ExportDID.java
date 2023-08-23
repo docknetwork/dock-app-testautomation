@@ -12,23 +12,23 @@ public class ExportDID extends BaseTestCaseAndroid {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify Export DID option")
     public void verifyExportDID() {
-//        AndroidDriver driver = getDriverInstance();
-//        WalletHomePage walletHomePage = new WalletHomePage(driver);
-//        String password = "123456789Qw!";
-//        if (walletHomePage.getWalletStatus()) {
-//            walletHomePage.createNewWallet();
-//        }
-//        else {
-//            walletHomePage.enterPassCodeOneTime();
-//        }
-//        walletHomePage.clickDID()
-//                .clickThreeIconsDID()
-//                .clickExportDID()
-//                .enterDIDPassword(password)
-//                .enterConfirmDIDPassword(password)
-//                .clickNext();
-//
-//        // Verify export DID options are displayed
-//        Assert.assertTrue(walletHomePage.isDisplayedByText("Shar"));
+       AndroidDriver driver = getDriverInstance();
+       WalletHomePage walletHomePage = new WalletHomePage(driver);
+       String password = "123456789Qw!";
+       if (walletHomePage.getWalletStatus()) {
+           walletHomePage.createNewWallet();
+       }
+       else {
+           walletHomePage.enterPassCodeOneTime();
+       }
+       walletHomePage.clickDID()
+               .clickThreeIconsDID()
+               .clickExportDID()
+               .enterDIDPassword(password)
+               .enterConfirmDIDPassword(password)
+               .clickNext();
+
+       // Verify export DID options are displayed
+       Assert.assertTrue(walletHomePage.isDisplayedByText("Shar"));
     }
 }
