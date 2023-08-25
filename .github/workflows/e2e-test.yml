@@ -1,0 +1,93 @@
+name: "End-to-end test"
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger-test]
+
+# Auto cancels previous running CI jobs in this PR on each new commit
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+  
+jobs:
+  start-test:
+    runs-on: macos-latest
+    name: "Start Test"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: feat/passing-tests-only
+          token: "${{ secrets.GIT_ACCESS_TOKEN }}"
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+
+      - name: Install ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.5'
+          bundler-cache: true
+          
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'adopt'
+          cache: 'gradle'
+
+      - name: Install Fastlane
+        run: gem install fastlane
+      
+      - name: Generate apk
+        run: |
+          git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/dock-app.git" ./dock-app
+          cd ./dock-app
+          bash ./scripts/github/pre-installation.sh
+          bash ./scripts/github/install-dependencies.sh ${{ secrets.ACCESS_TOKEN }}
+          bash ./scripts/github/android-certs.sh ${{ secrets.ACCESS_TOKEN }}
+          cd ./android
+          mkdir release
+          fastlane package_apk
+          cd ../..
+
+      
+      - name: Install Appium
+        run: yarn global add appium@1.22
+
+      - name: Run E2E Tests
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          arch: x86_64
+          force-avd-creation: false
+          profile: Nexus 6
+          ram-size: 4096M
+          emulator-boot-timeout: 12000
+          emulator-options: -no-window -netdelay none -netspeed full -noaudio -no-boot-anim -no-snapshot
+          disable-animations: true
+          script: |
+            appium &>/dev/null &
+            gradle
+            adb install -r ./dock-app/android/app/build/outputs/apk/release/dock-wallet.apk 
+            adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
+            gradle test --stacktrace --info -DsuitXmlFile=mainSuite.xml
+      
+      # - name: Send slack notification
+      #   if: always()
+      #   uses: edge/simple-slack-notify@master
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #   with:
+      #     channel: '#wallet-bot'
+      #     status: ${{ job.status }}
+      #     success_text: 'End-to-end test completed successfully'
+      #     failure_text: 'End-to-end test failed'
+      #     cancelled_text: 'End-to-end test cancelled'
+      #     fields: |
+      #       [{ "title": "Repository", "value": "${env.GITHUB_REPOSITORY}", "short": true },
+      #       { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
+      #       { "title": "Pull Request", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/pull/${{ steps.pr.outputs.pull_request_number }}"}
+      #       ]
