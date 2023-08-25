@@ -44,7 +44,6 @@ jobs:
       - name: Generate apk
         run: |
           git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ../dock-app
-          bash ../dock-app/scripts/github/pre-installation.sh
           yarn --cwd ../dock-app install --network-timeout 1000000
           git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
           yarn --cwd ../wallet-sdk install --network-timeout 1000000
