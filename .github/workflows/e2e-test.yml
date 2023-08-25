@@ -44,14 +44,8 @@ jobs:
       - name: Generate apk
         run: |
           git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ./dock-app
-          cd ./dock-app
-          bash ./scripts/github/pre-installation.sh
-          bash ./scripts/github/install-dependencies.sh ${{ secrets.E2E_GITHUB_TOKEN }}
-          bash ./scripts/github/android-certs.sh ${{ secrets.E2E_GITHUB_TOKEN }}
-          cd ./android
-          mkdir release
-          fastlane package_apk
-          cd ../..
+          (cd ./dock-app & bash ./scripts/github/pre-installation.sh & bash ./scripts/github/install-dependencies.sh ${{ secrets.E2E_GITHUB_TOKEN }} & bash ./scripts/github/android-certs.sh ${{ secrets.E2E_GITHUB_TOKEN }})
+          (cd ./dock-app/android & mkdir release & fastlane package_apk)
 
       
       - name: Install Appium
