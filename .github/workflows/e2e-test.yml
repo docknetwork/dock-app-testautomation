@@ -43,10 +43,15 @@ jobs:
       
       - name: Generate apk
         run: |
-          git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ./dock-app
-          (cd ./dock-app & bash ./dock-app/scripts/github/pre-installation.sh & bash ./dock-app/scripts/github/install-dependencies.sh ${{ secrets.E2E_GITHUB_TOKEN }} & bash ./dock-app/scripts/github/android-certs.sh ${{ secrets.E2E_GITHUB_TOKEN }})
-          cd ./dock-app/android
-          mkdir release
+          git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ../dock-app
+          yarn --cwd ../dock-app install --network-timeout 1000000
+          git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
+          yarn --cwd ../wallet-sdk install --network-timeout 1000000
+          yarn --cwd ../wallet-sdk build
+          yarn --cwd ../dock-app postinstall
+          yarn --cwd ../dock-app sync-sdk
+          yarn --cwd ../dock-app build-sdk
+          cd ../dock-app/android
           fastlane package_apk
 
       
@@ -67,7 +72,7 @@ jobs:
           script: |
             appium &>/dev/null &
             gradle
-            adb install -r ./dock-app/android/app/build/outputs/apk/release/dock-wallet.apk 
+            adb install -r ../dock-app/android/app/build/outputs/apk/release/dock-wallet.apk 
             adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
             gradle test --stacktrace --info -DsuitXmlFile=mainSuite.xml
       
