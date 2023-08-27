@@ -40,19 +40,24 @@ jobs:
 
       - name: Install Fastlane
         run: gem install fastlane
+
+      - name: Install wallet sdk
+        run: |
+          git config --global url."https://".insteadOf git://
+          git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
+          cd ../wallet-sdk
+          yarn install --network-timeout 1000000
+          yarn build
       
       - name: Generate apk
         run: |
-          git config --global url."https://".insteadOf git://
           git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ../dock-app
-          yarn --cwd ../dock-app install --network-timeout 1000000
-          git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
-          yarn --cwd ../wallet-sdk install --network-timeout 1000000
-          yarn --cwd ../wallet-sdk build
-          yarn --cwd ../dock-app postinstall
-          yarn --cwd ../dock-app sync-sdk
-          yarn --cwd ../dock-app build-sdk
-          cd ../dock-app/android
+          cd ../dock-app
+          yarn install --network-timeout 1000000
+          yarn postinstall
+          yarn sync-sdk
+          yarn build-sdk
+          cd ./android
           fastlane package_apk
 
       
