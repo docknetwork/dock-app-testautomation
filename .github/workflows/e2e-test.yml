@@ -62,7 +62,7 @@ jobs:
         run: |
           cd ../dock-app
           rm -rf ./certs
-          git clone "https://${ACCESS_TOKEN}@github.com/docknetwork/dock-app-certs.git" ./certs
+          git clone "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
           mv ./certs/google-play.json ./
           cp -rf ./certs/google-services.json ./android/app/
           rm -rf ./android/gradle.properties
@@ -72,7 +72,7 @@ jobs:
           cp -rf ./certs/.env ./
           rm -rf /tmp/google-play-cert
           cp -rf ./certs/google-play-cert /tmp/google-play-cert
-          
+
       - name: Generate android apk
         run: |
           cd ../dock-app/android
