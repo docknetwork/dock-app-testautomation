@@ -90,9 +90,10 @@ jobs:
           arch: x86_64
           force-avd-creation: false
           profile: Nexus 6
-          ram-size: 4096M
+          ram-size: 16384M
+          disk-size: 16384M
           emulator-boot-timeout: 12000
-          emulator-options: -no-window -netdelay none -netspeed full -noaudio -no-boot-anim -gpu host
+          emulator-options: -no-window -netdelay none -netspeed full -noaudio -no-boot-anim
           disable-animations: true
           script: |
             appium &>/dev/null &
