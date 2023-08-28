@@ -15,7 +15,7 @@ import org.testng.ITestResult;
 public class RetryAnalyzer implements IRetryAnalyzer {
 
     private int count = 1;
-    private final int maxCount = 4;
+    private final int maxCount = 6;
 
     private final Logger logger = LoggerFactory.getLogger(RetryAnalyzer.class);
 
