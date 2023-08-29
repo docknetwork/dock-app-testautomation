@@ -6,7 +6,7 @@ on:
 
 # Auto cancels previous running CI jobs in this PR on each new commit
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.client_payload.ref }}
   cancel-in-progress: true
   
 jobs:
