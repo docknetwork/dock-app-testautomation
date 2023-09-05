@@ -22,6 +22,8 @@ public class ImportAccountViaJsonAndTokenHistory extends BaseTestCaseAndroid {
             walletHomePage.enterPassCodeOneTime();
         }
 
+        walletHomePage.ensureMainnet();
+
         walletHomePage.clickTokens();
 
         if (!walletHomePage.checkElementExistByXpath(accountName)) {

@@ -32,6 +32,7 @@ public class WalletHomePage extends BasePage {
     private By txtBxAccountName = By.xpath("//android.widget.EditText[contains(@text,'Account name')]");
     private By txtBxSendAddress = By.xpath("//android.widget.EditText[contains(@text,'Recipient address')]");
     private By btnDoThisLater = By.xpath("//*[contains(@text,'Do this later')]");
+    private By btnScan = By.xpath("//*[contains(@text,'Scan')]");
     private By btnTokens = By.xpath("//*[contains(@text,'Tokens')]");
     private By btnPlus = Selector.contentResourceID("action-button");
     private By optionImportExistingAccount = Selector.contentResourceID("importExistingOption");
@@ -59,6 +60,8 @@ public class WalletHomePage extends BasePage {
     private By deleteDid = By.xpath("//android.widget.TextView[contains(@text,'Delete DID')]");
     private By delete = By.xpath("//android.widget.TextView[contains(@text,'Delete')]");
     private By btnShare = By.xpath("//android.widget.TextView[contains(@text,'Share')]");
+    private By btnTestMode = Selector.contentResourceID("testMode");
+    private By btnPasteToScan = By.xpath("//hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[6]");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -141,6 +144,67 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage ensureTestnet() {
+        if (!checkElementExistByXpath("Test mode")) {
+            clickSettings();
+            click(btnTestMode);
+            click(By.xpath("//android.widget.Switch"));
+            clickCredentials();
+            Assert.assertTrue(isDisplayedByText("Test mode"));
+        }
+        return this;
+    }
+
+    public WalletHomePage ensureMainnet() {
+        if (checkElementExistByXpath("Test mode")) {
+            clickSettings();
+            click(btnTestMode);
+            click(By.xpath("//android.widget.Switch"));
+            clickCredentials();
+            Assert.assertFalse(isDisplayedByText("Test mode"));
+        }
+        return this;
+    }
+
+    public WalletHomePage ensureHasCredential() {
+        clickCredentials();
+        if (!checkElementExistByXpath("Test Credential")) {
+            scanQRCode("https://creds-testnet.dock.io/6064d2eb3778bb7e0a8fa68384f4b345c3c5386492fab4789de2a7f0b0b57c6b");
+            sendTextVisibleKeyboard(txtBxPassword, "Password1!");
+            clickOk();
+            waitABit(10000);
+            if(checkElementExistByXpath("Import Credential")){
+                clickOk();
+            }
+        }
+        return this;
+    }
+
+    public WalletHomePage ensureHasDID() {
+        clickDID();
+        if (!checkElementExistByXpath("Test DID")) {
+            clickDID();
+            clickPlusButtonToCreatDID();
+            clickCreateNewDID();
+            enterDIDName("Test DID");
+            selectDidKeyAsDIDType();
+            clickCreate();
+            waitABit(2000);
+        }
+        return this;
+    }
+
+    public WalletHomePage scanQRCode(String code) {
+        clickScan();
+        waitABit(200);
+        driver.setClipboardText(code);
+        if(checkElementExistByXpathContains("Allow")){
+            click(By.xpath("//android.widget.Button[contains(@text,'Allow')]"));
+        }
+        click(btnPasteToScan);
+        return this;
+    }
+
     public WalletHomePage clickDoThisLater() {
         click(btnDoThisLater);
         return this;
@@ -162,8 +226,13 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
-    public WalletHomePage clickOkCredentialImport() {
+    public WalletHomePage clickOk() {
         click(btnOk);
+        return this;
+    }
+
+    public WalletHomePage clickScan() {
+        click(btnScan);
         return this;
     }
 
@@ -398,7 +467,7 @@ public class WalletHomePage extends BasePage {
     public WalletHomePage createNewAccount(String testName) {
         click(btnCreateNewAccount);
         sendText(txtBxAccountName, testName);
-        waitABit(2000);
+        hideKeyboard();
         clickNext().clickSkip();
         return this;
     }

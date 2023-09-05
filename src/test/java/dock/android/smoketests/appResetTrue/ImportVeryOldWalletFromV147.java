@@ -32,11 +32,7 @@ public class ImportVeryOldWalletFromV147 {
                 .enterPassCodeTwoTimes();
                 // .clickDoThisLater();
 
-        // Verify Import of old account
-        // Assert.assertTrue(walletHomePage.isDisplayedByText("frank"));
-        // Assert.assertTrue(walletHomePage.isDisplayedByTextByScrollIntoView("0.2065 DOCK"));
-        // Assert.assertTrue(walletHomePage.isDisplayedByText("Bob"));
-        // Assert.assertTrue(walletHomePage.isDisplayedByTextByScrollIntoView("0.435 DOCK"));
+         Assert.assertTrue(walletHomePage.isDisplayedByText("Beta Testing Credential"));
     }
 
     @AfterMethod(alwaysRun = true)
