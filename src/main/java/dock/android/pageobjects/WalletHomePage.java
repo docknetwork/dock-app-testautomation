@@ -434,14 +434,12 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage enterDIDName(String value) {
         sendText(txtBxDid, value);
-        hideKeyboard();
         waitABit(2000);
         return this;
     }
 
     public WalletHomePage enterEditDIDName(String value) {
         sendText(txtBxEditDid, value);
-        hideKeyboard();
         waitABit(2000);
         return this;
     }
@@ -467,7 +465,6 @@ public class WalletHomePage extends BasePage {
     public WalletHomePage createNewAccount(String testName) {
         click(btnCreateNewAccount);
         sendText(txtBxAccountName, testName);
-        hideKeyboard();
         clickNext().clickSkip();
         return this;
     }
