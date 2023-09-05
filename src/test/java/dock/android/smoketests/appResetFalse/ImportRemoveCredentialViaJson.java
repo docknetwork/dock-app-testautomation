@@ -24,7 +24,7 @@ public class ImportRemoveCredentialViaJson extends BaseTestCaseAndroid {
         }
         walletHomePage.clickPlusBtnCredentials()
                 .uploadFile("credImport.json")
-                .clickOkCredentialImport();
+                .clickOk();
         Assert.assertTrue(walletHomePage.isDisplayedByText("Enterprise in the Community"));
         Assert.assertTrue(walletHomePage.isDisplayedByText("NSC Balgowlah Boys Campus"));
         Assert.assertTrue(walletHomePage.isDisplayedByText("June 26, 2022"));

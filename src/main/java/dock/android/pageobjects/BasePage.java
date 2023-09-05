@@ -82,7 +82,7 @@ public class BasePage {
     }
 
     public void clickByView(String value) {
-        click(By.xpath("//android.view.View[contains(@text,'" + value + "')]"));
+        click(By.xpath("//*[contains(@text,'" + value + "')]"));
         log.info("Value clicked: " + value);
     }
 
@@ -374,12 +374,16 @@ public class BasePage {
         return this;
     }
 
-    public BasePage sendText(By locator, String text) {
+    public BasePage sendTextVisibleKeyboard(By locator, String text) {
         AndroidElement element = (AndroidElement) getElement(locator);
         element.click();
         element.clear();
         element.sendKeys(text);
         log.info("locator = [" + locator + "], Text = [" + text + "] has been entered.");
+        return this;
+    }
+    public BasePage sendText(By locator, String text) {
+        sendTextVisibleKeyboard(locator, text);
         hideKeyboard();
         return this;
     }
