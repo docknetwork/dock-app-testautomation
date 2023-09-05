@@ -32,3 +32,4 @@ test-output/
 allure-results/*
 src/test/resources/configfiles/local.properties
 bin/
+local.properties
