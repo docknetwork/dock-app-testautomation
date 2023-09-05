@@ -36,8 +36,8 @@ public class FilterCredentials extends BaseTestCaseAndroid {
         walletHomePage.ensureHasCredential();
         walletHomePage.sendText(searchInput, invalidSearchTerm);
         Assert.assertFalse(walletHomePage.checkElementExistByXpath(validSearchTerm));
-//        walletHomePage.sendText(searchInput, validSearchTerm);
-//        Assert.assertTrue(walletHomePage.checkElementExistByXpath(validSearchTerm));
+        walletHomePage.sendText(searchInput, validSearchTerm);
+        Assert.assertTrue(walletHomePage.checkElementExistByXpath(validSearchTerm));
         walletHomePage.sendText(searchInput, "");
         walletHomePage.click(btnFilter);
 
