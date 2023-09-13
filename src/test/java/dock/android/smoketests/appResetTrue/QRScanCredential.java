@@ -29,6 +29,7 @@ public class QRScanCredential {
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         walletHomePage.createNewWallet().waitABit(300);
         walletHomePage.ensureTestnet().waitABit(300);
+        walletHomePage.ensureHasDID();
         walletHomePage.scanQRCode(qrCodeValue);
 
         walletHomePage.sendTextVisibleKeyboard(By.xpath("//*[contains(@text,'Password')]"), password);
