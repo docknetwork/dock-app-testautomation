@@ -103,8 +103,8 @@ jobs:
       
       - name: Parse Test Report
         run: |
-          chmod +x /scripts/ParseReports.sh
-          /scripts/ParseReports.sh
+          chmod +x ./scripts/ParseReports.sh
+          ./scripts/ParseReports.sh
 
       - name: Send slack notification
         if: always()
