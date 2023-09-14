@@ -119,7 +119,7 @@ jobs:
           cancelled_text: 'End-to-end test cancelled'
           fields: |
             [
-              { "title": "Repository", "value": "${{github.event.client_payload.ref}}", "short": true },
+              { "title": "Repository", "value": "${env.GITHUB_SERVER_URL}/dock-app/${{github.event.client_payload.ref}}", "short": true },
               { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
               { "title": "Failed Tests", "value":"${env.ALL_FAILED_TESTS}"}
             ]
