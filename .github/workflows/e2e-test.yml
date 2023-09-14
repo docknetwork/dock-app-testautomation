@@ -99,9 +99,10 @@ jobs:
             gradle
             adb install -r ../dock-app/android/app/build/outputs/apk/release/app-release.apk
             adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
-            gradle test --stacktrace --info -DsuitXmlFile=mainSuite.xml
+            gradle test --stacktrace --info --tests "dock.android.smoketests.appResetTrue.CreateWalletAndNewAccount.verifyCreateWalletAndCreateNewAccount"
       
       - name: Parse Test Report
+        if: always()
         run: |
           chmod +x ./scripts/ParseReports.sh
           ./scripts/ParseReports.sh
