@@ -222,7 +222,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickPlusBtnCredentials() {
-        click(btnPlusCredential);
+        click(btnPlus);
         return this;
     }
 
