@@ -21,8 +21,8 @@ public class ExportDID extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
-        walletHomePage.clickDID()
-                .clickThreeIconsDID()
+        walletHomePage.clickDID().waitABit(2000);
+        walletHomePage.clickThreeIconsDID()
                 .clickExportDID()
                 .enterDIDPassword(password)
                 .enterConfirmDIDPassword(password)

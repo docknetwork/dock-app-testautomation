@@ -51,7 +51,7 @@ public class WalletHomePage extends BasePage {
     private By btnCreateDID = By.xpath("//android.widget.Button[@content-desc=\"CreateNewDIDScreenDIDCreate\"]/android.widget.TextView");
     private By btnImportExistingDID = By.xpath("//android.widget.TextView[contains(@text,'Import existing DID')]");
     private By txtBxPasswordDid = By.xpath("//android.widget.EditText[@content-desc=\"Password\"]");
-    private By threeIconsDid = By.xpath("//android.view.ViewGroup[@content-desc=\"DIDListScreen\"]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup");
+    private By threeIconsDid = By.xpath("(//android.widget.Button[@content-desc=\"DIDListItemOptionButton\"])[1]");
     private By editDid = By.xpath("//android.widget.TextView[contains(@text,'Edit DID')]");
     private By exportDid = By.xpath("//android.widget.TextView[contains(@text,'Export DID')]");
     private By txtBxDid = By.xpath("//android.widget.EditText[@content-desc=\"DIDName\"]");
