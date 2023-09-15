@@ -540,7 +540,7 @@ public class WalletHomePage extends BasePage {
             driver.context("NATIVE_APP");
             driver.pullFile(directoryPath + fileName);
             click(By.xpath("//*[contains(@text,'" + fileName + "')]"));
-            waitABit(3000);
+            waitABit(5000);
         }
         catch (IOException e) {
             e.printStackTrace();
