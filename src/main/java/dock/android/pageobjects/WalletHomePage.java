@@ -196,7 +196,7 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage scanQRCode(String code) {
         clickScan();
-        waitABit(200);
+        waitABit(2000);
         driver.setClipboardText(code);
         if(checkElementExistByXpathContains("Allow")){
             click(By.xpath("//android.widget.Button[contains(@text,'Allow')]"));
