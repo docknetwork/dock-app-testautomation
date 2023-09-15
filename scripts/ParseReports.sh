@@ -6,7 +6,7 @@ xml_directory="./build/reports/tests/test/xml/"
 all_results=""
 for ((i=1; i<=2; i=i+1))
 do
-    all_results+="test report"$'\n'
+    all_results+="test report \n"
 done
 
 # for xml_file in "$xml_directory"/*.xml; do
