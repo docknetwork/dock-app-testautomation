@@ -366,7 +366,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickPlusButtonToCreatDID() {
-        click(btnPlusDID);
+        click(btnPlus);
         return this;
     }
 
