@@ -20,86 +20,86 @@ jobs:
           ref: main
           token: "${{ secrets.GITHUB_TOKEN }}"
 
-      # - name: Setup node
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '16.x'
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
 
-      # - name: Install ruby
-      #   uses: ruby/setup-ruby@v1
-      #   with:
-      #     ruby-version: '2.7.5'
-      #     bundler-cache: true
+      - name: Install ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.5'
+          bundler-cache: true
           
-      # - name: Set up JDK 11
-      #   uses: actions/setup-java@v3
-      #   with:
-      #     java-version: 11
-      #     distribution: 'adopt'
-      #     cache: 'gradle'
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: 'adopt'
+          cache: 'gradle'
 
-      # - name: Install Fastlane
-      #   run: gem install fastlane
+      - name: Install Fastlane
+        run: gem install fastlane
 
-      # - name: Install wallet sdk
-      #   run: |
-      #     git config --global url."https://".insteadOf git://
-      #     git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
-      #     cd ../wallet-sdk
-      #     yarn install --network-timeout 1000000
-      #     yarn build
+      - name: Install wallet sdk
+        run: |
+          git config --global url."https://".insteadOf git://
+          git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
+          cd ../wallet-sdk
+          yarn install --network-timeout 1000000
+          yarn build
       
-      # - name: Install app dependencies
-      #   run: |
-      #     git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ../dock-app
-      #     cd ../dock-app
-      #     yarn install --network-timeout 1000000
-      #     yarn postinstall
-      #     yarn sync-sdk
-      #     yarn build-sdk
+      - name: Install app dependencies
+        run: |
+          git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ../dock-app
+          cd ../dock-app
+          yarn install --network-timeout 1000000
+          yarn postinstall
+          yarn sync-sdk
+          yarn build-sdk
 
-      # - name: Handle Certs configuration
-      #   run: |
-      #     cd ../dock-app
-      #     rm -rf ./certs
-      #     git clone "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
-      #     mv ./certs/google-play.json ./
-      #     cp -rf ./certs/google-services.json ./android/app/
-      #     rm -rf ./android/gradle.properties
-      #     cp -rf ./certs/gradle.properties ./android/gradle.properties
-      #     # Pull env variables from certs repo
-      #     # It will inject sentry token in the JS thread
-      #     cp -rf ./certs/.env ./
-      #     rm -rf /tmp/google-play-cert
-      #     cp -rf ./certs/google-play-cert /tmp/google-play-cert
+      - name: Handle Certs configuration
+        run: |
+          cd ../dock-app
+          rm -rf ./certs
+          git clone "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
+          mv ./certs/google-play.json ./
+          cp -rf ./certs/google-services.json ./android/app/
+          rm -rf ./android/gradle.properties
+          cp -rf ./certs/gradle.properties ./android/gradle.properties
+          # Pull env variables from certs repo
+          # It will inject sentry token in the JS thread
+          cp -rf ./certs/.env ./
+          rm -rf /tmp/google-play-cert
+          cp -rf ./certs/google-play-cert /tmp/google-play-cert
 
-      # - name: Generate android apk
-      #   run: |
-      #     cd ../dock-app/android
-      #     fastlane package_apk
+      - name: Generate android apk
+        run: |
+          cd ../dock-app/android
+          fastlane package_apk
 
       
-      # - name: Install Appium
-      #   run: yarn global add appium@1.22
+      - name: Install Appium
+        run: yarn global add appium@1.22
 
-      # - name: Run E2E Tests
-      #   uses: ReactiveCircus/android-emulator-runner@v2
-      #   with:
-      #     api-level: 29
-      #     arch: x86_64
-      #     force-avd-creation: false
-      #     profile: Nexus 6
-      #     ram-size: 16384M
-      #     disk-size: 16384M
-      #     emulator-boot-timeout: 12000
-      #     emulator-options: -no-window -netdelay none -netspeed full -noaudio -no-boot-anim
-      #     disable-animations: true
-      #     script: |
-      #       appium &>/dev/null &
-      #       gradle
-      #       adb install -r ../dock-app/android/app/build/outputs/apk/release/app-release.apk
-      #       adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
-      #       gradle test --stacktrace --info -DsuitXmlFile=mainSuite.xml
+      - name: Run E2E Tests
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          arch: x86_64
+          force-avd-creation: false
+          profile: Nexus 6
+          ram-size: 16384M
+          disk-size: 16384M
+          emulator-boot-timeout: 12000
+          emulator-options: -no-window -netdelay none -netspeed full -noaudio -no-boot-anim
+          disable-animations: true
+          script: |
+            appium &>/dev/null &
+            gradle
+            adb install -r ../dock-app/android/app/build/outputs/apk/release/app-release.apk
+            adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
+            gradle test --stacktrace --info -DsuitXmlFile=mainSuite.xml
       
       - name: Parse Test Report
         if: always()
