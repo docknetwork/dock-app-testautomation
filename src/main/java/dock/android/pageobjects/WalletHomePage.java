@@ -185,6 +185,7 @@ public class WalletHomePage extends BasePage {
         if (!checkElementExistByXpath("Test DID")) {
             clickDID();
             clickPlusButtonToCreatDID();
+            waitABit(2000);
             clickCreateNewDID();
             enterDIDName("Test DID");
             selectDidKeyAsDIDType();
