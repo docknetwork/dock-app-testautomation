@@ -169,7 +169,7 @@ public class WalletHomePage extends BasePage {
     public WalletHomePage ensureHasCredential() {
         clickCredentials();
         if (!checkElementExistByXpath("Test Credential")) {
-            scanQRCode("https://creds-testnet.dock.io/6064d2eb3778bb7e0a8fa68384f4b345c3c5386492fab4789de2a7f0b0b57c6b");
+            scanQRCode("https://creds-testnet.dock.io/dc20aa279fd2edcc890a5b7025b99814b288a12de1569863447e77242a7e94bb");
             sendTextVisibleKeyboard(txtBxPassword, "Password1!");
             clickOk();
             waitABit(10000);
