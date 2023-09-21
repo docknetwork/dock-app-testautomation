@@ -10,7 +10,7 @@ import dock.utilities.TestGroup;
 import io.appium.java_client.android.AndroidDriver;
 
 public class QRScanEncryptedWallet extends BaseTestCaseAndroid {
-    private By btnContinue = Selector.contentResourceID("Next");
+    private By btnContinue = Selector.contentResourceID("next-btn");
     private By passwordInput = Selector.contentResourceID("Password");
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify scanning QR credential")
