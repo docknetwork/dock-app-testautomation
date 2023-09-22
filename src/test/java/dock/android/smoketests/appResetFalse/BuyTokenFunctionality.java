@@ -28,11 +28,11 @@ public class BuyTokenFunctionality extends BaseTestCaseAndroid {
             walletHomePage.clickPlusButtonToCreateAccount()
                     .clickImportExistingAccount()
                     .clickUploadJsonFile()
-                    .uploadFile("importAccount.json")
-                    .enterPassword("123456789Qw!")
+                    .uploadFile("importAccount.json");
+            walletHomePage.enterPassword("123456789Qw!")
                     .clickNext()
                     .enterNewAccountName(accountName);
-            walletHomePage.clickNext();
+            walletHomePage.clickNext().waitABit(2000);
         }
         walletHomePage.clickAccountDetails(accountName)
                 .clickBuy()

@@ -27,8 +27,8 @@ public class DeleteDID {
         walletHomePage.createNewWallet();
 
         // Try to delete the default created DID
-        walletHomePage.clickDID()
-                .clickThreeIconsDID()
+        walletHomePage.clickDID().waitABit(2000);
+        walletHomePage.clickThreeIconsDID()
                 .clickDeleteDID()
                 .clickDelete();
         Assert.assertTrue(walletHomePage.isDisplayedByText("Create New DID"));

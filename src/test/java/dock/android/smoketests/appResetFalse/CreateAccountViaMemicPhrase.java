@@ -22,7 +22,7 @@ public class CreateAccountViaMemicPhrase extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
-        walletHomePage.clickTokens();
+        walletHomePage.clickTokens().waitABit(2000);
         walletHomePage.clickPlusButtonToCreateAccount()
                 .clickImportExistingAccount()
                 .clickAccountRecoveryPhrase()

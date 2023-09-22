@@ -21,8 +21,8 @@ public class ShareDID extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
-        walletHomePage.clickDID()
-                .clickShare();
+        walletHomePage.clickDID().waitABit(2000);
+        walletHomePage.clickShare();
 
         // Verify Share DID options are displayed
         Assert.assertTrue(walletHomePage.isDisplayedByText("Copy DID"));

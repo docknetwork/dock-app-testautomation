@@ -21,8 +21,8 @@ public class CreateNewDID extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
-        walletHomePage.clickDID()
-                        .clickPlusButtonToCreatDID()
+        walletHomePage.clickDID().waitABit(2000);
+        walletHomePage.clickPlusButtonToCreatDID()
                                 .clickCreateNewDID()
                 .enterDIDName(didName)
                 .selectDidKeyAsDIDType()

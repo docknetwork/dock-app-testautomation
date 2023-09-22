@@ -12,7 +12,7 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class FilterCredentials extends BaseTestCaseAndroid {
     private By searchInput = Selector.contentResourceID("search-input");
-    private By btnFilter = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.widget.Button");
+    private By btnFilter = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.widget.Button[3]");
     private By btnBack = By.xpath(".//*[@resource-id =\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup[2]");
     private By fromDateInput = By.xpath(".//*[@resource-id =\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup[6]");
     private By toDateInput = By.xpath(".//*[@resource-id =\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup[8]");
