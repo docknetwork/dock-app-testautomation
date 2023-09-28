@@ -199,9 +199,6 @@ public class WalletHomePage extends BasePage {
         clickScan();
         waitABit(3000);
         driver.setClipboardText(code);
-        if(checkElementExistByXpathContains("Allow")){
-            click(Selector.contentResourceID("com.android.permissioncontroller:id/permission_allow_button"));
-        }
         click(btnPasteToScan);
         return this;
     }
