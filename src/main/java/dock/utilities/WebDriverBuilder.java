@@ -46,6 +46,7 @@ public class WebDriverBuilder {
     public AndroidDriver getAndroidDriver() {
         AndroidDriver driver = null;
         DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability("autoGrantPermissions", "true");
         caps.setCapability(MobileCapabilityType.NO_RESET, true);
         if (LocalPropertiesReader.getExecutionMode().equals("local")) {
             caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
