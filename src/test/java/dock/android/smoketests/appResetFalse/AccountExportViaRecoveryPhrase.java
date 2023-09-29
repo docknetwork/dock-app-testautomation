@@ -22,6 +22,7 @@ public class AccountExportViaRecoveryPhrase extends BaseTestCaseAndroid {
             walletHomePage.enterPassCodeOneTime();
         }
         walletHomePage.clickTokens();
+        walletHomePage.waitElementVisibility("Accounts");
         walletHomePage.clickPlusButtonToCreateAccount()
                 .clickImportExistingAccount()
                 .clickAccountRecoveryPhrase()

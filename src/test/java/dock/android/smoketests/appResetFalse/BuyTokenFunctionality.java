@@ -22,6 +22,7 @@ public class BuyTokenFunctionality extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
+        walletHomePage.ensureMainnet();
         walletHomePage.clickTokens();
         walletHomePage.waitElementVisibility("Accounts");
         if (!walletHomePage.checkElementExistByXpath(accountName)) {

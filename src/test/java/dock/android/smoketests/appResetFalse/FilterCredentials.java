@@ -41,6 +41,8 @@ public class FilterCredentials extends BaseTestCaseAndroid {
         walletHomePage.sendText(searchInput, "");
         walletHomePage.click(btnFilter);
 
+        walletHomePage.waitABit(2000);
+
         walletHomePage.clickByView("Credential Type");
 
         if(walletHomePage.checkElementExistByXpathContains("Credential Type")){
@@ -48,7 +50,7 @@ public class FilterCredentials extends BaseTestCaseAndroid {
         }
         walletHomePage.clickByView("BasicCredential");
         walletHomePage.clickByView("Issuer DID");
-        walletHomePage.clickByView("did:dock:5DpnDQaqHCBBdDjXpiaWibgUb6Tymz1vFG1UMJv9H363fYFb");
+        walletHomePage.clickByView("did:dock:5CRMra6S2P3y992T7vM44RrUqNAXTEn2MbtWqw2PyGn5UgoV");
         walletHomePage.clickByView("Holder DID");
         walletHomePage.clickByView("Test");
         walletHomePage.clickByView("Issuance Date");

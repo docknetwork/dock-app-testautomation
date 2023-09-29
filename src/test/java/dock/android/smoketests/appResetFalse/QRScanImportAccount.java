@@ -27,6 +27,7 @@ public class QRScanImportAccount extends BaseTestCaseAndroid {
             walletHomePage.enterPassCodeOneTime();
         }
 
+        walletHomePage.ensureTestnet();
         walletHomePage.scanQRCode(qrCodeValue);
         walletHomePage.enterPassword(password)
                 .clickNext()
