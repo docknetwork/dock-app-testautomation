@@ -30,8 +30,8 @@ public class BackupWallet {
 
         // Try to Backup the Wallet
         walletHomePage.clickSettings()
-                .clickBackupWallet()
-                .enterPassword(password)
+                .clickBackupWallet().waitABit(2000);
+        walletHomePage.enterPassword(password)
                 .enterConfirmPassword(password)
                 .clickNext();
 

@@ -39,6 +39,7 @@ public class QRScanProofRequest extends BaseTestCaseAndroid {
             walletHomePage.click(By.xpath("//android.widget.TextView[contains(@text,'did:key')]"));
         }
         walletHomePage.click(btnContinuePresent);
+        walletHomePage.waitABit(2000);
         walletHomePage.click(btnContinuePresent);
         walletHomePage.waitABit(5000);
 

@@ -22,6 +22,7 @@ public class ImportRemoveCredentialViaJson extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
+        walletHomePage.ensureTestnet();
         walletHomePage.clickPlusBtnCredentials()
                 .uploadFile("credImport.json")
                 .clickOk();
