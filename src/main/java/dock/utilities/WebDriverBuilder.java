@@ -13,6 +13,7 @@ import org.testng.Assert;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 
 public class WebDriverBuilder {
@@ -46,7 +47,7 @@ public class WebDriverBuilder {
     public AndroidDriver getAndroidDriver() {
         AndroidDriver driver = null;
         DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability("autoGrantPermissions", "true");
+        caps.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);
         caps.setCapability(MobileCapabilityType.NO_RESET, true);
         if (LocalPropertiesReader.getExecutionMode().equals("local")) {
             caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
