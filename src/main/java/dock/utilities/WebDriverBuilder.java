@@ -76,6 +76,7 @@ public class WebDriverBuilder {
         AndroidDriver driver = null;
         System.setProperty("testType", "android1");
         DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);
         caps.setCapability(MobileCapabilityType.NO_RESET, false);
         if (LocalPropertiesReader.getExecutionMode().equals("local")) {
             caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
