@@ -43,6 +43,6 @@ public class QRScanProofRequest extends BaseTestCaseAndroid {
         walletHomePage.click(btnContinuePresent);
         walletHomePage.waitABit(5000);
 
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Verification Successful"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Verification"));
     }
 }

@@ -21,9 +21,11 @@ public class QRScanAddress extends BaseTestCaseAndroid {
         else {
             walletHomePage.enterPassCodeOneTime();
         }
-        walletHomePage.ensureTestnet();
+        walletHomePage.ensureMainnet();
+        walletHomePage.checkAccountOrElseCreateIt(accountName);
         walletHomePage.scanQRCode(address).waitABit(5000);
 
+        walletHomePage.click(By.xpath("//android.widget.TextView[contains(@text,'Continue')]"));
         Assert.assertTrue(walletHomePage.isDisplayedByText(address));
         walletHomePage.click(By.xpath("//android.widget.TextView[contains(@text,'Next')]"));
         walletHomePage.clickSendMax();

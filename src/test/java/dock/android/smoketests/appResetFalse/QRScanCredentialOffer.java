@@ -38,12 +38,9 @@ public class QRScanCredentialOffer extends BaseTestCaseAndroid {
 
         walletHomePage.sendText(txtField, name);
         walletHomePage.click(btnSubmit);
-
-        walletHomePage.waitABit(10000);
-
-        if(walletHomePage.checkElementExistByXpathContains("Import Credential")){
-            walletHomePage.clickOk();
-        }
+        walletHomePage.waitABit(20000);
+        walletHomePage.waitElementVisibility("Import Credential");
+        walletHomePage.clickOk();
 
         Assert.assertTrue(walletHomePage.isDisplayedByText(name));
     }
