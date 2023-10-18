@@ -130,6 +130,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage checkAccountOrElseCreateIt(String accountName) {
+        clickTokens();
         waitElementVisibility("Accounts");
         if (!checkElementExistByXpath(accountName)) {
             clickPlusButtonToCreateAccount()
@@ -174,10 +175,9 @@ public class WalletHomePage extends BasePage {
             scanQRCode("https://creds-testnet.dock.io/dc20aa279fd2edcc890a5b7025b99814b288a12de1569863447e77242a7e94bb");
             sendTextVisibleKeyboard(txtBxPassword, "Password1!");
             clickOk();
-            waitABit(10000);
-            if(checkElementExistByXpath("Import Credential")){
-                clickOk();
-            }
+            waitABit(20000);
+            waitElementVisibility("Import Credential");
+            clickOk();
         }
         return this;
     }
@@ -609,7 +609,7 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage clickThreeDotsFromTopRightCorner() {
         waitABit(5000);
-        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup").click();
+        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup").click();
         return this;
     }
 

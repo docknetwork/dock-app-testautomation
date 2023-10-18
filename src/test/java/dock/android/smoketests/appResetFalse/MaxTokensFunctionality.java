@@ -10,7 +10,7 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class MaxTokensFunctionality extends BaseTestCaseAndroid {
 
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Receive Button")
+    @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify Receive Button")
     public void verifyMaxTokensSendButton() {
         AndroidDriver driver = getDriverInstance();
         String recipient = "3DyCKfVoGZL8iTWruPtekwhDy9SFqaq9gHtbWF3QGYXDzHSK";

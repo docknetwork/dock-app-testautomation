@@ -26,8 +26,6 @@ public class CreateWalletAndNewAccount {
     public void verifyCreateWalletAndCreateNewAccount() {
         // Create new Wallet
         WalletHomePage walletHomePage = new WalletHomePage(driver);
-        String pageSource = driver.getPageSource();
-        log.info("page source: " + pageSource);
         walletHomePage.createNewWallet().clickTokens();
 
         // Create a new Account

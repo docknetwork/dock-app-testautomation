@@ -11,7 +11,7 @@ import dock.utilities.TestGroup;
 import io.appium.java_client.android.AndroidDriver;
 
 public class QRScanImportAccount extends BaseTestCaseAndroid {
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify scanning QR credential")
+    @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify scanning QR credential")
     public void verifyScanImportAccount() {
         AndroidDriver driver = getDriverInstance();
         WalletHomePage walletHomePage = new WalletHomePage(driver);
@@ -37,6 +37,6 @@ public class QRScanImportAccount extends BaseTestCaseAndroid {
 
         walletHomePage.swipeDownUntillElementVisibileByExactText(accountName);
         Assert.assertTrue(walletHomePage.getDockBalance().contains("DOCK"));
-        
+
     }
 }

@@ -34,11 +34,9 @@ public class QRScanCredential {
 
         walletHomePage.sendTextVisibleKeyboard(By.xpath("//*[contains(@text,'Password')]"), password);
         walletHomePage.clickOk();
-        walletHomePage.waitABit(10000);
-
-        if(walletHomePage.checkElementExistByXpathContains("Import Credential")){
-            walletHomePage.clickOk();
-        }
+        walletHomePage.waitABit(20000);
+        walletHomePage.waitElementVisibility("Import Credential");
+        walletHomePage.clickOk();
 
         // Verify Credential is displayed
         Assert.assertTrue(walletHomePage.isDisplayedByText("Test Credential"));
