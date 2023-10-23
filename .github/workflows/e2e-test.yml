@@ -3,15 +3,18 @@ on:
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-test]
+  push:
+    branches:
+      - "experiment/linux-tests"
 
 # Auto cancels previous running CI jobs in this PR on each new commit
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.client_payload.ref }}
   cancel-in-progress: true
-  
+
 jobs:
   start-test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest-m
     name: "Start Test"
     steps:
       - name: Checkout
@@ -30,7 +33,7 @@ jobs:
         with:
           ruby-version: '2.7.5'
           bundler-cache: true
-          
+
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
@@ -48,7 +51,7 @@ jobs:
           cd ../wallet-sdk
           yarn install --network-timeout 1000000
           yarn build
-      
+
       - name: Install app dependencies
         run: |
           git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ../dock-app
@@ -78,7 +81,7 @@ jobs:
           cd ../dock-app/android
           fastlane package_apk
 
-      
+
       - name: Install Appium
         run: yarn global add appium@1.22
 
@@ -99,8 +102,8 @@ jobs:
             gradle
             adb install -g ../dock-app/android/app/build/outputs/apk/release/app-release.apk
             adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
-            gradle test --stacktrace --info -DsuitXmlFile=mainSuite.xml
-      
+            gradle test --stacktrace --info --tests 'dock.android.smoketests.appResetFalse.CreateNewDID'
+
       - name: Parse Test Report
         if: always()
         run: |
