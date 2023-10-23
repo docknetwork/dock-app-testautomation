@@ -102,7 +102,7 @@ jobs:
             gradle
             adb install -g ../dock-app/android/app/build/outputs/apk/release/app-release.apk
             adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
-            gradle test --stacktrace --info --tests 'dock.android.smoketests.appResetFalse.CreateNewDID'
+            gradle test --stacktrace --info -DsuitXmlFile=mainSuite.xml
 
       - name: Parse Test Report
         if: always()
