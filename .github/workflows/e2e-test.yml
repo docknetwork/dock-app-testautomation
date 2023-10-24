@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: experiment/linux-tests
           token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Setup node
