@@ -104,8 +104,9 @@ jobs:
       - name: Parse Test Report
         if: always()
         run: |
-          chmod +x ./scripts/ParseReports.sh
+          chmod +x ./scripts/ParseReports.sh ./scripts/BuildNumber.sh
           ./scripts/ParseReports.sh
+          ./scripts/BuildNumber.sh
 
       - name: Send slack notification
         if: always()
@@ -121,5 +122,6 @@ jobs:
           fields: |
             [
               { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
+              { "title": "Build Number", "value":"${env.BUILD_NUMBER}"}
               { "title": "Failed Tests", "value":"${env.ALL_FAILED_TESTS}"}
             ]
