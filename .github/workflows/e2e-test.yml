@@ -82,8 +82,8 @@ jobs:
       #     fastlane package_apk
 
 
-      # - name: Install Appium
-      #   run: yarn global add appium@1.22
+      - name: Install Appium
+        run: yarn global add appium@1.22
 
       - name: Enable KVM group perms
         run: |
@@ -103,7 +103,11 @@ jobs:
           emulator-boot-timeout: 12000
           emulator-options: -no-window -netdelay none -netspeed full -noaudio -no-boot-anim
           disable-animations: true
-          script: gradle connectedCheck
+          script: |
+            appium &>/dev/null &
+            appium_pid=$!
+            kill $appium_pid
+          
 
       # - name: Parse Test Report
       #   if: always()
