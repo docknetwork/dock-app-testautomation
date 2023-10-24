@@ -12,7 +12,7 @@
 
    <test name="Wallet Tests After App Reset- Android">
        <classes>
-           <class name="CreateNewDID"/>
-       </classes>
+        <class name="dock.android.smoketests.appResetFalse.CreateNewDID"/>
+      </classes>
     </test>
 </suite>
