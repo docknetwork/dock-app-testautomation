@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   start-test:
-    runs-on: ubuntu-latest-m
+    runs-on: macos-latest
     name: "Start Test"
     steps:
       - name: Checkout
