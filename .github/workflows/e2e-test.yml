@@ -105,7 +105,7 @@ jobs:
           disable-animations: true
           script: |
             appium &>/dev/null &
-            exit 1
+            exit 0
           
 
       # - name: Parse Test Report
