@@ -105,8 +105,6 @@ jobs:
           disable-animations: true
           script: |
             appium &>/dev/null &
-            appium_pid=$!
-            kill $appium_pid
             exit 1
           
 
