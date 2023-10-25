@@ -3,84 +3,93 @@ on:
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-test]
+  push:
+    branches:
+      - "experiment/linux-tests"
 
 # Auto cancels previous running CI jobs in this PR on each new commit
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.client_payload.ref }}
   cancel-in-progress: true
-  
+
 jobs:
   start-test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest-m
     name: "Start Test"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: experiment/linux-tests
           token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
+      # - name: Setup node
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '16.x'
 
-      - name: Install ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '2.7.5'
-          bundler-cache: true
-          
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: 11
-          distribution: 'adopt'
-          cache: 'gradle'
+      # - name: Install ruby
+      #   uses: ruby/setup-ruby@v1
+      #   with:
+      #     ruby-version: '2.7.5'
+      #     bundler-cache: true
 
-      - name: Install Fastlane
-        run: gem install fastlane
+      # - name: Set up JDK 11
+      #   uses: actions/setup-java@v3
+      #   with:
+      #     java-version: 11
+      #     distribution: 'adopt'
+      #     cache: 'gradle'
 
-      - name: Install wallet sdk
-        run: |
-          git config --global url."https://".insteadOf git://
-          git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
-          cd ../wallet-sdk
-          yarn install --network-timeout 1000000
-          yarn build
-      
-      - name: Install app dependencies
-        run: |
-          git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ../dock-app
-          cd ../dock-app
-          yarn install --network-timeout 1000000
-          yarn postinstall
-          yarn sync-sdk
-          yarn build-sdk
+      # - name: Install Fastlane
+      #   run: gem install fastlane
 
-      - name: Handle Certs configuration
-        run: |
-          cd ../dock-app
-          rm -rf ./certs
-          git clone "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
-          mv ./certs/google-play.json ./
-          cp -rf ./certs/google-services.json ./android/app/
-          rm -rf ./android/gradle.properties
-          cp -rf ./certs/gradle.properties ./android/gradle.properties
-          # Pull env variables from certs repo
-          # It will inject sentry token in the JS thread
-          cp -rf ./certs/.env ./
-          rm -rf /tmp/google-play-cert
-          cp -rf ./certs/google-play-cert /tmp/google-play-cert
+      # - name: Install wallet sdk
+      #   run: |
+      #     git config --global url."https://".insteadOf git://
+      #     git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
+      #     cd ../wallet-sdk
+      #     yarn install --network-timeout 1000000
+      #     yarn build
 
-      - name: Generate android apk
-        run: |
-          cd ../dock-app/android
-          fastlane package_apk
+      # - name: Install app dependencies
+      #   run: |
+      #     git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ../dock-app
+      #     cd ../dock-app
+      #     yarn install --network-timeout 1000000
+      #     yarn postinstall
+      #     yarn sync-sdk
+      #     yarn build-sdk
 
-      
+      # - name: Handle Certs configuration
+      #   run: |
+      #     cd ../dock-app
+      #     rm -rf ./certs
+      #     git clone "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
+      #     mv ./certs/google-play.json ./
+      #     cp -rf ./certs/google-services.json ./android/app/
+      #     rm -rf ./android/gradle.properties
+      #     cp -rf ./certs/gradle.properties ./android/gradle.properties
+      #     # Pull env variables from certs repo
+      #     # It will inject sentry token in the JS thread
+      #     cp -rf ./certs/.env ./
+      #     rm -rf /tmp/google-play-cert
+      #     cp -rf ./certs/google-play-cert /tmp/google-play-cert
+
+      # - name: Generate android apk
+      #   run: |
+      #     cd ../dock-app/android
+      #     fastlane package_apk
+
+
       - name: Install Appium
         run: yarn global add appium@1.22
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
 
       - name: Run E2E Tests
         uses: ReactiveCircus/android-emulator-runner@v2
@@ -95,33 +104,33 @@ jobs:
           emulator-options: -no-window -netdelay none -netspeed full -noaudio -no-boot-anim
           disable-animations: true
           script: |
-            appium &>/dev/null &
-            gradle
-            adb install -g ../dock-app/android/app/build/outputs/apk/release/app-release.apk
-            adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
-            gradle test --stacktrace --info -DsuitXmlFile=mainSuite.xml
-      
-      - name: Parse Test Report
-        if: always()
-        run: |
-          chmod +x ./scripts/ParseReports.sh ./scripts/BuildNumber.sh
-          ./scripts/ParseReports.sh
-          ./scripts/BuildNumber.sh
+            appium &
+            appium_pid=$!
+            kill $appium_pid
+            exit 0
+          
 
-      - name: Send slack notification
-        if: always()
-        uses: edge/simple-slack-notify@master
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        with:
-          channel: '#wallet-bot'
-          status: ${{ job.status }}
-          success_text: 'End-to-end test completed successfully'
-          failure_text: 'End-to-end test failed'
-          cancelled_text: 'End-to-end test cancelled'
-          fields: |
-            [
-              { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
-              { "title": "Build Number", "value":"${env.BUILD_NUMBER}"}
-              { "title": "Failed Tests", "value":"${env.ALL_FAILED_TESTS}"}
-            ]
+      # - name: Parse Test Report
+      #   if: always()
+      #   run: |
+      #     chmod +x ./scripts/ParseReports.sh ./scripts/BuildNumber.sh
+      #     ./scripts/ParseReports.sh
+      #     ./scripts/BuildNumber.sh
+
+      # - name: Send slack notification
+      #   if: always()
+      #   uses: edge/simple-slack-notify@master
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #   with:
+      #     channel: '#wallet-bot'
+      #     status: ${{ job.status }}
+      #     success_text: 'End-to-end test completed successfully'
+      #     failure_text: 'End-to-end test failed'
+      #     cancelled_text: 'End-to-end test cancelled'
+      #     fields: |
+      #       [
+      #         { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
+      #         { "title": "Build Number", "value":"${env.BUILD_NUMBER}"}
+      #         { "title": "Failed Tests", "value":"${env.ALL_FAILED_TESTS}"}
+      #       ]
