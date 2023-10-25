@@ -104,7 +104,10 @@ jobs:
           emulator-options: -no-window -netdelay none -netspeed full -noaudio -no-boot-anim
           disable-animations: true
           script: |
+            set -ex
             appium &>/dev/null &
+            appium_pid=$!
+            kill $appium_pid
             exit 0
           
 
