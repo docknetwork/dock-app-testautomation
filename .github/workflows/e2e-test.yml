@@ -80,7 +80,7 @@ jobs:
 
       
       - name: Install Appium
-        run: yarn global add appium@1.22
+        run: yarn global add appium
 
       - name: Run E2E Tests
         uses: ReactiveCircus/android-emulator-runner@v2
