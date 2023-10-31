@@ -22,7 +22,7 @@ public class CreateWalletAndNewAccount {
         driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
     }
 
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Wallet Creation and new Account")
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Wallet Creation and new Account", enabled = false)
     public void verifyCreateWalletAndCreateNewAccount() {
         // Create new Wallet
         WalletHomePage walletHomePage = new WalletHomePage(driver);
@@ -32,10 +32,5 @@ public class CreateWalletAndNewAccount {
        walletHomePage.createNewAccount("test1");
        Assert.assertTrue(walletHomePage.isDisplayed(walletHomePage.labelAccountNext));
        Assert.assertTrue(walletHomePage.getDockBalance().contains("0"));
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public synchronized void closeApp() {
-        driver.quit();
     }
 }

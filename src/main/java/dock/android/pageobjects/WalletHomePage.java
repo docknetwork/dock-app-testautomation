@@ -10,7 +10,6 @@ import org.testng.Assert;
 
 import dock.utilities.Selector;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 
 public class WalletHomePage extends BasePage {
     public By importExistingWallet = Selector.contentDesc("ImportExistingBtn");
@@ -290,7 +289,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickRemoveOnFinalNotificationMessage() {
-        AndroidElement remove = (AndroidElement) driver.findElements(By.xpath("//android.widget.TextView[contains(@text,'Remove')]")).get(1);
+        WebElement remove = (WebElement) driver.findElements(By.xpath("//android.widget.TextView[contains(@text,'Remove')]")).get(1);
         remove.click();
         return this;
     }
@@ -521,7 +520,7 @@ public class WalletHomePage extends BasePage {
         try {
             waitABit(3000);
             driver.findElement(By.xpath("//android.widget.ImageButton[@content-desc=\"Show roots\"]")).click();
-            List<AndroidElement> downlaods = getElements(By.xpath("//android.widget.TextView[@text='Downloads']"));
+            List<WebElement> downlaods = getElements(By.xpath("//android.widget.TextView[@text='Downloads']"));
             System.out.println("downloadsicon size: " + downlaods.size());
 
             if (downlaods.size() > 1) {
@@ -609,7 +608,7 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage clickThreeDotsFromTopRightCorner() {
         waitABit(5000);
-        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup").click();
+        driver.findElement(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup")).click();
         return this;
     }
 
