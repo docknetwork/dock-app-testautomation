@@ -80,7 +80,10 @@ jobs:
 
       
       - name: Install Appium
-        run: yarn global add appium
+        run: |
+          yarn global add appium
+          appium driver install uiautomator2
+          appium driver install xcuitest
 
       - name: Run E2E Tests
         uses: ReactiveCircus/android-emulator-runner@v2
