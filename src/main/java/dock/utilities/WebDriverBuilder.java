@@ -18,6 +18,7 @@ import io.appium.java_client.android.options.app.SupportsAutoGrantPermissionsOpt
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.ios.options.app.SupportsBundleIdOption;
+import io.appium.java_client.ios.options.wda.SupportsShouldTerminateAppOption;
 import io.appium.java_client.ios.options.wda.SupportsUseNewWdaOption;
 import io.appium.java_client.remote.options.SupportsAppOption;
 import io.appium.java_client.remote.options.SupportsAutomationNameOption;
@@ -59,6 +60,7 @@ public class WebDriverBuilder {
         UiAutomator2Options options = new UiAutomator2Options();
         options.setCapability(SupportsAutoGrantPermissionsOption.AUTO_GRANT_PERMISSIONS_OPTION, true);
         options.setCapability(SupportsNoResetOption.NO_RESET_OPTION, true);
+        options.setCapability(SupportsShouldTerminateAppOption.SHOULD_TERMINATE_APP_OPTION, true);
         if (LocalPropertiesReader.getExecutionMode().equals("local")) {
             options.setCapability(SupportsDeviceNameOption.DEVICE_NAME_OPTION, LocalPropertiesReader.getAndroidPhoneName());
             options.setCapability(SupportsUdidOption.UDID_OPTION, LocalPropertiesReader.getAndroidUdid());

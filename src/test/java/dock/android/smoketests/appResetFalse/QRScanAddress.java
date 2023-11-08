@@ -13,7 +13,6 @@ public class QRScanAddress extends BaseTestCaseAndroid {
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify scanning QR credential")
     public void verifyScanAddress() {
         String address = "3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB";
-        AndroidDriver driver = getDriverInstance();
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         if (walletHomePage.getWalletStatus()) {
             walletHomePage.createNewWallet();

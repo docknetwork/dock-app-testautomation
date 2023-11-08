@@ -22,7 +22,7 @@ public class CreateWalletAndNewAccount {
         driver = WebDriverBuilder.getInstance().getAndroidDriverByAppReset();
     }
 
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Wallet Creation and new Account", enabled = false)
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Wallet Creation and new Account")
     public void verifyCreateWalletAndCreateNewAccount() {
         // Create new Wallet
         WalletHomePage walletHomePage = new WalletHomePage(driver);

@@ -9,12 +9,9 @@ import dock.utilities.TestGroup;
 import io.appium.java_client.android.AndroidDriver;
 
 public class ShareDID extends BaseTestCaseAndroid {
-
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify Share DID option")
     public void verifyShareDID() {
-        AndroidDriver driver = getDriverInstance();
         WalletHomePage walletHomePage = new WalletHomePage(driver);
-        String password = "123456789Qw!";
         if (walletHomePage.getWalletStatus()) {
             walletHomePage.createNewWallet();
         }

@@ -12,7 +12,6 @@ public class ImportRemoveCredentialViaJson extends BaseTestCaseAndroid {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify Import Credential functionality via Json")
     public void verifyImportCredentialViaJson() {
-        AndroidDriver driver = getDriverInstance();
 
         // Import Existing account via Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);

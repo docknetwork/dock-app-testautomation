@@ -12,8 +12,6 @@ public class DeleteAccount extends BaseTestCaseAndroid {
 
     @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify Delete Account functionality")
     public void verifyDeleteAccount() {
-        AndroidDriver driver = getDriverInstance();
-
         // Create New Account
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         String accountName = "test" + walletHomePage.generateRandomNumber();

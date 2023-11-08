@@ -12,7 +12,6 @@ public class MaxTokensFunctionality extends BaseTestCaseAndroid {
 
     @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify Receive Button")
     public void verifyMaxTokensSendButton() {
-        AndroidDriver driver = getDriverInstance();
         String recipient = "3DyCKfVoGZL8iTWruPtekwhDy9SFqaq9gHtbWF3QGYXDzHSK";
 
         // Import Existing account via Json

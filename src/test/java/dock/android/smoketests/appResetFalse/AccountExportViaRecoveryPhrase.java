@@ -12,7 +12,6 @@ public class AccountExportViaRecoveryPhrase extends BaseTestCaseAndroid {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify account export as Json")
     public void verifyExportAccountAsJson() {
-        AndroidDriver driver = getDriverInstance();
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         String accountName = "test" + walletHomePage.generateRandomNumber();
         if (walletHomePage.getWalletStatus()) {

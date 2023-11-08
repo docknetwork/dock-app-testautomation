@@ -20,7 +20,6 @@ public class QRScanProofRequest extends BaseTestCaseAndroid {
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify scanning QR credential")
     public void verifyScanProofRequest() {
         String qrCodeValue = "https://creds-testnet.dock.io/proof/06579da1-4195-428b-81d2-4bb7ff2787c4";
-        AndroidDriver driver = getDriverInstance();
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         if (walletHomePage.getWalletStatus()) {
             walletHomePage.createNewWallet();

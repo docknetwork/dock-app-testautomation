@@ -12,8 +12,6 @@ public class CreateAccountViaMemicPhrase extends BaseTestCaseAndroid {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to create account verification via Memic")
     public void verifyCreateAccountViaMemic() {
-        AndroidDriver driver = getDriverInstance();
-
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         String accountName = "test" + walletHomePage.generateRandomNumber();
         if (walletHomePage.getWalletStatus()) {
