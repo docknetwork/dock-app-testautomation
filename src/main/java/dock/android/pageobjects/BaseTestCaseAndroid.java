@@ -35,11 +35,11 @@ public class BaseTestCaseAndroid {
    public synchronized void closeApp() {
        try {
            if (executionMode.equals("grid") && driver != null) {
-               driver.close();
+               driver.quit();
                log.info("Driver has been closed");
            }
            else if (quitDriver && driver != null) {
-               driver.close();
+               driver.quit();
                log.info("Driver has been closed");
            }
        }
