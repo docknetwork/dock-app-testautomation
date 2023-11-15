@@ -122,6 +122,6 @@ jobs:
           fields: |
             [
               { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
-              { "title": "Build Number", "value":"${env.BUILD_NUMBER}"}
+              { "title": "Build Number", "value":"${env.BUILD_NUMBER}"},
               { "title": "Failed Tests", "value":"${env.ALL_FAILED_TESTS}"}
             ]
