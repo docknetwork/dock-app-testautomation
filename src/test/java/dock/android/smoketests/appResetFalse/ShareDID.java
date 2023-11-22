@@ -33,6 +33,7 @@ public class ShareDID extends BaseTestCaseAndroid {
         Assert.assertTrue(walletHomePage.isDisplayedByText("did:key:"));
 
         String mainnetDID = driver.getClipboardText();
+        
         walletHomePage.ensureTestnet();
         walletHomePage.clickDID().waitABit(2000);
         walletHomePage.clickShare().waitABit(3000);
