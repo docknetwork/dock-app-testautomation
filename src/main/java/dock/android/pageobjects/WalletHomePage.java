@@ -61,7 +61,7 @@ public class WalletHomePage extends BasePage {
     private By delete = By.xpath("//android.widget.TextView[contains(@text,'Delete')]");
     private By btnShare = By.xpath("//android.widget.TextView[contains(@text,'Share')]");
     private By btnTestMode = Selector.contentResourceID("testMode");
-    private By btnPasteToScan = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[6]");
+    private By btnPasteToScan = Selector.contentResourceID("Scan the QR Code, Place the code inside the box");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -73,8 +73,8 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage createNewWallet() {
 
-        click(btnCreateNewWallet).waitABit(200);
-        click(Selector.contentDesc("CreateWalletBtn"));
+        click(btnCreateNewWallet).waitABit(2000);
+        click(Selector.contentDesc("CreateWalletBtn")).waitABit(2000);
         enterPassCodeTwoTimes();
 //        clickDoThisLater();
         return this;
@@ -137,7 +137,8 @@ public class WalletHomePage extends BasePage {
                     .clickImportExistingAccount()
                     .clickUploadJsonFile()
                     .uploadFile("importAccount.json")
-                    .enterPassword("123456789Qw!")
+                    .waitABit(3000);
+            enterPassword("123456789Qw!")
                     .clickNext()
                     .enterNewAccountName(accountName)
                     .clickNext();
@@ -201,7 +202,7 @@ public class WalletHomePage extends BasePage {
         clickScan();
         waitABit(3000);
         driver.setClipboardText(code);
-        click(btnPasteToScan);
+        click(By.xpath("//android.view.ViewGroup[@content-desc=\"Scan the QR Code, Place the code inside the box\"]"));
         return this;
     }
 
@@ -565,11 +566,13 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage enterConfirmPassword(String password) {
         sendText(txtBxConfirmPassword, password);
+        waitABit(2000);
         return this;
     }
 
     public WalletHomePage enterConfirmDIDPassword(String password) {
         sendText(txtBxConfirmDIDPassword, password);
+        waitABit(2000);
         return this;
     }
 

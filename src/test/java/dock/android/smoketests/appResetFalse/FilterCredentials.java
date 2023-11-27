@@ -53,8 +53,10 @@ public class FilterCredentials extends BaseTestCaseAndroid {
         walletHomePage.clickByView("did:dock:5CRMra6S2P3y992T7vM44RrUqNAXTEn2MbtWqw2PyGn5UgoV");
         walletHomePage.clickByView("Issuance Date");
         walletHomePage.click(fromDateInput);
+        walletHomePage.waitABit(2000);
         walletHomePage.clickByView("Confirm");
         walletHomePage.click(toDateInput);
+        walletHomePage.waitABit(2000);
         walletHomePage.clickByView("Confirm");
         walletHomePage.clickByView("Apply filter");
         walletHomePage.clickByView("Show results");
