@@ -61,7 +61,7 @@ public class WalletHomePage extends BasePage {
     private By delete = By.xpath("//android.widget.TextView[contains(@text,'Delete')]");
     private By btnShare = By.xpath("//android.widget.TextView[contains(@text,'Share')]");
     private By btnTestMode = Selector.contentResourceID("testMode");
-    private By btnPasteToScan = Selector.contentResourceID("Scan the QR Code, Place the code inside the box");
+    private By btnPasteToScan = Selector.contentResourceID("pasteToScan");
 
     public WalletHomePage(final AndroidDriver driver) {
         super(driver);
@@ -202,7 +202,7 @@ public class WalletHomePage extends BasePage {
         clickScan();
         waitABit(3000);
         driver.setClipboardText(code);
-        click(By.xpath("//android.view.ViewGroup[@content-desc=\"Scan the QR Code, Place the code inside the box\"]"));
+        click(btnPasteToScan);
         return this;
     }
 
