@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import dock.android.pageobjects.WalletHomePage;
+import dock.utilities.Selector;
 import dock.utilities.TestGroup;
 import dock.utilities.WebDriverBuilder;
 import io.appium.java_client.android.AndroidDriver;
@@ -42,7 +43,7 @@ public class DefaultDIDCreation {
         walletHomePage.createNewWallet();
         walletHomePage.clickDID().waitABit(2000);
         walletHomePage.clickShare();
-        walletHomePage.click(By.xpath("//*[contains(@text,'Copy DID')]")).waitABit(2000);
+        walletHomePage.click(Selector.contentResourceID("copyDIDButton")).waitABit(2000);
         String secondDID = driver.getClipboardText();
 
         Assert.assertFalse(firstDID.equals(secondDID));
