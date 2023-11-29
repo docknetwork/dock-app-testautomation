@@ -25,10 +25,9 @@ import org.slf4j.MDC;
 import dock.android.Selector;
 import dock.utilities.TestListener;
 import dock.utilities.WebDriverBuilder;
-import io.appium.java_client.MobileBy;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
@@ -66,7 +65,7 @@ public class BasePage {
         swipeDownUntillElementVisibileByContains("weiter");
     }
 
-    public BasePage waitForElementToBeClickable(By locator, long seconds) {
+    public BasePage waitForElementToBeClickable(By locator, Duration seconds) {
         new WebDriverWait(driver, seconds).pollingEvery(Duration.ofMillis(500))
                 .ignoring(NoSuchElementException.class).ignoring(StaleElementReferenceException.class)
                 .ignoring(TimeoutException.class)
@@ -87,7 +86,7 @@ public class BasePage {
     }
 
     public void clickOptionAfterSearch(String value) {
-        AndroidElement searchTxtBx = (AndroidElement) driver.findElement(By.id(appVersion + "search_src_text"));
+        WebElement searchTxtBx = (WebElement) driver.findElement(By.id(appVersion + "search_src_text"));
         searchTxtBx.sendKeys(value);
         click(By.id(appVersion + "text_view"));
         log.info("Value clicked: " + value);
@@ -95,12 +94,12 @@ public class BasePage {
 
 
     public void clickBySwitchButton(String contentDec) {
-        getElementByContentDescription(contentDec).findElement(By.className("android.widget.Switch")).click();
+        getElementByContentDescription(contentDec).findElement(AppiumBy.className("android.widget.Switch")).click();
         log.info("Value clicked: " + contentDec);
     }
 
     public void clickByCheckedTextView(String contentDesc, int number) {
-        getElementByContentDescription(contentDesc).findElements(By.className("android.widget.CheckedTextView")).get(--number).click();
+        getElementByContentDescription(contentDesc).findElements(AppiumBy.className("android.widget.CheckedTextView")).get(--number).click();
         log.info("Value clicked: " + contentDesc);
     }
 
@@ -110,12 +109,12 @@ public class BasePage {
     }
 
     public void clickByTextView(String contentDesc, int number) {
-        getElementByContentDescription(contentDesc).findElements(By.className("android.widget.TextView")).get(--number).click();
+        getElementByContentDescription(contentDesc).findElements(AppiumBy.className("android.widget.TextView")).get(--number).click();
         log.info("Value clicked: " + contentDesc);
     }
 
     public void clickByEditTextView(String contentDesc, int number) {
-        getElementByContentDescription(contentDesc).findElements(By.className("android.widget.EditText")).get(--number).click();
+        getElementByContentDescription(contentDesc).findElements(AppiumBy.className("android.widget.EditText")).get(--number).click();
         log.info("Value clicked: " + contentDesc);
     }
 
@@ -125,7 +124,7 @@ public class BasePage {
 
     public BasePage sendTextByContentDesc(String text, String descNr) {
         scrollIntoViewByDescs(descNr);
-        AndroidElement element = getElement(Selector.contentDesc(descNr)).findElement(txtBxEditText);
+        WebElement element = getElement(Selector.contentDesc(descNr)).findElement(txtBxEditText);
         element.click();
         element.sendKeys(text);
         hideKeyboard();
@@ -141,13 +140,6 @@ public class BasePage {
 
     public String getTitle() {
         return getElement(framePageTitle).findElement(txtBxTitle).getText();
-    }
-
-    public void scrollIntoViewById(String locator) {
-        String uiSelector = "new UiSelector().resourceId(\"" + locator + "\")";
-        String command = "new UiScrollable(new UiSelector().scrollable(true).instance(0)).swipeDownUntillElementVisibile("
-                + uiSelector + ");";
-        driver.findElementByAndroidUIAutomator(command);
     }
 
     public void scrollIntoViewByCoordinates(int yOffset, int yMoveTo) {
@@ -250,12 +242,12 @@ public class BasePage {
         return this;
     }
 
-    public AndroidElement getElementByXpath(String elementText) {
-        return (AndroidElement) driver.findElement(By.xpath("//*[@text='" + elementText + "']"));
+    public WebElement getElementByXpath(String elementText) {
+        return (WebElement) driver.findElement(By.xpath("//*[@text='" + elementText + "']"));
     }
 
-    public AndroidElement getElementByXpathContains(String elementText) {
-        return (AndroidElement) driver.findElement(By.xpath("//*[contains(@text , '" + elementText + "')]"));
+    public WebElement getElementByXpathContains(String elementText) {
+        return (WebElement) driver.findElement(By.xpath("//*[contains(@text , '" + elementText + "')]"));
     }
 
     public BasePage click(WebElement element) {
@@ -279,14 +271,14 @@ public class BasePage {
         return driver.findElement(locator);
     }
 
-    public AndroidElement getElementByContentDescription(String contentDescription) {
+    public WebElement getElementByContentDescription(String contentDescription) {
         waitElementVisibility(Selector.contentDesc(contentDescription));
-        return (AndroidElement) driver.findElement(Selector.contentDesc(contentDescription));
+        return (WebElement) driver.findElement(Selector.contentDesc(contentDescription));
     }
 
     public void sendText(String contentDescription, String value) {
         scrollIntoViewByDescs(contentDescription);
-        AndroidElement element = driver.findElement(Selector.contentDesc(contentDescription)).findElement(txtBxEditText);
+        WebElement element = driver.findElement(Selector.contentDesc(contentDescription)).findElement(txtBxEditText);
         element.clear();
         element.click();
         element.sendKeys(value);
@@ -294,7 +286,7 @@ public class BasePage {
         hideKeyboard();
     }
 
-    public List<AndroidElement> getElements(By locator) {
+    public List<WebElement> getElements(By locator) {
         waitElementVisibility(locator);
         return driver.findElements(locator);
     }
@@ -334,34 +326,34 @@ public class BasePage {
     }
 
     public BasePage waitElementVisibility(By locator) {
-        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(locator));
+        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.visibilityOfElementLocated(locator));
         return this;
     }
 
     public BasePage waitElementVisibility(String locator) {
         final String selector = "new UiSelector().text(\"" + locator + "\").className(\"android.widget.TextView\")";
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(MobileBy.AndroidUIAutomator(selector)));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.androidUIAutomator(selector)));
         return this;
     }
 
     public BasePage waitForElementInVisibility(String locator) {
         final String selector = "new UiSelector().text(\"" + locator + "\").className(\"android.widget.TextView\")";
-        new WebDriverWait(driver, 5).until(ExpectedConditions.invisibilityOfElementLocated(MobileBy.AndroidUIAutomator(selector)));
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.invisibilityOfElementLocated(AppiumBy.androidUIAutomator(selector)));
         return this;
     }
 
-    public BasePage waitElementVisibility(By locator, int sec) {
+    public BasePage waitElementVisibility(By locator, Duration sec) {
         takeScreenshot();
         new WebDriverWait(driver, sec).until(ExpectedConditions.visibilityOfElementLocated(locator));
         return this;
     }
 
-    public void waitElementInVisibility(By locator, int sec) {
+    public void waitElementInVisibility(By locator, Duration sec) {
         new WebDriverWait(driver, sec).until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
 
     public BasePage waitElementVisibility(WebElement element) {
-        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(element));
+        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.visibilityOf(element));
         return this;
     }
 
@@ -375,7 +367,7 @@ public class BasePage {
     }
 
     public BasePage sendTextVisibleKeyboard(By locator, String text) {
-        AndroidElement element = (AndroidElement) getElement(locator);
+        WebElement element = (WebElement) getElement(locator);
         element.click();
         element.clear();
         element.sendKeys(text);
@@ -388,7 +380,7 @@ public class BasePage {
         return this;
     }
 
-    public BasePage sendText(AndroidElement element, String text) {
+    public BasePage sendText(WebElement element, String text) {
         waitElementVisibility(element);
         element.click();
         element.clear();
@@ -398,18 +390,19 @@ public class BasePage {
         return this;
     }
 
-    public BasePage sendTextDate(AndroidElement element, String text) {
+    public BasePage sendTextDate(WebElement element, String text) {
         waitElementVisibility(element);
         if (text.length() == 1) {
             log.info("textlength is " + text.length());
             text = "0" + text;
         }
         if (element.getText().equals("TT") || element.getText().equals("MM") || element.getText().equals("JJJJ")) {
-            element.setValue(text);
+            element.sendKeys(text);
         }
         else {
             waitElementVisibility(element);
-            element.replaceValue(text);
+//            driver.replaceElementValue(element, text);
+            element.sendKeys(text);
         }
         log.info("Text = [" + text + "] has been entered.");
         return this;
@@ -539,9 +532,9 @@ public class BasePage {
         driver.manage().timeouts().implicitlyWait(WebDriverBuilder.IMPLICIT_WAIT_TIME, TimeUnit.SECONDS);
     }
 
-    public AndroidElement scrollIntoViewByDescs(String desc) {
-        AndroidElement element = (AndroidElement) driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0))" +
-                ".scrollDescriptionIntoView(" + "\"" + desc + "\"" + ");");
+    public WebElement scrollIntoViewByDescs(String desc) {
+        WebElement element = (WebElement) driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0))" +
+                ".scrollDescriptionIntoView(" + "\"" + desc + "\"" + ");"));
         waitABit(400);
         return element;
     }
@@ -558,7 +551,7 @@ public class BasePage {
 
     public void dragSeekBarTo(int scrollPosition, int seekbar) {
         log.info("Scrolling to: " + scrollPosition);
-        WebElement seekBarele = (WebElement) driver.findElements(By.className("android.widget.SeekBar")).get(--seekbar);
+        WebElement seekBarele = (WebElement) driver.findElements(AppiumBy.className("android.widget.SeekBar")).get(--seekbar);
         int start = seekBarele.getLocation().getX();
         int y = seekBarele.getLocation().getY();
         int end = start + seekBarele.getSize().getWidth();
@@ -574,13 +567,13 @@ public class BasePage {
         String day = String.valueOf(LocalDate.parse(date, localDateFormatter).getDayOfMonth());
         String year = String.valueOf(LocalDate.parse(date, localDateFormatter).getYear());
 
-        AndroidElement dayTxtElement = getElement(locator).findElement(txtBxDay);
+        WebElement dayTxtElement = getElement(locator).findElement(txtBxDay);
         sendTextDate(dayTxtElement, day);
 
-        AndroidElement monthTxtElement = getElement(locator).findElement(txtBxMonth);
+        WebElement monthTxtElement = getElement(locator).findElement(txtBxMonth);
         sendTextDate(monthTxtElement, month);
 
-        AndroidElement yearTxtElement = getElement(locator).findElement(txtBxYear);
+        WebElement yearTxtElement = getElement(locator).findElement(txtBxYear);
         sendTextDate(yearTxtElement, year);
 
         log.info("Date entered: " + date);
@@ -637,18 +630,18 @@ public class BasePage {
 
     public void enterDateByDescription(String date, By locator) {
         log.info("Date to enetered: " + date);
-        AndroidElement txtBxDay = getElement(locator).findElement(txtBxEditTextDay);
+        WebElement txtBxDay = getElement(locator).findElement(txtBxEditTextDay);
         String day = date.substring(0, 2);
         txtBxDay.click();
         txtBxDay.clear();
         txtBxDay.sendKeys(day);
 
-        AndroidElement txtBxMonth = getElement(locator).findElement(txtBxEditTextMonth);
+        WebElement txtBxMonth = getElement(locator).findElement(txtBxEditTextMonth);
         String month = date.substring(3, 5);
         txtBxMonth.clear();
         txtBxMonth.sendKeys(month);
 
-        AndroidElement txtBxJahr = getElement(locator).findElement(txtBxEditTextYear);
+        WebElement txtBxJahr = getElement(locator).findElement(txtBxEditTextYear);
         String year = date.substring(6, 10);
         txtBxJahr.clear();
         txtBxJahr.sendKeys(year);
@@ -682,17 +675,17 @@ public class BasePage {
     }
 
     public void waitforResults() {
-        waitElementVisibility(tarif_name, 120);
+        waitElementVisibility(tarif_name, Duration.ofSeconds(120));
     }
 
     protected void clickByUiAutomator(final String selector) {
         log.info("Click on selector ....." + selector);
-        driver.findElement(MobileBy.AndroidUIAutomator(selector)).click();
+        driver.findElement(AppiumBy.androidUIAutomator(selector)).click();
         log.info("Successfully clicked on selector ....." + selector);
     }
 
     protected String getTextByUiAutomator(final String selector) {
         log.info("Getting Text on selector ....." + selector);
-        return driver.findElement(MobileBy.AndroidUIAutomator(selector)).getText();
+        return driver.findElement(AppiumBy.androidUIAutomator(selector)).getText();
     }
 }

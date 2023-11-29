@@ -21,7 +21,6 @@ public class QRScanCredentialOffer extends BaseTestCaseAndroid {
         String name = "Test name";
         String qrValue = "openid://discovery?issuer=https://api-testnet.dock.io/openid/connect/issuers/eda7ac1a-4a33-4b5e-8017-22c20631149d";
 
-        AndroidDriver driver = getDriverInstance();
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         if (walletHomePage.getWalletStatus()) {
             walletHomePage.createNewWallet();

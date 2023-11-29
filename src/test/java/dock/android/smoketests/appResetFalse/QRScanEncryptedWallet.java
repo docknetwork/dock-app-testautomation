@@ -18,7 +18,6 @@ public class QRScanEncryptedWallet extends BaseTestCaseAndroid {
         String qrCodeValue = "{\"@context\":[\"https://w3id.org/wallet/v1\"],\"id\":\"did:key:z6LSd1HEdsPzejHbcKpWH44bF5oA4ET2hvxRBGJK17m4EQgH#encrypted-wallet\",\"type\":[\"EncryptedWallet\"],\"issuer\":\"did:key:z6LSd1HEdsPzejHbcKpWH44bF5oA4ET2hvxRBGJK17m4EQgH\",\"issuanceDate\":\"2022-03-28T11:44:06.296Z\",\"credentialSubject\":{\"id\":\"did:key:z6LSd1HEdsPzejHbcKpWH44bF5oA4ET2hvxRBGJK17m4EQgH\",\"encryptedWalletContents\":{}}}";
         String password = "Password";
 
-        AndroidDriver driver = getDriverInstance();
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         if (walletHomePage.getWalletStatus()) {
             walletHomePage.createNewWallet();

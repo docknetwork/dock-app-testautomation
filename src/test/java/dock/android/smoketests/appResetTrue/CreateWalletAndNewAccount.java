@@ -33,9 +33,4 @@ public class CreateWalletAndNewAccount {
        Assert.assertTrue(walletHomePage.isDisplayed(walletHomePage.labelAccountNext));
        Assert.assertTrue(walletHomePage.getDockBalance().contains("0"));
     }
-
-    @AfterMethod(alwaysRun = true)
-    public synchronized void closeApp() {
-        driver.quit();
-    }
 }

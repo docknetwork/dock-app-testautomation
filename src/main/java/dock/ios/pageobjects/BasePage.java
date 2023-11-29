@@ -13,6 +13,7 @@ import java.util.concurrent.TimeoutException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -21,10 +22,9 @@ import org.slf4j.MDC;
 
 import dock.utilities.TestListener;
 import dock.utilities.WebDriverBuilder;
-import io.appium.java_client.MobileBy;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.touch.WaitOptions;
 
 public class BasePage<T extends BasePage> {
@@ -54,25 +54,25 @@ public class BasePage<T extends BasePage> {
         return (T) this;
     }
 
-    public BasePage click(IOSElement element) {
+    public BasePage click(WebElement element) {
         element.click();
         log.info("*****Element with locator = [ " + element + " ] has been clicked.**********");
         return this;
     }
 
     public BasePage clickByAccessibilityId(String accessibilityId) {
-        driver.findElementByAccessibilityId(accessibilityId).click();
+        driver.findElement(AppiumBy.accessibilityId(accessibilityId)).click();
         log.info("*****Element with locator = [ " + accessibilityId + " ] has been clicked.**********");
         return this;
     }
 
     public BasePage inputValueByAccessibilityId(String accessibilityId, String value) {
-        ((IOSElement) driver.findElementByAccessibilityId(accessibilityId)).setValue(value);
+        ((WebElement) driver.findElement(AppiumBy.accessibilityId(accessibilityId))).sendKeys(value);
         return this;
     }
 
     public String getTextByAccessibilityId(String accessibilityId) {
-        String text = driver.findElementByAccessibilityId(accessibilityId).getText();
+        String text = driver.findElement(AppiumBy.accessibilityId(accessibilityId)).getText();
         log.info("Element displayed text = " + text);
         return text;
     }
@@ -98,11 +98,11 @@ public class BasePage<T extends BasePage> {
         return (T) this;
     }
 
-    public IOSElement getElement(By locator) {
-        return (IOSElement) driver.findElement(locator);
+    public WebElement getElement(By locator) {
+        return (WebElement) driver.findElement(locator);
     }
 
-    public List<IOSElement> getElements(By locator) {
+    public List<WebElement> getElements(By locator) {
         turnOffImplicitWait();
         List listElements = driver.findElements(locator);
         turnOnImplicitWait();
@@ -117,24 +117,24 @@ public class BasePage<T extends BasePage> {
     public void clickOptionviaSuchen(String Value) {
         getElement(suchen).click();
         getElement(suchen).sendKeys(Value);
-        IOSElement element = (IOSElement) driver.findElementByName(Value);
+        WebElement element = (WebElement) driver.findElement(By.name(Value));
         element.click();
     }
 
 
     public BasePage waitForElementVisibility(By locator) {
-        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(locator));
+        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.visibilityOfElementLocated(locator));
         return this;
     }
 
     public BasePage waitForElementVisibilityByAccessibilityId(String locator) {
-        new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(MobileBy.AccessibilityId(locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.accessibilityId(locator)));
         return this;
     }
 
     public BasePage waitForElementInvisibility(By locator) {
         turnOffImplicitWait();
-        new WebDriverWait(driver, 60).pollingEvery(Duration.ofMillis(200))
+        new WebDriverWait(driver, Duration.ofSeconds(60)).pollingEvery(Duration.ofMillis(200))
                 .ignoring(NoSuchElementException.class).ignoring(StaleElementReferenceException.class)
                 .ignoring(TimeoutException.class)
                 .until(ExpectedConditions.invisibilityOfElementLocated(locator));
@@ -143,14 +143,14 @@ public class BasePage<T extends BasePage> {
     }
 
 
-    public BasePage waitForElementVisibility(By locator, int sec) {
+    public BasePage waitForElementVisibility(By locator, Duration sec) {
         new WebDriverWait(driver, sec).until(ExpectedConditions.visibilityOfElementLocated(locator));
         return this;
     }
 
-    public BasePage waitForElementVisibility(IOSElement element) {
+    public BasePage waitForElementVisibility(WebElement element) {
         turnOffImplicitWait();
-        new WebDriverWait(driver, 30).pollingEvery(Duration.ofMillis(1000))
+        new WebDriverWait(driver, Duration.ofSeconds(30)).pollingEvery(Duration.ofMillis(1000))
                 .ignoring(NoSuchElementException.class).ignoring(StaleElementReferenceException.class)
                 .ignoring(TimeoutException.class)
                 .until(ExpectedConditions.visibilityOf(element));
@@ -161,7 +161,7 @@ public class BasePage<T extends BasePage> {
     public BasePage hideKeyboard() {
         waitABit(500);
         if (checkElementExist(By.name("Fertig"))) {
-            driver.findElementByName("Fertig").click();
+            driver.findElement(By.name("Fertig")).click();
         }
         return this;
     }
@@ -180,7 +180,7 @@ public class BasePage<T extends BasePage> {
         if (locator.toString().contains("name")) {
             swipeDownUntillElementVisibile(locator.toString().replace("By.name:", "").trim());
         }
-        IOSElement element = (IOSElement) driver.findElement(locator);
+        WebElement element = (WebElement) driver.findElement(locator);
         element.click();
         element.sendKeys(text);
         log.info("locator = [" + locator + "], Text = [" + text + "] has been entered.");
@@ -193,7 +193,7 @@ public class BasePage<T extends BasePage> {
         if (locator.toString().contains("name")) {
             swipeDownUntillElementVisibile(locator.toString().replace("By.name:", "").trim());
         }
-        IOSElement element = (IOSElement) driver.findElement(locator);
+        WebElement element = (WebElement) driver.findElement(locator);
         element.click();
         element.clear();
         element.sendKeys(text);
@@ -203,7 +203,7 @@ public class BasePage<T extends BasePage> {
     }
 
     //Write Text
-    public BasePage sendText(IOSElement element, String text) {
+    public BasePage sendText(WebElement element, String text) {
         element.sendKeys(text);
         log.info("Text = [" + text + "] has been entered.");
         return this;
@@ -257,7 +257,7 @@ public class BasePage<T extends BasePage> {
 
     public boolean checkElementExist(By locator, int sec) {
         turnOffImplicitWait(sec);
-        List<IOSElement> elements = driver.findElements(locator);
+        List<WebElement> elements = driver.findElements(locator);
         boolean status = false;
         if (elements.size() > 0) {
             status = elements.get(0).isDisplayed();
@@ -277,7 +277,7 @@ public class BasePage<T extends BasePage> {
 
     public boolean getElementStatusWithVisibilityStatus(By locator) {
         turnOffImplicitWait();
-        List<IOSElement> elements = driver.findElements(locator);
+        List<WebElement> elements = driver.findElements(locator);
         boolean status = false;
         if (elements.size() > 0) {
             status = elements.get(0).isDisplayed();
@@ -288,16 +288,16 @@ public class BasePage<T extends BasePage> {
     }
 
     public boolean checkElementVisibilityByAccessibilityId(String locator) {
-        WebDriverWait wait = new WebDriverWait(driver, 2);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
         log.info("Checking visibility of Element with locator: " + locator + " ----  is starting");
-        final boolean displayed = wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId(locator))).isDisplayed();
+        final boolean displayed = wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.accessibilityId(locator))).isDisplayed();
         log.info("Checking visibility of Element with locator: " + locator + " ---- Visibility status: " + displayed);
         return displayed;
     }
 
     public boolean getElementStatusWithInvisibilityStatus(By locator) {
         turnOffImplicitWait();
-        List<IOSElement> elements = driver.findElements(locator);
+        List<WebElement> elements = driver.findElements(locator);
         boolean status = elements.size() > 0;
         log.info("Checking visibility of Element with locator: " + locator + " ---- Visibility status: " + status);
         turnOnImplicitWait();
@@ -389,7 +389,7 @@ public class BasePage<T extends BasePage> {
     }
 
     protected void enterDate(By locator, String date) {
-        IOSElement dayTxtElement = getElement(locator);
+        WebElement dayTxtElement = getElement(locator);
         dayTxtElement.sendKeys(date);
         waitABit(500);
     }
