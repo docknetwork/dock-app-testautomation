@@ -12,8 +12,6 @@ public class ExportAccountAsJson extends BaseTestCaseAndroid {
 
     @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify Export Account as Json functionality")
     public void verifyExportAccount() {
-        AndroidDriver driver = getDriverInstance();
-
         // Create New Account
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         String accountName = "test";

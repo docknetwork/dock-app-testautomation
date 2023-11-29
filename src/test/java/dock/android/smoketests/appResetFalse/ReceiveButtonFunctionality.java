@@ -12,7 +12,6 @@ public class ReceiveButtonFunctionality extends BaseTestCaseAndroid {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify Receive Button")
     public void verifyReceiveButton() {
-        AndroidDriver driver = getDriverInstance();
         // Import Existing account via Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         if (walletHomePage.getWalletStatus()) {

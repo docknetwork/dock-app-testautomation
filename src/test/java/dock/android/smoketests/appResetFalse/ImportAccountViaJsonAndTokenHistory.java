@@ -12,7 +12,6 @@ public class ImportAccountViaJsonAndTokenHistory extends BaseTestCaseAndroid {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify Import Account functionality via Json")
     public void verifyImportAccountViaJsonAndTokensHistory() {
-        AndroidDriver driver = getDriverInstance();
         // Import Existing account via Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         if (walletHomePage.getWalletStatus()) {

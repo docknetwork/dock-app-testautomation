@@ -19,8 +19,6 @@ public class FilterCredentials extends BaseTestCaseAndroid {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify filter credentials")
     public void verifyFilterCredentials() {
-        AndroidDriver driver = getDriverInstance();
-
         // Create New Account
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         String invalidSearchTerm = "search term" + walletHomePage.generateRandomNumber();

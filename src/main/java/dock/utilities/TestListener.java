@@ -42,7 +42,8 @@ public class TestListener implements ITestListener {
         if (appType.equals("android")) {
             BaseTestCaseAndroid currentCase = (BaseTestCaseAndroid) x;
             WebDriver driver = currentCase.getDriverInstance();
-            savePNG(testMethodName, driver);
+//            TODO : Restore this when CI android version restriction is resolved (context: https://creds-testnet.dock.io/proof/06579da1-4195-428b-81d2-4bb7ff2787c4)
+//            savePNG(testMethodName, driver);
         }
         else if (appType.equals("ios")) {
             BaseTestCaseIOS currentCase = (BaseTestCaseIOS) x;
