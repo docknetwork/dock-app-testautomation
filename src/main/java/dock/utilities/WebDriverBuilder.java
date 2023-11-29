@@ -11,10 +11,21 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.options.UiAutomator2Options;
+import io.appium.java_client.android.options.app.SupportsAppActivityOption;
+import io.appium.java_client.android.options.app.SupportsAppPackageOption;
+import io.appium.java_client.android.options.app.SupportsAutoGrantPermissionsOption;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
-import io.appium.java_client.remote.AndroidMobileCapabilityType;
-import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.ios.options.XCUITestOptions;
+import io.appium.java_client.ios.options.app.SupportsBundleIdOption;
+import io.appium.java_client.ios.options.wda.SupportsShouldTerminateAppOption;
+import io.appium.java_client.ios.options.wda.SupportsUseNewWdaOption;
+import io.appium.java_client.remote.options.SupportsAppOption;
+import io.appium.java_client.remote.options.SupportsAutomationNameOption;
+import io.appium.java_client.remote.options.SupportsDeviceNameOption;
+import io.appium.java_client.remote.options.SupportsNoResetOption;
+import io.appium.java_client.remote.options.SupportsPlatformVersionOption;
+import io.appium.java_client.remote.options.SupportsUdidOption;
 
 public class WebDriverBuilder {
     public final static int IMPLICIT_WAIT_TIME = 15;
@@ -46,25 +57,26 @@ public class WebDriverBuilder {
 
     public AndroidDriver getAndroidDriver() {
         AndroidDriver driver = null;
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);
-        caps.setCapability(MobileCapabilityType.NO_RESET, true);
+        UiAutomator2Options options = new UiAutomator2Options();
+        options.setCapability(SupportsAutoGrantPermissionsOption.AUTO_GRANT_PERMISSIONS_OPTION, true);
+        options.setCapability(SupportsNoResetOption.NO_RESET_OPTION, true);
+        options.setCapability(SupportsShouldTerminateAppOption.SHOULD_TERMINATE_APP_OPTION, true);
         if (LocalPropertiesReader.getExecutionMode().equals("local")) {
-            caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
-            caps.setCapability(MobileCapabilityType.UDID, LocalPropertiesReader.getAndroidUdid());
-            caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, LocalPropertiesReader.getAndroidOSVersion());
+            options.setCapability(SupportsDeviceNameOption.DEVICE_NAME_OPTION, LocalPropertiesReader.getAndroidPhoneName());
+            options.setCapability(SupportsUdidOption.UDID_OPTION, LocalPropertiesReader.getAndroidUdid());
+            options.setCapability(SupportsPlatformVersionOption.PLATFORM_VERSION_OPTION, LocalPropertiesReader.getAndroidOSVersion());
         }
         else {
-            caps.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/app-release.apk");
-            caps.setCapability("automationName", "UiAutomator1");
-            caps.setCapability("platformName", "Android");
-            //caps.setCapability("platformVersion", "7.1.1");
-            caps.setCapability("deviceName", "Android Emulator");
+            options.setCapability(SupportsAppOption.APP_OPTION, System.getProperty("user.dir") + "/apps/app-release.apk");
+            options.setCapability(SupportsAutomationNameOption.AUTOMATION_NAME_OPTION, "UiAutomator2");
+            options.setCapability("platformName", "Android");
+//            options.setCapability(SupportsPlatformVersionOption.PLATFORM_VERSION_OPTION, "7.1.1");
+            options.setCapability(SupportsDeviceNameOption.DEVICE_NAME_OPTION, "Android Emulator");
         }
-        caps.setCapability("appPackage", "com.dockapp");
-        caps.setCapability("appActivity", "com.dockapp.MainActivity");
+        options.setCapability(SupportsAppPackageOption.APP_PACKAGE_OPTION, "com.dockapp");
+        options.setCapability(SupportsAppActivityOption.APP_ACTIVITY_OPTION, "com.dockapp.MainActivity");
         try {
-            driver = new AndroidDriver(new URL(LocalPropertiesReader.getGridHubName()), caps);
+            driver = new AndroidDriver(new URL(LocalPropertiesReader.getGridHubName()), options);
         }
         catch (MalformedURLException e) {
             e.printStackTrace();
@@ -75,25 +87,25 @@ public class WebDriverBuilder {
     public AndroidDriver getAndroidDriverByAppReset() {
         AndroidDriver driver = null;
         System.setProperty("testType", "android1");
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);
-        caps.setCapability(MobileCapabilityType.NO_RESET, false);
+        UiAutomator2Options options = new UiAutomator2Options();
+        options.setCapability(SupportsAutoGrantPermissionsOption.AUTO_GRANT_PERMISSIONS_OPTION, true);
+        options.setCapability(SupportsNoResetOption.NO_RESET_OPTION, false);
         if (LocalPropertiesReader.getExecutionMode().equals("local")) {
-            caps.setCapability(MobileCapabilityType.DEVICE_NAME, LocalPropertiesReader.getAndroidPhoneName());
-            caps.setCapability(MobileCapabilityType.UDID, LocalPropertiesReader.getAndroidUdid());
-            caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, LocalPropertiesReader.getAndroidOSVersion());
+            options.setCapability(SupportsDeviceNameOption.DEVICE_NAME_OPTION, LocalPropertiesReader.getAndroidPhoneName());
+            options.setCapability(SupportsUdidOption.UDID_OPTION, LocalPropertiesReader.getAndroidUdid());
+            options.setCapability(SupportsPlatformVersionOption.PLATFORM_VERSION_OPTION, LocalPropertiesReader.getAndroidOSVersion());
         }
         else {
-            caps.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/app-release.apk");
-            caps.setCapability("automationName", "UiAutomator1");
-            caps.setCapability("platformName", "Android");
-            //caps.setCapability("platformVersion", "7.1.1");
-            caps.setCapability("deviceName", "Android Emulator");
+            options.setCapability(SupportsAppOption.APP_OPTION, System.getProperty("user.dir") + "/apps/app-release.apk");
+            options.setCapability(SupportsAutomationNameOption.AUTOMATION_NAME_OPTION, "UiAutomator2");
+            options.setCapability("platformName", "Android");
+            //options.setCapability(SupportsPlatformVersionOption.PLATFORM_VERSION_OPTION, "7.1.1");
+            options.setCapability(SupportsDeviceNameOption.DEVICE_NAME_OPTION, "Android Emulator");
         }
-        caps.setCapability("appPackage", "com.dockapp");
-        caps.setCapability("appActivity", "com.dockapp.MainActivity");
+        options.setCapability(SupportsAppPackageOption.APP_PACKAGE_OPTION, "com.dockapp");
+        options.setCapability(SupportsAppActivityOption.APP_ACTIVITY_OPTION, "com.dockapp.MainActivity");
         try {
-            driver = new AndroidDriver<>(new URL(LocalPropertiesReader.getGridHubName()), caps);
+            driver = new AndroidDriver(new URL(LocalPropertiesReader.getGridHubName()), options);
         }
         catch (MalformedURLException e) {
             e.printStackTrace();
@@ -101,32 +113,32 @@ public class WebDriverBuilder {
         return driver;
     }
 
-    private DesiredCapabilities setiOSCapabilities(DesiredCapabilities cap) {
-        cap.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
-        cap.setCapability("bundleId", "com.dockapp");
-        cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
-        cap.setCapability("deviceName", "iPhone");
-        cap.setCapability("udid", "iOSUdid");
-        cap.setCapability("useNewWDA", true);
-        cap.setCapability("platformVersion", "iOSVersion");
-        return cap;
+    private XCUITestOptions setiOSCapabilities(XCUITestOptions options) {
+        options.setCapability("platformName", "iOS");
+        options.setCapability(SupportsBundleIdOption.BUNDLE_ID_OPTION, "com.dockapp");
+        options.setCapability(SupportsAutomationNameOption.AUTOMATION_NAME_OPTION, "XCUITest");
+        options.setCapability(SupportsDeviceNameOption.DEVICE_NAME_OPTION, "iPhone");
+        options.setCapability(SupportsUdidOption.UDID_OPTION, "iOSUdid");
+        options.setCapability(SupportsUseNewWdaOption.USE_NEW_WDA_OPTION, true);
+        options.setCapability(SupportsPlatformVersionOption.PLATFORM_VERSION_OPTION, "iOSVersion");
+        return options;
     }
 
     public IOSDriver getIOSDriver() {
         String executionMode = LocalPropertiesReader.getExecutionMode();
         IOSDriver driver = null;
-        DesiredCapabilities cap = new DesiredCapabilities();
-        cap = setiOSCapabilities(cap);
+        XCUITestOptions options = new XCUITestOptions();
+        options = setiOSCapabilities(options);
         if (executionMode.equals("local")) {
             try {
-                driver = new IOSDriver<IOSElement>(new URL("http://localhost:4723/wd/hub"), cap);
+                driver = new IOSDriver(new URL("http://localhost:4723"), options);
             }
             catch (MalformedURLException e) {
                 log.info("Problem in opening the driver: " + e);
             }
         }
         else {
-            driver = new IOSDriver(createGridRemoteAddress(), cap);
+            driver = new IOSDriver(createGridRemoteAddress(), options);
         }
         driver.setFileDetector(new LocalFileDetector());
         return driver;

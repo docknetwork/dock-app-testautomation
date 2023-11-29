@@ -12,7 +12,6 @@ public class RemoveWallet extends BaseTestCaseAndroid {
 
     @Test(groups = TestGroup.SmokeTest, description = "Test to verify Remove wallet functionality")
     public void verifyRemoveWallet() {
-        AndroidDriver driver = getDriverInstance();
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         if (walletHomePage.getWalletStatus()) {
             walletHomePage.createNewWallet();
