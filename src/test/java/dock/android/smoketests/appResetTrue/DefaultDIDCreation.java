@@ -30,7 +30,7 @@ public class DefaultDIDCreation {
         // Check Default DID
         walletHomePage.clickDID().waitABit(2000);
         walletHomePage.clickShare();
-        walletHomePage.click(By.xpath("//*[contains(@text,'Copy DID')]")).waitABit(2000);
+        walletHomePage.click(Selector.contentResourceID("copyDIDButton")).waitABit(2000);
         String firstDID = driver.getClipboardText();
 
         // Remove current wallet
@@ -38,7 +38,7 @@ public class DefaultDIDCreation {
         walletHomePage.clickRemoveWallet();
         walletHomePage.enterPassCodeOneTime()
                 .clickSkip();
-        walletHomePage.click(By.xpath("//android.widget.Button[@content-desc=\"Remove\"]"));
+        walletHomePage.click(Selector.contentResourceID("deleteWallet"));
 
         walletHomePage.createNewWallet();
         walletHomePage.clickDID().waitABit(2000);
