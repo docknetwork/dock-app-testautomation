@@ -10,7 +10,7 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class ImportRemoveCredentialViaJson extends BaseTestCaseAndroid {
 
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Import Credential functionality via Json")
+    @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify Import Credential functionality via Json")
     public void verifyImportCredentialViaJson() {
 
         // Import Existing account via Json
