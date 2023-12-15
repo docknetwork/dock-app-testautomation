@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: fix/failing-tests
+          ref: main
           token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Setup node
@@ -51,7 +51,7 @@ jobs:
       
       - name: Install app dependencies
         run: |
-          git clone --branch ${{ github.event.client_payload.ref || 'dev' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ../dock-app
+          git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ../dock-app
           cd ../dock-app
           yarn install --network-timeout 1000000
           yarn postinstall
