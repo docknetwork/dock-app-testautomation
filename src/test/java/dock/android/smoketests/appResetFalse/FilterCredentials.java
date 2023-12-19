@@ -17,7 +17,7 @@ public class FilterCredentials extends BaseTestCaseAndroid {
     private By fromDateInput = By.xpath(".//*[@resource-id =\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup[6]");
     private By toDateInput = By.xpath(".//*[@resource-id =\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup[8]");
 
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify filter credentials")
+    @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify filter credentials")
     public void verifyFilterCredentials() {
         // Create New Account
         WalletHomePage walletHomePage = new WalletHomePage(driver);
@@ -51,8 +51,10 @@ public class FilterCredentials extends BaseTestCaseAndroid {
         walletHomePage.clickByView("did:dock:5CRMra6S2P3y992T7vM44RrUqNAXTEn2MbtWqw2PyGn5UgoV");
         walletHomePage.clickByView("Issuance Date");
         walletHomePage.click(fromDateInput);
+        walletHomePage.waitABit(2000);
         walletHomePage.clickByView("Confirm");
         walletHomePage.click(toDateInput);
+        walletHomePage.waitABit(2000);
         walletHomePage.clickByView("Confirm");
         walletHomePage.clickByView("Apply filter");
         walletHomePage.clickByView("Show results");

@@ -30,7 +30,8 @@ public class ImportAccountViaJsonAndTokenHistory extends BaseTestCaseAndroid {
                     .clickImportExistingAccount()
                     .clickUploadJsonFile()
                     .uploadFile("importAccount.json")
-                    .enterPassword("123456789Qw!")
+                    .waitABit(3000);
+            walletHomePage.enterPassword("123456789Qw!")
                     .clickNext()
                     .enterNewAccountName(accountName)
                     .clickNext().waitABit(4000);
