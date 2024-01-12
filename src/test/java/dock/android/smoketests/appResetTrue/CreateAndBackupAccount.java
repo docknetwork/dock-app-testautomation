@@ -34,7 +34,7 @@ public class CreateAndBackupAccount {
 
         // Create a new Account
         walletHomePage.createNewAccount("test1").waitABit(3000);
-        Assert.assertTrue(walletHomePage.checkElementExist(By.xpath("//android.view.ViewGroup[@content-desc=\"AlertIcon\"]")));
+        Assert.assertTrue(walletHomePage.checkElementExist(By.xpath("//*[@content-desc=\"AlertIcon\"]")));
         walletHomePage.clickThreeDotsFromTopRightCorner()
                 .clickRemoveAccountAfterThreeDotsClick();
         walletHomePage.click(Selector.contentResourceID("CreateNewAccount"));
