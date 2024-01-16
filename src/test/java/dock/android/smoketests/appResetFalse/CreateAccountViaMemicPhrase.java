@@ -25,8 +25,9 @@ public class CreateAccountViaMemicPhrase extends BaseTestCaseAndroid {
                 .clickImportExistingAccount()
                 .clickAccountRecoveryPhrase()
                 .enterMememicPhrase("argue glow aerobic acoustic artefact exact flush fetch skill void direct rib")
-                .clickNext()
-                .enterNewAccountName(accountName)
+                .waitABit(2000);
+        walletHomePage.clickNext().waitABit(2000);
+        walletHomePage.enterNewAccountName(accountName)
                 .clickNext();
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
     }

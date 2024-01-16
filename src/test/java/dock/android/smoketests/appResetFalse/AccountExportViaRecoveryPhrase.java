@@ -10,7 +10,7 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class AccountExportViaRecoveryPhrase extends BaseTestCaseAndroid {
 
-    @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify account export as Json")
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify account export as Json")
     public void verifyExportAccountAsJson() {
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         String accountName = "test" + walletHomePage.generateRandomNumber();

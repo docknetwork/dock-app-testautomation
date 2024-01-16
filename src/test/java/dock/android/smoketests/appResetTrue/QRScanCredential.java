@@ -41,7 +41,7 @@ public class QRScanCredential {
         // Verify Credential is displayed
         Assert.assertTrue(walletHomePage.isDisplayedByText("Test Credential"));
         walletHomePage.waitABit(10000);
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Valid"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Verified"));
     }
 
     @AfterMethod(alwaysRun = true)

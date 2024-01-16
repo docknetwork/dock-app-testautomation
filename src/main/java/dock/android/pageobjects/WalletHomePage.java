@@ -40,7 +40,7 @@ public class WalletHomePage extends BasePage {
     private By optionDeleteAccount = By.xpath("//android.widget.TextView[contains(@text,'Delete account')]");
     private By optionExportAccount = By.xpath("//android.widget.TextView[contains(@text,'Export account')]");
     private By btnPlusCredential = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.view.ViewGroup[2]");
-    private By btnThreeDots = By.xpath("//android.view.ViewGroup[@content-desc=\"CredentialsScreen\"]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup");
+    private By btnThreeDots = By.xpath("//*[@content-desc=\"credentialMenuButton\"]");
     private By btnContinueTransak = By.xpath("//android.widget.Button[@content-desc=\"ContinueToTransak\"]");
     private By btnSave = By.xpath("//android.widget.Button[contains(@text,'Save')]");
     private By btnDID = By.xpath("//android.widget.TextView[contains(@text,'DIDs')]");
