@@ -1,5 +1,6 @@
 package dock.android.smoketests.appResetFalse;
 
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -26,7 +27,7 @@ public class CreateAccountViaMemicPhrase extends BaseTestCaseAndroid {
                 .clickAccountRecoveryPhrase()
                 .enterMememicPhrase("argue glow aerobic acoustic artefact exact flush fetch skill void direct rib")
                 .waitABit(2000);
-        walletHomePage.clickNext().waitABit(2000);
+        walletHomePage.clickNext().waitElementVisibility(By.xpath(("//*[@text='Account name']")));
         walletHomePage.enterNewAccountName(accountName)
                 .clickNext();
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
