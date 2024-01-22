@@ -11,7 +11,7 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class ExportDID extends BaseTestCaseAndroid {
 
-    @Test(enabled = false, groups = TestGroup.SmokeTest, description = "Test to verify Export DID option")
+    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Export DID option")
     public void verifyExportDID() {
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         String password = "123456789Qw!";
@@ -29,6 +29,6 @@ public class ExportDID extends BaseTestCaseAndroid {
                 .clickNext();
 
         // Verify export DID options are displayed
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Shar"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));
     }
 }
