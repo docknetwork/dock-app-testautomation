@@ -36,6 +36,7 @@ public class QRScanCredential {
         walletHomePage.clickOk();
         walletHomePage.waitABit(20000);
         walletHomePage.waitElementVisibility("Import Credential");
+        walletHomePage.waitABit(2000);
         walletHomePage.clickOk();
 
         // Verify Credential is displayed

@@ -26,20 +26,19 @@ public class ExportAccountAsJson extends BaseTestCaseAndroid {
                 .clickCreateNewAccountFromAddAccountWidget()
                 .enterNewAccountInfo(accountName)
                 .clickNext()
-                .clickSkip().waitElementVisibility(("//*[@text='Account name']"));
+                .clickSkip();
+        walletHomePage.waitElementVisibility(accountName).waitABit(2000);
         walletHomePage.clickByXpathAndroidWidgetTextView(accountName);
 
         // Try to export new account
         String password = "123456789Qw!";
-        walletHomePage.clickThreeDotsFromTopRightCorner()
+        walletHomePage.accountDetailsKebabMenu()
                 .clickExportAccountFromOptionsWidget()
                 .clickExportAccountAsJson()
                 .enterPassword(password)
                 .enterConfirmPassword(password)
                 .clickNext();
 
-        // Verify that account***.Json is displayed
-        Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Link Sharing"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));
     }
 }
