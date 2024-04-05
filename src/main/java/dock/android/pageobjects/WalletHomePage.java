@@ -615,6 +615,12 @@ public class WalletHomePage extends BasePage {
         return this;
     }
 
+    public WalletHomePage accountDetailsKebabMenu() {
+        waitABit(2000);
+        driver.findElement(Selector.contentResourceID("action-button")).click();
+        return this;
+    }
+
     public int generateRandomNumber() {
         int min = 50;
         int max = 10000;
