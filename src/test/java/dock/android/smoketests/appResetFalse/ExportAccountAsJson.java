@@ -27,7 +27,9 @@ public class ExportAccountAsJson extends BaseTestCaseAndroid {
                 .enterNewAccountInfo(accountName)
                 .clickNext()
                 .clickSkip();
-        walletHomePage.waitElementVisibility(accountName).waitABit(2000);
+        walletHomePage.waitElementVisibility(accountName);
+        walletHomePage.waitElementVisibility("Account successfully created");
+        walletHomePage.waitForElementInVisibility("Account successfully created");
         walletHomePage.clickByXpathAndroidWidgetTextView(accountName);
 
         // Try to export new account

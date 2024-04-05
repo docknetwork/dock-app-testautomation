@@ -6,6 +6,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import dock.android.pageobjects.WalletHomePage;
 import dock.utilities.TestGroup;
 import dock.utilities.WebDriverBuilder;
@@ -34,9 +36,7 @@ public class QRScanCredential {
 
         walletHomePage.sendTextVisibleKeyboard(By.xpath("//*[contains(@text,'Password')]"), password);
         walletHomePage.clickOk();
-        walletHomePage.waitABit(20000);
-        walletHomePage.waitElementVisibility("Import Credential");
-        walletHomePage.waitABit(2000);
+        walletHomePage.waitElementVisibility(By.xpath("//*[contains(@text,\"Import Credential\")]"), Duration.ofSeconds(120));
         walletHomePage.clickOk();
 
         // Verify Credential is displayed
