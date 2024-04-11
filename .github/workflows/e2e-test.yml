@@ -17,13 +17,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: fix/failing-tests
           token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: '18.x'
+          node-version: '20.x'
 
       - name: Install ruby
         uses: ruby/setup-ruby@v1
