@@ -47,7 +47,7 @@ jobs:
           git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
           cd ../wallet-sdk
           yarn install --network-timeout 1000000
-          yarn build
+          yarn build --network-timeout 1000000
       
       - name: Install app dependencies
         run: |
