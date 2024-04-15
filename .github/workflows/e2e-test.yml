@@ -42,6 +42,7 @@ jobs:
         run: gem install fastlane
 
       - name: Install wallet sdk
+        continue-on-error: true
         run: |
           git config --global url."https://".insteadOf git://
           git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
