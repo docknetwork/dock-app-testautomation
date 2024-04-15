@@ -23,7 +23,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: '20.x'
+          node-version: '18.17.1'
 
       - name: Install ruby
         uses: ruby/setup-ruby@v1
@@ -46,13 +46,8 @@ jobs:
         run: |
           git config --global url."https://".insteadOf git://
           git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
-          cd ../wallet-sdk
-          yarn install --network-timeout 1000000
-          timeout 5m yarn workspace @docknetwork/wallet-sdk-data-store build
-          timeout 5m yarn workspace @docknetwork/wallet-sdk-wasm build
-          timeout 5m yarn workspace @docknetwork/wallet-sdk-core build
-          timeout 5m yarn workspace @docknetwork/wallet-sdk-dids build
-          timeout 5m yarn workspace @docknetwork/wallet-sdk-relay-service build
+          yarn --cwd ../wallet-sdk install --network-timeout 1000000
+          yarn --cwd ../wallet-sdk build
       
       - name: Install app dependencies
         run: |
