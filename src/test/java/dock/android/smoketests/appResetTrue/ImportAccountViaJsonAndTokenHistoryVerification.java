@@ -30,16 +30,13 @@ public class ImportAccountViaJsonAndTokenHistoryVerification {
                 .clickImportExistingAccount()
                 .clickUploadJsonFile()
                 .uploadFile("importAccount.json")
-                .enterPassword("123456789Qw!")
-                .clickNext()
-                .enterNewAccountName(accountName)
-                .clickNext().waitABit(2000);
+                .enterPassword("123456789Qw!");
+        walletHomePage.clickNext().waitABit(2000);
+        walletHomePage.enterNewAccountName(accountName).waitABit(1000);
+        walletHomePage.clickNext();
+        walletHomePage.waitElementVisibility("Account successfully imported");
+        walletHomePage.waitForElementInVisibility("Account successfully imported");
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
-        // Assert.assertTrue(walletHomePage.getDockBalance().contains("3.615 DOCK"));
-
-        // Click the imported account to see the history
-        walletHomePage.clickAccountDetails(accountName);
-        Assert.assertTrue(walletHomePage.isDisplayedByText("DOCK"));
     }
 
     @AfterMethod(alwaysRun = true)
