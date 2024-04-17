@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import dock.android.pageobjects.WalletHomePage;
+import dock.utilities.Selector;
 import dock.utilities.TestGroup;
 import dock.utilities.WebDriverBuilder;
 import io.appium.java_client.android.AndroidDriver;
@@ -36,7 +37,11 @@ public class BackupWallet {
                 .clickNext();
 
         // Verify that wallet-backup***.Json is displayed
-        //Assert.assertTrue(walletHomePage.isDisplayedByText("Shar"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));
+
+        walletHomePage.click(Selector.contentResourceID("android:id/contentPanel"));
+        walletHomePage.waitElementVisibility("Wallet exported successfully");
+        Assert.assertTrue(walletHomePage.isDisplayedByText("Settings"));
     }
 
     @AfterMethod(alwaysRun = true)

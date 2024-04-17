@@ -31,6 +31,7 @@ public class ImportRemoveCredentialViaJson{
         else {
             walletHomePage.enterPassCodeOneTime();
         }
+        walletHomePage.waitABit(500);
         walletHomePage.ensureTestnet();
         walletHomePage.clickPlusBtnCredentials()
                 .uploadFile("credImport.json").waitABit(3000);

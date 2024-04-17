@@ -242,6 +242,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickCreateNewAccountFromAddAccountWidget() {
+        waitElementVisibility(optionCreateNewAccount);
         click(optionCreateNewAccount);
         return this;
     }
@@ -464,12 +465,14 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage createNewAccount(String testName) {
         click(btnCreateNewAccount);
+        waitElementVisibility(txtBxAccountName);
         sendText(txtBxAccountName, testName);
         clickNext().clickSkip();
         return this;
     }
 
     public WalletHomePage enterNewAccountInfo(String testName) {
+        waitElementVisibility(txtBxAccountName);
         sendText(txtBxAccountName, testName);
         return this;
     }

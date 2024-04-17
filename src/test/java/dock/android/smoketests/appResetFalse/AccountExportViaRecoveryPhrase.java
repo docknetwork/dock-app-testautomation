@@ -28,7 +28,7 @@ public class AccountExportViaRecoveryPhrase extends BaseTestCaseAndroid {
                 .enterMememicPhrase("shiver aspect midnight brush loan resemble poet sea team hill mountain spoil")
                 .clickNext()
                 .enterNewAccountName(accountName)
-                .clickNext();
+                .clickNext().waitElementVisibility(accountName);
         Assert.assertTrue(walletHomePage.isDisplayedByText(accountName));
     }
 }

@@ -23,7 +23,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: '18.x'
+          node-version: '18.17.1'
 
       - name: Install ruby
         uses: ruby/setup-ruby@v1
@@ -42,12 +42,12 @@ jobs:
         run: gem install fastlane
 
       - name: Install wallet sdk
+        continue-on-error: true
         run: |
           git config --global url."https://".insteadOf git://
           git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
-          cd ../wallet-sdk
-          yarn install --network-timeout 1000000
-          yarn build
+          yarn --cwd ../wallet-sdk install --network-timeout 1000000
+          yarn --cwd ../wallet-sdk build
       
       - name: Install app dependencies
         run: |
