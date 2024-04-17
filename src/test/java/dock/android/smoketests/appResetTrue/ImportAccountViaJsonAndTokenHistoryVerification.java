@@ -31,8 +31,8 @@ public class ImportAccountViaJsonAndTokenHistoryVerification {
                 .clickUploadJsonFile()
                 .uploadFile("importAccount.json")
                 .enterPassword("123456789Qw!");
-        walletHomePage.clickNext().waitABit(2000);
-        walletHomePage.enterNewAccountName(accountName).waitABit(1000);
+        walletHomePage.clickNext().waitElementVisibility("Account name");
+        walletHomePage.enterNewAccountName(accountName);
         walletHomePage.clickNext();
         walletHomePage.waitElementVisibility("Account successfully imported");
         walletHomePage.waitForElementInVisibility("Account successfully imported");
