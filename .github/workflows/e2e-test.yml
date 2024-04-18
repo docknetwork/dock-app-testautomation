@@ -52,8 +52,10 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Download file from S3
+        env: 
+          DIRECTORY_NAME: ${{ env.DIRECTORY_NAME }}
         run: |
-          aws s3 cp s3://dock-wallet/android-apks/${env.DIRECTORY_NAME }/dock-wallet.apk ./app/
+          aws s3 cp s3://dock-wallet/android-apks/$DIRECTORY_NAME/dock-wallet.apk ./app/
 
       - name: Install Appium
         run: |
