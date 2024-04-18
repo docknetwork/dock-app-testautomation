@@ -1,6 +1,11 @@
 name: "End-to-end test"
 on:
   workflow_dispatch:
+    inputs:
+      build_number:
+        description: 'Build number e.g v0.4.21 build-692'
+        required: true
+        default: 'v0.4.21 build-692'
   repository_dispatch:
     types: [trigger-test]
 
@@ -20,11 +25,6 @@ jobs:
           ref: main
           token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18.17.1'
-
       - name: Install ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -41,44 +41,20 @@ jobs:
       - name: Install Fastlane
         run: gem install fastlane
 
-      - name: Install wallet sdk
-        continue-on-error: true
-        run: |
-          git config --global url."https://".insteadOf git://
-          git clone "https://${{secrets.E2E_GITHUB_TOKEN}}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
-          yarn --cwd ../wallet-sdk install --network-timeout 1000000
-          yarn --cwd ../wallet-sdk build
-      
-      - name: Install app dependencies
-        run: |
-          git clone --branch ${{ github.event.client_payload.ref || 'main' }} --single-branch "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app.git" ../dock-app
-          cd ../dock-app
-          yarn install --network-timeout 1000000
-          yarn postinstall
-          yarn sync-sdk
-          yarn build-sdk
+      - name: Format APK directory name
+        run: bash ./scripts/APKFileDirectory.sh "${{ github.event.client_payload.build_number || github.event.inputs.build_number}}"
 
-      - name: Handle Certs configuration
-        run: |
-          cd ../dock-app
-          rm -rf ./certs
-          git clone "https://${{ secrets.E2E_GITHUB_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
-          mv ./certs/google-play.json ./
-          cp -rf ./certs/google-services.json ./android/app/
-          rm -rf ./android/gradle.properties
-          cp -rf ./certs/gradle.properties ./android/gradle.properties
-          # Pull env variables from certs repo
-          # It will inject sentry token in the JS thread
-          cp -rf ./certs/.env ./
-          rm -rf /tmp/google-play-cert
-          cp -rf ./certs/google-play-cert /tmp/google-play-cert
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Generate android apk
+      - name: Download file from S3
         run: |
-          cd ../dock-app/android
-          fastlane package_apk
+          aws s3 cp s3://dock-wallet/android-apks/${env.DIRECTORY_NAME }/dock-wallet.apk ./app/
 
-      
       - name: Install Appium
         run: |
           yarn global add appium
@@ -100,7 +76,7 @@ jobs:
           script: |
             appium &>/dev/null &
             gradle
-            adb install -g ../dock-app/android/app/build/outputs/apk/release/app-release.apk
+            adb install -g ./app/dock-wallet.apk
             adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
             gradle test --stacktrace --info -DsuitXmlFile=mainSuite.xml
       
