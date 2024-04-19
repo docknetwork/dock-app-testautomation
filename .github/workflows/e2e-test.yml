@@ -38,9 +38,6 @@ jobs:
           distribution: 'adopt'
           cache: 'gradle'
 
-      - name: Install Fastlane
-        run: gem install fastlane
-
       - name: Format APK directory name
         run: bash ./scripts/APKFileDirectory.sh "${{ github.event.client_payload.build_number || github.event.inputs.build_number}}"
 
@@ -103,6 +100,6 @@ jobs:
           fields: |
             [
               { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
-              { "title": "Build Number", "value":"${env.BUILD_NUMBER}"},
+              { "title": "Build Number", "value":"${github.event.client_payload.build_number}"},
               { "title": "Failed Tests", "value":"${env.ALL_FAILED_TESTS}"}
             ]

@@ -29,6 +29,11 @@ public class BackupWallet {
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         walletHomePage.importWalletComplete();
 
+        // Clear any file sharing screen
+        if(walletHomePage.checkElementExist(Selector.contentResourceID("android:id/contentPanel"))){
+            walletHomePage.click(Selector.contentResourceID("android:id/contentPanel"));
+        }
+
         // Try to Backup the Wallet
         walletHomePage.clickSettings()
                 .clickBackupWallet().waitABit(2000);

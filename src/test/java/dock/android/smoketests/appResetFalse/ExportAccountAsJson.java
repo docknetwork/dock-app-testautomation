@@ -16,6 +16,12 @@ public class ExportAccountAsJson extends BaseTestCaseAndroid {
         // Create New Account
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         String accountName = "test";
+
+        // Clear any file sharing screen
+        if(walletHomePage.checkElementExist(Selector.contentResourceID("android:id/contentPanel"))){
+            walletHomePage.click(Selector.contentResourceID("android:id/contentPanel"));
+        }
+
         if (walletHomePage.getWalletStatus()) {
             walletHomePage.createNewWallet();
         }
