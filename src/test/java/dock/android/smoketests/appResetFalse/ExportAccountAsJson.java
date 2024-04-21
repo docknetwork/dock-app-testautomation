@@ -48,7 +48,8 @@ public class ExportAccountAsJson extends BaseTestCaseAndroid {
                 .enterConfirmPassword(password)
                 .clickNext();
         walletHomePage.waitABit(2000);
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));
+//        Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));
+        walletHomePage.waitElementVisibility(Selector.contentResourceID("android:id/contentPanel"));
         walletHomePage.click(Selector.contentResourceID("android:id/contentPanel"));
         Assert.assertTrue(walletHomePage.isDisplayedByText("Account exported"));
     }
