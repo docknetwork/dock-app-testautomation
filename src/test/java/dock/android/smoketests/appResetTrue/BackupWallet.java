@@ -38,8 +38,9 @@ public class BackupWallet {
         walletHomePage.clickSettings()
                 .clickBackupWallet().waitABit(2000);
         walletHomePage.enterPassword(password)
-                .enterConfirmPassword(password)
-                .clickNext();
+                .enterConfirmPassword(password);
+
+        walletHomePage.clickNext();
 
         // Verify that wallet-backup***.Json is displayed
         Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));

@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import dock.android.pageobjects.BaseTestCaseAndroid;
 import dock.android.pageobjects.WalletHomePage;
+import dock.utilities.Selector;
 import dock.utilities.TestGroup;
 import dock.utilities.WebDriverBuilder;
 import io.appium.java_client.android.AndroidDriver;
@@ -25,10 +26,12 @@ public class ExportDID extends BaseTestCaseAndroid {
         walletHomePage.clickThreeIconsDID()
                 .clickExportDID()
                 .enterDIDPassword(password)
-                .enterConfirmDIDPassword(password)
-                .clickNext();
+                .enterConfirmDIDPassword(password);
+
+        walletHomePage.clickNext();
 
         // Verify export DID options are displayed
         Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));
+        walletHomePage.click(Selector.contentResourceID("android:id/contentPanel"));
     }
 }

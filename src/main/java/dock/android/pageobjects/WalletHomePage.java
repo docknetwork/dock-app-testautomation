@@ -242,7 +242,8 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickCreateNewAccountFromAddAccountWidget() {
-        waitElementVisibility(optionCreateNewAccount);
+//        waitElementVisibility(optionCreateNewAccount);
+        waitABit(2000);
         click(optionCreateNewAccount);
         return this;
     }
@@ -580,7 +581,8 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage clickNext() {
         waitABit(2000);
-        driver.findElement(btnNext).click();
+        click(btnNext);
+//        driver.findElement(btnNext).click();
 
         //if (checkElementExist(btnNext)) {
         //    click(btnNext);

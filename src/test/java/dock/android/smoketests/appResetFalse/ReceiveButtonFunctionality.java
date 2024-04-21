@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import dock.android.pageobjects.BaseTestCaseAndroid;
 import dock.android.pageobjects.WalletHomePage;
+import dock.utilities.Selector;
 import dock.utilities.TestGroup;
 import io.appium.java_client.android.AndroidDriver;
 
@@ -29,6 +30,7 @@ public class ReceiveButtonFunctionality extends BaseTestCaseAndroid {
 
         walletHomePage.clickShareAddress().waitABit(3000);
         Assert.assertTrue(walletHomePage.isDisplayedByText("Copy"));
+        walletHomePage.click(Selector.contentResourceID("android:id/contentPanel"));
         // Assert.assertTrue(walletHomePage.isDisplayedByText("Nearby Share"));
     }
 }
