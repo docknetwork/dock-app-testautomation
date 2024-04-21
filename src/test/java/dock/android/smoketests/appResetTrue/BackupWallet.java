@@ -41,6 +41,7 @@ public class BackupWallet {
                 .enterConfirmPassword(password);
 
         walletHomePage.clickNext();
+        walletHomePage.waitABit(2000);
 
         // Verify that wallet-backup***.Json is displayed
         Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));

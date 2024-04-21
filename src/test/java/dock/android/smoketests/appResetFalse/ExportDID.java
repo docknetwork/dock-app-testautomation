@@ -29,6 +29,7 @@ public class ExportDID extends BaseTestCaseAndroid {
                 .enterConfirmDIDPassword(password);
 
         walletHomePage.clickNext();
+        walletHomePage.waitABit(2000);
 
         // Verify export DID options are displayed
         Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));
