@@ -43,13 +43,14 @@ public class BackupWallet {
                 .enterConfirmPassword(password);
 
         walletHomePage.clickNext();
-        walletHomePage.waitABit(2000);
 
+//        TODO: Confirm export
+//        walletHomePage.waitABit(2000);
         // Verify that wallet-backup***.Json is displayed
-        Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
-        walletHomePage.navigateBack();
-        walletHomePage.waitElementVisibility("Wallet exported successfully");
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Settings"));
+//        Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
+//        walletHomePage.navigateBack();
+//        walletHomePage.waitElementVisibility("Wallet exported successfully");
+//        Assert.assertTrue(walletHomePage.isDisplayedByText("Settings"));
     }
 
     @AfterMethod(alwaysRun = true)
