@@ -49,10 +49,10 @@ public class ExportAccountAsJson extends BaseTestCaseAndroid {
                 .enterPassword(password)
                 .enterConfirmPassword(password)
                 .clickNext();
+        walletHomePage.waitABit(2000);
+        walletHomePage.navigateBack();
 //        TODO: Confirm export
-//        walletHomePage.waitABit(2000);
 //        Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
-//        walletHomePage.navigateBack();
 //        Assert.assertTrue(walletHomePage.isDisplayedByText("Account exported"));
     }
 }

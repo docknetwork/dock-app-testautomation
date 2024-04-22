@@ -43,6 +43,8 @@ public class BackupWallet {
                 .enterConfirmPassword(password);
 
         walletHomePage.clickNext();
+        walletHomePage.waitABit(2000);
+        walletHomePage.navigateBack();
 
 //        TODO: Confirm export
 //        walletHomePage.waitABit(2000);

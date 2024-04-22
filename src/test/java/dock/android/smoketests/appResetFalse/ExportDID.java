@@ -31,6 +31,8 @@ public class ExportDID extends BaseTestCaseAndroid {
                 .enterConfirmDIDPassword(password);
 
         walletHomePage.clickNext();
+        walletHomePage.waitABit(2000);
+        walletHomePage.navigateBack();
 
 //        TODO: Confirm export
 //        walletHomePage.waitABit(2000);
