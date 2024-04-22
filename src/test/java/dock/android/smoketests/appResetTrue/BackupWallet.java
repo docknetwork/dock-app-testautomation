@@ -5,6 +5,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import dock.android.pageobjects.WalletHomePage;
 import dock.utilities.Selector;
 import dock.utilities.TestGroup;
@@ -44,8 +46,8 @@ public class BackupWallet {
         walletHomePage.waitABit(2000);
 
         // Verify that wallet-backup***.Json is displayed
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));
-        walletHomePage.click(Selector.contentResourceID("android:id/contentPanel"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
+        walletHomePage.navigateBack();
         walletHomePage.waitElementVisibility("Wallet exported successfully");
         Assert.assertTrue(walletHomePage.isDisplayedByText("Settings"));
     }

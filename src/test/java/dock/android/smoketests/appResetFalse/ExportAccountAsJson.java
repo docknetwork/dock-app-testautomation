@@ -3,6 +3,8 @@ package dock.android.smoketests.appResetFalse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import dock.android.pageobjects.BaseTestCaseAndroid;
 import dock.android.pageobjects.WalletHomePage;
 import dock.utilities.Selector;
@@ -48,8 +50,8 @@ public class ExportAccountAsJson extends BaseTestCaseAndroid {
                 .enterConfirmPassword(password)
                 .clickNext();
         walletHomePage.waitABit(2000);
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));
-        walletHomePage.click(Selector.contentResourceID("android:id/contentPanel"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText(".json"));
+        walletHomePage.navigateBack();
         Assert.assertTrue(walletHomePage.isDisplayedByText("Account exported"));
     }
 }

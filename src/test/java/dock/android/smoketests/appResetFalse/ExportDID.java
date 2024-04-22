@@ -3,6 +3,8 @@ package dock.android.smoketests.appResetFalse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import dock.android.pageobjects.BaseTestCaseAndroid;
 import dock.android.pageobjects.WalletHomePage;
 import dock.utilities.Selector;
@@ -30,10 +32,8 @@ public class ExportDID extends BaseTestCaseAndroid {
 
         walletHomePage.clickNext();
         walletHomePage.waitABit(2000);
-
-        // Verify export DID options are displayed
-        Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));
-        walletHomePage.waitElementVisibility(Selector.contentResourceID("android:id/contentPanel"));
-        walletHomePage.click(Selector.contentResourceID("android:id/contentPanel"));
+        Assert.assertTrue(walletHomePage.isDisplayedByText("did_"));
+        walletHomePage.navigateBack();
+        Assert.assertTrue(walletHomePage.isDisplayedByText("DID exported successfully"));
     }
 }
