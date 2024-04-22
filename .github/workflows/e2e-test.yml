@@ -77,6 +77,7 @@ jobs:
             gradle
             adb install -g ./app/dock-wallet.apk
             adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE
+            adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
             gradle test --info -DsuitXmlFile=mainSuite.xml
       
       - name: Parse Test Report
