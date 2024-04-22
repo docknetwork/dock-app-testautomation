@@ -76,8 +76,8 @@ jobs:
             appium &>/dev/null &
             gradle
             adb install -g ./app/dock-wallet.apk
-            adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
-            gradle test --stacktrace --info -DsuitXmlFile=mainSuite.xml
+            adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE
+            gradle test --info -DsuitXmlFile=mainSuite.xml
       
       - name: Parse Test Report
         if: always()

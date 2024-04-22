@@ -45,6 +45,7 @@ public class BackupWallet {
 
         // Verify that wallet-backup***.Json is displayed
 //        Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));
+        walletHomePage.waitElementVisibility("Share");
         walletHomePage.waitElementVisibility(Selector.contentResourceID("android:id/contentPanel"));
         walletHomePage.click(Selector.contentResourceID("android:id/contentPanel"));
         walletHomePage.waitElementVisibility("Wallet exported successfully");

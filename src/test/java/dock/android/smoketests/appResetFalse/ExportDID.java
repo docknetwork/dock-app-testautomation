@@ -33,6 +33,7 @@ public class ExportDID extends BaseTestCaseAndroid {
 
         // Verify export DID options are displayed
 //        Assert.assertTrue(walletHomePage.isDisplayedByText("Share"));
+        walletHomePage.waitElementVisibility("Share");
         walletHomePage.waitElementVisibility(Selector.contentResourceID("android:id/contentPanel"));
         walletHomePage.click(Selector.contentResourceID("android:id/contentPanel"));
     }
