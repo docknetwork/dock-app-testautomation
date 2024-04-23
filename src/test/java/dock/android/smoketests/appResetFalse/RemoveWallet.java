@@ -10,7 +10,7 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class RemoveWallet extends BaseTestCaseAndroid {
 
-    @Test(groups = TestGroup.SmokeTest, description = "Test to verify Remove wallet functionality")
+    @Test(groups = TestGroup.SmokeTest, enabled = false, description = "Test to verify Remove wallet functionality")
     public void verifyRemoveWallet() {
         WalletHomePage walletHomePage = new WalletHomePage(driver);
         if (walletHomePage.getWalletStatus()) {

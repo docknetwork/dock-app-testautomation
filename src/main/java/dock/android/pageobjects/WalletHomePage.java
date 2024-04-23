@@ -172,7 +172,7 @@ public class WalletHomePage extends BasePage {
     public WalletHomePage ensureHasCredential() {
         clickCredentials();
         if (!checkElementExistByXpath("Test Credential")) {
-            scanQRCode("https://creds-testnet.dock.io/dc20aa279fd2edcc890a5b7025b99814b288a12de1569863447e77242a7e94bb");
+            scanQRCode("https://creds-testnet.dock.io/bfc887b205e54bfa7bb0b1352562fbee334fcf591b07b01c98ed1a7356509768");
             sendTextVisibleKeyboard(txtBxPassword, "Password1!");
             clickOk();
             waitABit(20000);
@@ -242,7 +242,8 @@ public class WalletHomePage extends BasePage {
     }
 
     public WalletHomePage clickCreateNewAccountFromAddAccountWidget() {
-        waitElementVisibility(optionCreateNewAccount);
+//        waitElementVisibility(optionCreateNewAccount);
+        waitABit(2000);
         click(optionCreateNewAccount);
         return this;
     }
@@ -580,7 +581,8 @@ public class WalletHomePage extends BasePage {
 
     public WalletHomePage clickNext() {
         waitABit(2000);
-        driver.findElement(btnNext).click();
+        click(btnNext);
+//        driver.findElement(btnNext).click();
 
         //if (checkElementExist(btnNext)) {
         //    click(btnNext);
