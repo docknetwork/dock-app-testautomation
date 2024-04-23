@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: feat/fetch-apk-from-s3 
+          ref: main
           token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Install ruby
