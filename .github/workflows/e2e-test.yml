@@ -60,12 +60,12 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 29
-          arch: x86_64
+          arch: arm64-v8a
           force-avd-creation: false
           profile: Nexus 6
           ram-size: 16384M
           disk-size: 16384M
-          emulator-boot-timeout: 12000
+          emulator-boot-timeout: 600
           emulator-options: -no-window -netdelay none -netspeed full -noaudio -no-boot-anim
           disable-animations: true
           script: |
