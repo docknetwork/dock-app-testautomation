@@ -25,12 +25,7 @@ public class ImportRemoveCredentialViaJson{
 
         // Import Existing account via Json
         WalletHomePage walletHomePage = new WalletHomePage(driver);
-        if (walletHomePage.getWalletStatus()) {
-            walletHomePage.createNewWallet();
-        }
-        else {
-            walletHomePage.enterPassCodeOneTime();
-        }
+        walletHomePage.createNewWallet();
         walletHomePage.waitABit(500);
         walletHomePage.ensureTestnet();
         walletHomePage.clickPlusBtnCredentials()
