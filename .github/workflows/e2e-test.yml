@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: fix/failing-tests
           token: "${{ secrets.GITHUB_TOKEN }}"
           
       - name: Set up JDK 17
