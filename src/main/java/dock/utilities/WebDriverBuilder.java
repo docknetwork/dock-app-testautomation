@@ -90,6 +90,7 @@ public class WebDriverBuilder {
         UiAutomator2Options options = new UiAutomator2Options();
         options.setCapability(SupportsAutoGrantPermissionsOption.AUTO_GRANT_PERMISSIONS_OPTION, true);
         options.setCapability(SupportsNoResetOption.NO_RESET_OPTION, false);
+        options.setCapability(SupportsShouldTerminateAppOption.SHOULD_TERMINATE_APP_OPTION, true);
         if (LocalPropertiesReader.getExecutionMode().equals("local")) {
             options.setCapability(SupportsDeviceNameOption.DEVICE_NAME_OPTION, LocalPropertiesReader.getAndroidPhoneName());
             options.setCapability(SupportsUdidOption.UDID_OPTION, LocalPropertiesReader.getAndroidUdid());

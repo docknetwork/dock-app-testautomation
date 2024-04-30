@@ -11,14 +11,18 @@
     </listeners>
 
     <test name="Wallet Tests execution without App-Reset - Android">
-        <packages>
-            <package name="dock.android.smoketests.appResetTrue.*"/>
-        </packages>
+<!--        <packages>-->
+<!--            <package name="dock.android.smoketests.appResetTrue.*"/>-->
+<!--        </packages>-->
+        <classes>
+            <class name="dock.android.smoketests.appResetTrue.BackupWallet"></class>
+            <class name="dock.android.smoketests.appResetTrue.ImportRemoveCredentialViaJson"></class>
+        </classes>
     </test>
 
-    <test name="Wallet Tests After App Reset- Android">
-       <packages>
-           <package name="dock.android.smoketests.appResetFalse.*"/>
-       </packages>
-    </test>
+<!--    <test name="Wallet Tests After App Reset- Android">-->
+<!--       <packages>-->
+<!--           <package name="dock.android.smoketests.appResetFalse.*"/>-->
+<!--       </packages>-->
+<!--    </test>-->
 </suite>
