@@ -16,7 +16,7 @@ concurrency:
   
 jobs:
   start-test:
-    runs-on: macos-latest
+    runs-on: macos-13
     name: "Start Test"
     steps:
       - name: Checkout
@@ -65,7 +65,7 @@ jobs:
           profile: Nexus 6
           ram-size: 16384M
           disk-size: 16384M
-          emulator-boot-timeout: 12000
+          emulator-boot-timeout: 600
           emulator-options: -no-window -netdelay none -netspeed full -noaudio -no-boot-anim
           disable-animations: true
           script: |
