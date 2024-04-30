@@ -17,6 +17,7 @@
         <classes>
             <class name="dock.android.smoketests.appResetTrue.BackupWallet"></class>
             <class name="dock.android.smoketests.appResetTrue.ImportRemoveCredentialViaJson"></class>
+            <class name="dock.android.smoketests.appResetFalse.ExportAccountAsJson"></class>
         </classes>
     </test>
 
