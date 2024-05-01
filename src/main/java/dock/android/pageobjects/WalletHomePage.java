@@ -67,7 +67,7 @@ public class WalletHomePage extends BasePage {
     }
 
     public boolean getWalletStatus() {
-        return checkElementExistByXpath("Create a new wallet");
+        return checkElementExist(btnCreateNewWallet);
     }
 
     public WalletHomePage createNewWallet() {
