@@ -8,7 +8,6 @@ import org.openqa.selenium.By;
 import dock.android.pageobjects.BaseTestCaseAndroid;
 import dock.android.pageobjects.WalletHomePage;
 import dock.utilities.TestGroup;
-import io.appium.java_client.android.AndroidDriver;
 
 public class QRScanProofRequest extends BaseTestCaseAndroid {
     private By btnSelectCredential = By.xpath("//*[@content-desc=\"Select credential\"]");
@@ -32,13 +31,12 @@ public class QRScanProofRequest extends BaseTestCaseAndroid {
                 .ensureHasCredential();
         walletHomePage.scanQRCode(qrCodeValue).click(btnSelectCredential);
         walletHomePage.click(btnContinue);
-        walletHomePage.click(btnSelectAttribute);
+        walletHomePage.click(btnContinuePresent);
+        walletHomePage.waitABit(2000);
         if(driver.findElements(btnSelectDid).size() > 0){
             walletHomePage.click(btnSelectDid);
             walletHomePage.click(By.xpath("//android.widget.TextView[contains(@text,'did:key')]"));
         }
-        walletHomePage.click(btnContinuePresent);
-        walletHomePage.waitABit(2000);
         walletHomePage.click(btnContinuePresent);
         walletHomePage.waitABit(5000);
 
