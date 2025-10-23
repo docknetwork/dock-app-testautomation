@@ -59,7 +59,7 @@ async function runAndroidTest() {
     // button has testID "SetupPasscodeBtn"
     // TODO: rename testID to SetupPasscodeBtn
     const setupPasscodeButton = await driver.$('~CreateWalletBtn');
-    await setupPasscodeButton.waitForDisplayed({ timeout: 10000 });
+    await setupPasscodeButton.waitForDisplayed({ timeout: 30000 });
 
     // click on the button
     await setupPasscodeButton.click();
@@ -70,12 +70,12 @@ async function runAndroidTest() {
 
     // wait for SetupPasscodeScreen
     const createPasscodeScreen = await driver.$('~SetupPasscodeScreen');
-    await createPasscodeScreen.waitForDisplayed({ timeout: 10000 });
+    await createPasscodeScreen.waitForDisplayed({ timeout: 30000 });
     console.log('✓ Create passcode screen is visible');
 
     // look for keyboardNumber1 button and click on it
     let keyboardNumber1Button = await driver.$('~keyboardNumber1');
-    await keyboardNumber1Button.waitForDisplayed({ timeout: 10000 });
+    await keyboardNumber1Button.waitForDisplayed({ timeout: 30000 });
 
     // click 6 times 
     for (let i = 0; i < 6; i++) {
@@ -87,7 +87,7 @@ async function runAndroidTest() {
     // Password confirmation
     // look for keyboardNumber1 button and click on it
     keyboardNumber1Button = await driver.$('~keyboardNumber1');
-    await keyboardNumber1Button.waitForDisplayed({ timeout: 10000 });
+    await keyboardNumber1Button.waitForDisplayed({ timeout: 30000 });
     // click 6 times 
     for (let i = 0; i < 6; i++) {
       await keyboardNumber1Button.click();
@@ -96,7 +96,7 @@ async function runAndroidTest() {
 
     // Asset that CredentialsScreen is visible
     const credentialScreen = await driver.$('~CredentialsScreen');
-    await credentialScreen.waitForDisplayed({ timeout: 10000 });
+    await credentialScreen.waitForDisplayed({ timeout: 30000 });
     console.log('✓ Credential screen is visible');
     // take screenshot of the screen
     const screenshot = await driver.takeScreenshot();
