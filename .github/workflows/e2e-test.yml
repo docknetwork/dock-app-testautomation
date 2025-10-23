@@ -53,7 +53,7 @@ jobs:
         env:
           DIRECTORY_NAME: ${{ env.DIRECTORY_NAME }}
         run: |
-          aws s3 cp s3://dock-wallet/app-truvera-distribution/v1.7.0_build-904/dock-wallet.apk ./apps/truvera-wallet.apk
+          aws s3 cp s3://dock-wallet/app-truvera-distribution/v1.7.0_build-904/dock-wallet.apk ./app/truvera-wallet.apk
 
       - name: Install Dependencies
         run: |
@@ -79,21 +79,21 @@ jobs:
       #     ./scripts/ParseReports.sh
       #     ./scripts/BuildNumber.sh
 
-      # - name: Send slack notification
-      #   if: always()
-      #   uses: edge/simple-slack-notify@master
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      #     BUILD_NUMBER: ${{ github.event.client_payload.build_number || github.event.inputs.build_number}}
-      #   with:
-      #     channel: '#wallet-bot'
-      #     status: ${{ job.status }}
-      #     success_text: 'End-to-end test completed successfully'
-      #     failure_text: 'End-to-end test failed'
-      #     cancelled_text: 'End-to-end test cancelled'
-      #     fields: |
-      #       [
-      #         { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
-      #         { "title": "Build Number", "value":"${env.BUILD_NUMBER}"},
-      #         { "title": "Failed Tests", "value":"${env.ALL_FAILED_TESTS}"}
-      #       ]
+      - name: Send slack notification
+        if: always()
+        uses: edge/simple-slack-notify@master
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          BUILD_NUMBER: ${{ github.event.client_payload.build_number || github.event.inputs.build_number}}
+        with:
+          channel: '#wallet-bot'
+          status: ${{ job.status }}
+          success_text: 'End-to-end test completed successfully'
+          failure_text: 'End-to-end test failed'
+          cancelled_text: 'End-to-end test cancelled'
+          fields: |
+            [
+              { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
+              { "title": "Build Number", "value":"v1.7.0_build-904"},
+              { "title": "Failed Tests", "value":"${env.ALL_FAILED_TESTS}"}
+            ]
