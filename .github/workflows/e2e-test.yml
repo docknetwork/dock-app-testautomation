@@ -54,13 +54,14 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Download file from S3
-        env: 
+        env:
           DIRECTORY_NAME: ${{ env.DIRECTORY_NAME }}
         run: |
           aws s3 cp s3://dock-wallet/app-truvera-distribution/v1.7.0_build-904/dock-wallet.apk ./apps/truvera-wallet.apk
 
-      - name: Install Appium
+      - name: Install Dependencies
         run: |
+          npm install
           yarn global add appium
           appium driver install uiautomator2
 
