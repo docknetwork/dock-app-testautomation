@@ -15,6 +15,10 @@ const capabilities = {
   'appium:fullReset': false,      // Don't uninstall app after test
   'appium:autoGrantPermissions': true, // Auto-grant app permissions
 
+  // App activity configuration - wait for the main activity to load
+  'appium:appWaitActivity': 'com.dockapp.MainActivity',
+  'appium:appWaitDuration': 30000,
+
   // Timeouts
   'appium:newCommandTimeout': 240,
   'appium:androidInstallTimeout': 90000,
@@ -40,12 +44,12 @@ async function runAndroidTest() {
     // Wait for button with testID "CreateWalletBtn"
     console.log('Waiting for "Create a new Wallet" button...');
 
-    // wait for 2 seconds
-    await driver.pause(2000);
+    // Wait longer for app to fully load (especially important in CI environments)
+    await driver.pause(5000);
 
     const selector = '~CreateWalletBtn';
     const button = await driver.$(selector);
-    await button.waitForDisplayed({ timeout: 10000 });
+    await button.waitForDisplayed({ timeout: 30000 });
 
     console.log('✓ "Create a new Wallet" button found');
 

@@ -72,7 +72,6 @@ jobs:
             sleep 5
             adb install -g ./app/truvera-wallet.apk
             adb shell pm grant com.truvera.app android.permission.WRITE_EXTERNAL_STORAGE
-            adb shell am start -n 'com.truvera.app/com.dockapp.MainActivity'
             npm run test
       
       # - name: Parse Test Report
