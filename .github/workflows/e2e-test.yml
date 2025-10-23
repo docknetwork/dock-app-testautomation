@@ -62,9 +62,9 @@ jobs:
           profile: pixel_7_pro
           script: |
             appium &>/dev/null &
-            # adb install -g ./app/truvera-wallet.apk
-            # adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE
-            # adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
+            adb install -g ./app/truvera-wallet.apk
+            adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE
+            adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
             npm run test
       
       # - name: Parse Test Report
