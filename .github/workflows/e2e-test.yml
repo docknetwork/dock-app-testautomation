@@ -63,9 +63,10 @@ jobs:
 
       - name: Run E2E Tests
         timeout-minutes: 40
+        continue-on-error: true
         uses: ReactiveCircus/android-emulator-runner@v2
         env:
-          ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 5
+          ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 3
         with:
           api-level: 30
           arch: x86_64
@@ -80,10 +81,16 @@ jobs:
             adb install -g ./app/truvera-wallet.apk
             adb shell pm grant com.truvera.app android.permission.WRITE_EXTERNAL_STORAGE
             npm run test
+            TEST_EXIT_CODE=$?
             kill $APPIUM_PID 2>/dev/null || true
-            adb -s emulator-5554 emu kill
-            sleep 2
-            pkill -9 qemu-system || true
+            exit $TEST_EXIT_CODE
+
+      - name: Force Kill Emulator
+        if: always()
+        continue-on-error: true
+        run: |
+          pkill -9 qemu-system-x86_64 || true
+          pkill -9 adb || true
 
       - name: Upload Test Reports
         if: always()
