@@ -1,5 +1,13 @@
 const { remote } = require('webdriverio');
 const path = require('path');
+const fs = require('fs');
+const { addContext } = require('mochawesome/addContext');
+
+// Create screenshots directory if it doesn't exist
+const screenshotsDir = path.join(__dirname, '..', 'test-reports', 'screenshots');
+if (!fs.existsSync(screenshotsDir)) {
+  fs.mkdirSync(screenshotsDir, { recursive: true });
+}
 
 // Android capabilities for APK testing
 const capabilities = {
@@ -31,17 +39,58 @@ const wdOpts = {
   capabilities,
 };
 
-async function runAndroidTest() {
-  console.log('Starting Android test...');
-  console.log('Connecting to Appium server...');
+let driver;
 
-  const driver = await remote(wdOpts);
-
+// Helper function to take screenshot
+async function takeScreenshot(testContext, filename) {
   try {
+    const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\./g, '-');
+    const screenshotPath = path.join(screenshotsDir, `${filename}-${timestamp}.png`);
+    const screenshot = await driver.takeScreenshot();
+    fs.writeFileSync(screenshotPath, screenshot, 'base64');
+
+    // Add screenshot to mochawesome report
+    if (testContext) {
+      addContext(testContext, {
+        title: filename,
+        value: `../screenshots/${path.basename(screenshotPath)}`
+      });
+    }
+
+    console.log(`✓ Screenshot saved: ${path.basename(screenshotPath)}`);
+    return screenshotPath;
+  } catch (error) {
+    console.error(`Failed to take screenshot: ${error.message}`);
+  }
+}
+
+describe('Truvera Wallet E2E Tests', function() {
+  this.timeout(300000); // 5 minutes timeout for all tests
+
+  before(async function() {
+    console.log('Starting Android test...');
+    console.log('Connecting to Appium server...');
+    driver = await remote(wdOpts);
     console.log('✓ App installed and launched successfully');
+  });
 
+  after(async function() {
+    if (driver) {
+      await driver.deleteSession();
+      console.log('✓ Session closed');
+    }
+  });
 
-    // Wait for button with testID "CreateWalletBtn"
+  afterEach(async function() {
+    // Take screenshot after each test (success or failure)
+    if (this.currentTest) {
+      const testName = this.currentTest.title.replace(/[^a-z0-9]/gi, '_');
+      const status = this.currentTest.state || 'unknown';
+      await takeScreenshot(this, `${status}-${testName}`);
+    }
+  });
+
+  it('should display Create Wallet button on app launch', async function() {
     console.log('Waiting for "Create a new Wallet" button...');
 
     // Wait longer for app to fully load (especially important in CI environments)
@@ -52,86 +101,86 @@ async function runAndroidTest() {
     await button.waitForDisplayed({ timeout: 30000 });
 
     console.log('✓ "Create a new Wallet" button found');
+    await takeScreenshot(this, 'initial-screen');
+  });
 
+  it('should navigate to setup screen when Create Wallet is clicked', async function() {
+    const selector = '~CreateWalletBtn';
+    const button = await driver.$(selector);
+    await button.waitForDisplayed({ timeout: 30000 });
 
-    // click on the button
     await button.click();
     console.log('✓ "Create a new Wallet" button clicked');
 
+    // Wait for next screen
+    await driver.pause(2000);
+  });
 
-    // click on Setup passcode button
+  it('should display Setup Passcode button', async function() {
     // button has testID "SetupPasscodeBtn"
     // TODO: rename testID to SetupPasscodeBtn
     const setupPasscodeButton = await driver.$('~CreateWalletBtn');
     await setupPasscodeButton.waitForDisplayed({ timeout: 30000 });
 
-    // click on the button
+    console.log('✓ "Setup passcode" button found');
+  });
+
+  it('should navigate to passcode screen when Setup Passcode is clicked', async function() {
+    const setupPasscodeButton = await driver.$('~CreateWalletBtn');
     await setupPasscodeButton.click();
     console.log('✓ "Setup passcode" button clicked');
-
-    console.log('✓ "Create a new Wallet" button clicked');
-
 
     // wait for SetupPasscodeScreen
     const createPasscodeScreen = await driver.$('~SetupPasscodeScreen');
     await createPasscodeScreen.waitForDisplayed({ timeout: 30000 });
     console.log('✓ Create passcode screen is visible');
+  });
 
+  it('should enter passcode successfully', async function() {
     // look for keyboardNumber1 button and click on it
     let keyboardNumber1Button = await driver.$('~keyboardNumber1');
     await keyboardNumber1Button.waitForDisplayed({ timeout: 30000 });
 
     console.log('✓ Keyboard number 1 button found');
-    // click 6 times 
+
+    // click 6 times
     for (let i = 0; i < 6; i++) {
       await keyboardNumber1Button.click();
-      console.log('✓ Keyboard number 1 button clicked ' + i);
+      console.log(`✓ Keyboard number 1 button clicked ${i + 1}/6`);
       await driver.pause(200);
     }
 
     await driver.pause(5000);
+    console.log('✓ Passcode entered');
+  });
 
+  it('should confirm passcode successfully', async function() {
     console.log('Wait transition to password confirmation');
+
     // Password confirmation
-    // look for keyboardNumber1 button and click on it
-    keyboardNumber1Button = await driver.$('~keyboardNumber1');
+    let keyboardNumber1Button = await driver.$('~keyboardNumber1');
     await keyboardNumber1Button.waitForDisplayed({ timeout: 30000 });
-    // click 6 times 
+
+    // click 6 times
     for (let i = 0; i < 6; i++) {
       await keyboardNumber1Button.click();
-      console.log('✓ Keyboard number 1 button clicked ' + i);
+      console.log(`✓ Keyboard number 1 button clicked ${i + 1}/6`);
       await driver.pause(200);
     }
 
+    console.log('✓ Passcode confirmed');
+  });
+
+  it('should navigate to credentials screen after passcode setup', async function() {
     console.log('Wait transition to credentials screen');
 
-    // Asset that CredentialsScreen is visible
+    // Assert that CredentialsScreen is visible
     const credentialScreen = await driver.$('~CredentialsScreen');
     await credentialScreen.waitForDisplayed({ timeout: 30000 });
     console.log('✓ Credential screen is visible');
-    // take screenshot of the screen
-    const screenshot = await driver.takeScreenshot();
-    require('fs').writeFileSync('app-screenshot.png', screenshot, 'base64');
 
-    console.log('✓ Screenshot saved as app-screenshot.png');
+    // Take final screenshot
+    await takeScreenshot(this, 'credentials-screen-final');
     console.log('✓ Android test completed successfully!');
-  } catch (error) {
-    console.error('✗ Android test failed:', error.message);
-
-    // Take screenshot on failure
-    try {
-      const screenshot = await driver.takeScreenshot();
-      require('fs').writeFileSync('error-screenshot.png', screenshot, 'base64');
-      console.log('✓ Error screenshot saved as error-screenshot.png');
-    } catch (screenshotError) {
-      console.error('Could not save screenshot:', screenshotError.message);
-    }
-
-    throw error;
-  } finally {
-    // await driver.deleteSession();
-    console.log('✓ Session closed');
-  }
-}
-
-runAndroidTest().catch(console.error);
+  });
+});

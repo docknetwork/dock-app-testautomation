@@ -73,7 +73,68 @@ jobs:
             adb install -g ./app/truvera-wallet.apk
             adb shell pm grant com.truvera.app android.permission.WRITE_EXTERNAL_STORAGE
             npm run test
-      
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: test-reports/
+          retention-days: 30
+
+      - name: Upload Screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: test-reports/screenshots/
+          retention-days: 30
+
+      - name: Publish Test Results
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: test-reports/junit/results.xml
+          check_name: E2E Test Results
+          comment_title: E2E Test Results
+
+      - name: Generate Test Summary
+        if: always()
+        run: |
+          echo "## E2E Test Results Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ -f "test-reports/mochawesome/report.json" ]; then
+            TOTAL=$(jq '.stats.tests' test-reports/mochawesome/report.json)
+            PASSES=$(jq '.stats.passes' test-reports/mochawesome/report.json)
+            FAILURES=$(jq '.stats.failures' test-reports/mochawesome/report.json)
+            PENDING=$(jq '.stats.pending' test-reports/mochawesome/report.json)
+            DURATION=$(jq '.stats.duration' test-reports/mochawesome/report.json)
+
+            echo "📊 **Test Statistics**" >> $GITHUB_STEP_SUMMARY
+            echo "- Total Tests: $TOTAL" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Passed: $PASSES" >> $GITHUB_STEP_SUMMARY
+            echo "- ❌ Failed: $FAILURES" >> $GITHUB_STEP_SUMMARY
+            echo "- ⏭️ Pending: $PENDING" >> $GITHUB_STEP_SUMMARY
+            echo "- ⏱️ Duration: ${DURATION}ms" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+
+            # List failed tests if any
+            if [ "$FAILURES" -gt 0 ]; then
+              echo "### ❌ Failed Tests" >> $GITHUB_STEP_SUMMARY
+              jq -r '.results[].suites[].tests[] | select(.fail == true) | "- " + .fullTitle' test-reports/mochawesome/report.json >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "⚠️ No test report found" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "📸 **Screenshots**" >> $GITHUB_STEP_SUMMARY
+          echo "Screenshots are available in the artifacts section above." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📄 **Full HTML Report**" >> $GITHUB_STEP_SUMMARY
+          echo "Download the test-reports artifact to view the detailed HTML report." >> $GITHUB_STEP_SUMMARY
+
       # - name: Parse Test Report
       #   if: always()
       #   run: |

@@ -32,6 +32,7 @@ test-results/
 allure-results/
 allure-report/
 screenshots/
+test-reports/
 
 # Build
 dist/

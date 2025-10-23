@@ -4,8 +4,8 @@
   "description": "Appium test automation with Node.js and WebdriverIO",
   "main": "index.js",
   "scripts": {
-    "test": "node test/android.test.js",
-    "test:android": "node test/android.test.js"
+    "test": "mocha test/android.test.js --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
+    "test:android": "mocha test/android.test.js --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json"
   },
   "keywords": [
     "appium",
@@ -16,7 +16,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "webdriverio": "^8.11.2"
+    "webdriverio": "^8.11.2",
+    "mocha": "^10.2.0",
+    "mochawesome": "^7.1.3",
+    "mocha-multi-reporters": "^1.5.1",
+    "mocha-junit-reporter": "^2.2.1"
   },
   "dependencies": {}
 }
