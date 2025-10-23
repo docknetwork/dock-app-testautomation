@@ -70,6 +70,9 @@ jobs:
           script: |
             appium &>/dev/null &
             sleep 5
+            adb install -g ./app/truvera-wallet.apk
+            adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE
+            adb shell am start -n 'com.truvera.app/com.dockapp.MainActivity'
             npm run test
       
       # - name: Parse Test Report
@@ -79,21 +82,21 @@ jobs:
       #     ./scripts/ParseReports.sh
       #     ./scripts/BuildNumber.sh
 
-      - name: Send slack notification
-        if: always()
-        uses: edge/simple-slack-notify@master
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          BUILD_NUMBER: ${{ github.event.client_payload.build_number || github.event.inputs.build_number}}
-        with:
-          channel: '#wallet-bot'
-          status: ${{ job.status }}
-          success_text: 'End-to-end test completed successfully'
-          failure_text: 'End-to-end test failed'
-          cancelled_text: 'End-to-end test cancelled'
-          fields: |
-            [
-              { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
-              { "title": "Build Number", "value":"v1.7.0_build-904"},
-              { "title": "Failed Tests", "value":"${env.ALL_FAILED_TESTS}"}
-            ]
+      # - name: Send slack notification
+      #   if: always()
+      #   uses: edge/simple-slack-notify@master
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #     BUILD_NUMBER: ${{ github.event.client_payload.build_number || github.event.inputs.build_number}}
+      #   with:
+      #     channel: '#wallet-bot'
+      #     status: ${{ job.status }}
+      #     success_text: 'Smoke Test completed successfully'
+      #     failure_text: 'Smoke Test failed'
+      #     cancelled_text: 'Smoke Test cancelled'
+      #     fields: |
+      #       [
+      #         { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
+      #         { "title": "Build Number", "value":"v1.7.0_build-904"},
+      #         { "title": "Failed Tests", "value":"${env.ALL_FAILED_TESTS}"}
+      #       ]
