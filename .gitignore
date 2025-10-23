@@ -1,35 +1,38 @@
+# Node modules
+node_modules/
 
-# Build Outputs #
-#################
-/*/build
-/*/bin
-/out
-/*/out
-/target
-/classes
-**/classes
-.gradle
+# APK files (don't commit large binaries)
+apps/*.apk
 
-# IDE folders #
-###############
-# Intellij
-.idea
-*.iws
-*.iml
-*.ipr
+# Screenshots
+*.png
+!apps/.gitkeep
 
-# personal local propertiefiles #
-#################################
-build/*
-!/src/test/resources/browserDrivers/*.exe
-DEBUG
-out/*
-test-output/
-/src/test/resources/apps/*.apk
-*.apk
-*.ipa
-/*/build/allure-results
-allure-results/*
-src/test/resources/configfiles/local.properties
-bin/
-local.properties
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test results
+test-results/
+allure-results/
+allure-report/
+screenshots/
+
+# Build
+dist/
+build/
