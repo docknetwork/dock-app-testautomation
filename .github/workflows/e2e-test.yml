@@ -60,6 +60,10 @@ jobs:
           api-level: 30
           arch: x86_64
           profile: pixel_7_pro
+          force-avd-creation: false
+          emulator-boot-timeout: 900
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot-save -noaudio -no-boot-anim
+          disable-animations: true
           script: |
             appium &>/dev/null &
             adb install -g ./app/truvera-wallet.apk
