@@ -57,7 +57,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          npm install
+          npm install --force
           yarn global add appium
           appium driver install uiautomator2
 
