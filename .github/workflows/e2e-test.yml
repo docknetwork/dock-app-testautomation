@@ -19,10 +19,17 @@ jobs:
     runs-on: ubuntu-latest
     name: "Start Test"
     steps:
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
       - uses: actions/checkout@v4
         with:
           ref: main
           token: "${{ secrets.GITHUB_TOKEN }}"
+
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -60,13 +67,9 @@ jobs:
       - name: Run E2E Tests
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
-          api-level: 30
+          api-level: 29
           arch: x86_64
           profile: pixel_7_pro
-          force-avd-creation: false
-          emulator-boot-timeout: 900
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot-save -noaudio -no-boot-anim
-          disable-animations: true
           script: |
             appium &>/dev/null &
             sleep 5
