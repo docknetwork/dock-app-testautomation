@@ -54,7 +54,7 @@ jobs:
           yarn global add appium
           appium driver install uiautomator2
 
-      - name: Setup Android Emulator
+      - name: Run E2E Tests
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 30
@@ -62,20 +62,15 @@ jobs:
           profile: pixel_7_pro
           force-avd-creation: false
           emulator-boot-timeout: 900
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot-save -noaudio -no-boot-anim
           disable-animations: true
-          script: ./gradlew connectedCheck
-        
-      - name: Run E2E Tests
-        run: |
-          appium &>/dev/null &
-          npm run test
-
-          # script: |
-          #   appium &>/dev/null &
-          #   adb install -g ./apps/truvera-wallet.apk
-          #   adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE
-          #   adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
-          #   npm run test
+          script: |
+            appium &>/dev/null &
+            sleep 5
+            adb install -g ./apps/truvera-wallet.apk
+            adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE
+            adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
+            npm run test
       
       # - name: Parse Test Report
       #   if: always()
