@@ -62,22 +62,28 @@ jobs:
           appium driver install uiautomator2
 
       - name: Run E2E Tests
+        timeout-minutes: 40
         uses: ReactiveCircus/android-emulator-runner@v2
+        env:
+          ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 5
         with:
           api-level: 30
           arch: x86_64
           profile: pixel_7_pro
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          emulator-options: -no-snapshot-save -no-snapshot-load -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -memory 4096
           disable-animations: true
+          force-avd-creation: false
           script: |
             appium &>/dev/null &
             APPIUM_PID=$!
             sleep 5
             adb install -g ./app/truvera-wallet.apk
             adb shell pm grant com.truvera.app android.permission.WRITE_EXTERNAL_STORAGE
-            npm run test || true
+            npm run test
             kill $APPIUM_PID 2>/dev/null || true
-            adb emu kill || true
+            adb -s emulator-5554 emu kill
+            sleep 2
+            pkill -9 qemu-system || true
 
       - name: Upload Test Reports
         if: always()
