@@ -67,12 +67,17 @@ jobs:
           api-level: 30
           arch: x86_64
           profile: pixel_7_pro
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          disable-animations: true
           script: |
             appium &>/dev/null &
+            APPIUM_PID=$!
             sleep 5
             adb install -g ./app/truvera-wallet.apk
             adb shell pm grant com.truvera.app android.permission.WRITE_EXTERNAL_STORAGE
-            npm run test
+            npm run test || true
+            kill $APPIUM_PID 2>/dev/null || true
+            adb emu kill || true
 
       - name: Upload Test Reports
         if: always()

@@ -1,7 +1,7 @@
 const { remote } = require('webdriverio');
 const path = require('path');
 const fs = require('fs');
-const { addContext } = require('mochawesome/addContext');
+const addContext = require('mochawesome/addContext');
 
 // Create screenshots directory if it doesn't exist
 const screenshotsDir = path.join(__dirname, '..', 'test-reports', 'screenshots');

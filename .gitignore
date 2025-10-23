@@ -2,7 +2,7 @@
 node_modules/
 
 # APK files (don't commit large binaries)
-apps/*.apk
+app/*.apk
 
 # Screenshots
 *.png
