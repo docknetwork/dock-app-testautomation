@@ -81,13 +81,17 @@ async function runAndroidTest() {
     let keyboardNumber1Button = await driver.$('~keyboardNumber1');
     await keyboardNumber1Button.waitForDisplayed({ timeout: 30000 });
 
+    console.log('✓ Keyboard number 1 button found');
     // click 6 times 
     for (let i = 0; i < 6; i++) {
       await keyboardNumber1Button.click();
+      console.log('✓ Keyboard number 1 button clicked ' + i);
       await driver.pause(200);
     }
 
-    await driver.pause(1000);
+    await driver.pause(5000);
+
+    console.log('Wait transition to password confirmation');
     // Password confirmation
     // look for keyboardNumber1 button and click on it
     keyboardNumber1Button = await driver.$('~keyboardNumber1');
@@ -95,8 +99,11 @@ async function runAndroidTest() {
     // click 6 times 
     for (let i = 0; i < 6; i++) {
       await keyboardNumber1Button.click();
+      console.log('✓ Keyboard number 1 button clicked ' + i);
       await driver.pause(200);
     }
+
+    console.log('Wait transition to credentials screen');
 
     // Asset that CredentialsScreen is visible
     const credentialScreen = await driver.$('~CredentialsScreen');
