@@ -19,12 +19,15 @@ jobs:
     runs-on: ubuntu-latest
     name: "Start Test"
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           ref: main
           token: "${{ secrets.GITHUB_TOKEN }}"
-          
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       # setup nodejs
       - name: Install Node.js
         uses: actions/setup-node@v2
