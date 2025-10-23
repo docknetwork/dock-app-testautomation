@@ -1,13 +1,13 @@
 name: "End-to-end test"
-on:
-  workflow_dispatch:
-    inputs:
-      build_number:
-        description: 'Build number e.g v0.4.21 build-692'
-        required: true
-        default: 'v0.4.21 build-692'
-  repository_dispatch:
-    types: [trigger-test]
+on: [push]
+  # workflow_dispatch:
+  #   inputs:
+  #     build_number:
+  #       description: 'Build number e.g v0.4.21 build-692'
+  #       required: true
+  #       default: 'v0.4.21 build-692'
+  # repository_dispatch:
+  #   types: [trigger-test]
 
 # Auto cancels previous running CI jobs in this PR on each new commit
 concurrency:
@@ -47,7 +47,7 @@ jobs:
         env: 
           DIRECTORY_NAME: ${{ env.DIRECTORY_NAME }}
         run: |
-          aws s3 cp s3://dock-wallet/android-apks/$DIRECTORY_NAME/dock-wallet.apk ./app/
+          aws s3 cp s3://dock-wallet/app-truvera-distribution/v1.7.0_build-904/dock-wallet.apk ./app/truvera-wallet.apk
 
       - name: Install Appium
         run: |
