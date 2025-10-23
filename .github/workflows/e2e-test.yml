@@ -26,10 +26,6 @@ jobs:
           sudo udevadm trigger --name-match=kvm
 
       - uses: actions/checkout@v4
-        with:
-          ref: main
-          token: "${{ secrets.GITHUB_TOKEN }}"
-
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
