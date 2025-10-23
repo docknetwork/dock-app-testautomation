@@ -47,14 +47,14 @@ jobs:
         env: 
           DIRECTORY_NAME: ${{ env.DIRECTORY_NAME }}
         run: |
-          aws s3 cp s3://dock-wallet/app-truvera-distribution/v1.7.0_build-904/dock-wallet.apk ./app/truvera-wallet.apk
+          aws s3 cp s3://dock-wallet/app-truvera-distribution/v1.7.0_build-904/dock-wallet.apk ./apps/truvera-wallet.apk
 
       - name: Install Appium
         run: |
           yarn global add appium
           appium driver install uiautomator2
 
-      - name: Run E2E Tests
+      - name: Setup Android Emulator
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 30
@@ -64,12 +64,19 @@ jobs:
           emulator-boot-timeout: 900
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot-save -noaudio -no-boot-anim
           disable-animations: true
-          script: |
-            appium &>/dev/null &
-            adb install -g ./app/truvera-wallet.apk
-            adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE
-            adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
-            npm run test
+          script: ./gradlew connectedCheck
+        
+      - name: Run E2E Tests
+        run: |
+          appium &>/dev/null &
+          npm run test
+
+          # script: |
+          #   appium &>/dev/null &
+          #   adb install -g ./apps/truvera-wallet.apk
+          #   adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE
+          #   adb shell am start -n 'com.dockapp/com.dockapp.MainActivity'
+          #   npm run test
       
       # - name: Parse Test Report
       #   if: always()
