@@ -62,7 +62,6 @@ jobs:
           profile: pixel_7_pro
           force-avd-creation: false
           emulator-boot-timeout: 900
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot-save -noaudio -no-boot-anim
           disable-animations: true
           script: ./gradlew connectedCheck
         
