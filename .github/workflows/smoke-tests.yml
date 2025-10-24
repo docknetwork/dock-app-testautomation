@@ -8,7 +8,7 @@ on:
         required: false
         default: 'v1.7.0 build-904'
       distribution-name:
-        description: 'Distribution name (e.g., truvera, bank-demo, etc.)'
+        description: 'Distribution name matching the S3 bucket pattern app-{name}-distribution (e.g., truvera for app-truvera-distribution, bank-demo for app-bank-demo-distribution)'
         required: false
         default: 'truvera'
 
