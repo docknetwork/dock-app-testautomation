@@ -8,7 +8,7 @@ on:
         required: false
         default: 'v1.7.0 build-904'
       distribution-name:
-        description: 'Distribution name (e.g., truvera, dock, etc.)'
+        description: 'Distribution name (e.g., truvera, bank-demo, etc.)'
         required: false
         default: 'truvera'
 
