@@ -64,7 +64,7 @@ async function takeScreenshot(testContext, filename) {
   }
 }
 
-describe('Truvera Wallet E2E Tests', function() {
+describe('Truvera Wallet Smoke Tests', function() {
   this.timeout(300000); // 5 minutes timeout for all tests
 
   before(async function() {

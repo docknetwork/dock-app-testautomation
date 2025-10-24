@@ -1,4 +1,4 @@
-name: "End-to-end test"
+name: "Smoke tests"
 on:
   push:
   workflow_dispatch:
@@ -91,7 +91,7 @@ jobs:
           appium &>/dev/null &
           APPIUM_PID=$!
 
-      - name: Run E2E Tests
+      - name: Run Smoke Tests
         # TODO: workaround to get faster reports
         # The emulator is not closing properly, so we need to timeout the job until we find a fix for that
         # will be testing fixes in the next iterations
@@ -158,13 +158,13 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           files: test-reports/junit/results.xml
-          check_name: E2E Test Results
-          comment_title: E2E Test Results
+          check_name: Smoke Tests Results
+          comment_title: Smoke Tests Results
 
       - name: Generate Test Summary
         if: always()
         run: |
-          echo "## E2E Test Results Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## Smoke Tests Results Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           if [ -f "test-reports/mochawesome/report.json" ]; then

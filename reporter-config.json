@@ -15,14 +15,14 @@
     "mochaFile": "test-reports/junit/results.xml",
     "suiteTitleSeparatedBy": " > ",
     "testCaseSwitchClassnameAndName": false,
-    "rootSuiteTitle": "Truvera Wallet E2E Tests",
+    "rootSuiteTitle": "Truvera Wallet Smoke Tests",
     "toConsole": false
   },
   "mochaCtrfJsonReporterReporterOptions": {
     "outputDir": "ctrf",
     "outputFile": "ctrf-report.json",
     "minimal": false,
-    "appName": "Truvera Wallet E2E Tests",
+    "appName": "Truvera Wallet Smoke Tests",
     "appVersion": "1.0.0"
   }
 }
