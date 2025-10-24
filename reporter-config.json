@@ -19,7 +19,10 @@
     "toConsole": false
   },
   "mochaCtrfJsonReporterReporterOptions": {
-    "outputFile": "ctrf/ctrf-report.json",
-    "minimal": false
+    "outputDir": "ctrf",
+    "outputFile": "ctrf-report.json",
+    "minimal": false,
+    "appName": "Truvera Wallet E2E Tests",
+    "appVersion": "1.0.0"
   }
 }
