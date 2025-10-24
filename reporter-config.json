@@ -1,5 +1,5 @@
 {
-  "reporterEnabled": "spec, mochawesome, mocha-junit-reporter",
+  "reporterEnabled": "spec, mochawesome, mocha-junit-reporter, mocha-ctrf-json-reporter",
   "mochawesomeReporterOptions": {
     "reportDir": "test-reports/mochawesome",
     "reportFilename": "report",
@@ -17,5 +17,9 @@
     "testCaseSwitchClassnameAndName": false,
     "rootSuiteTitle": "Truvera Wallet E2E Tests",
     "toConsole": false
+  },
+  "mochaCtrfJsonReporterReporterOptions": {
+    "outputFile": "ctrf/ctrf-report.json",
+    "minimal": false
   }
 }
