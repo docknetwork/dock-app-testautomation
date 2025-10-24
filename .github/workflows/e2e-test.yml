@@ -88,7 +88,8 @@ jobs:
 
       - name: Start Appium Server
         run: |
-          appium &>/dev/null
+          appium &>/dev/null &
+          APPIUM_PID=$!
 
       - name: Run E2E Tests
         # TODO: workaround to get faster reports
@@ -196,13 +197,6 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "📄 **Full HTML Report**" >> $GITHUB_STEP_SUMMARY
           echo "Download the test-reports artifact to view the detailed HTML report." >> $GITHUB_STEP_SUMMARY
-
-      # - name: Parse Test Report
-      #   if: always()
-      #   run: |
-      #     chmod +x ./scripts/ParseReports.sh ./scripts/BuildNumber.sh
-      #     ./scripts/ParseReports.sh
-      #     ./scripts/BuildNumber.sh
 
       - name: Send slack notification
         if: always()
