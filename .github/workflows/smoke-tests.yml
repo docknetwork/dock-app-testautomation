@@ -14,7 +14,7 @@ on:
 
 # Auto cancels previous running CI jobs in this PR on each new commit
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.inputs.distribution-name }}
   cancel-in-progress: true
   
 jobs:
@@ -171,7 +171,9 @@ jobs:
       - name: Generate Test Summary
         if: always()
         run: |
-
+          echo "📦 **Distribution**" >> $GITHUB_STEP_SUMMARY
+          echo "Distribution name: ${{ env.DISTRIBUTION_NAME }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "📸 **Screenshots**" >> $GITHUB_STEP_SUMMARY
           echo "Screenshots are available in the artifacts section above." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -193,6 +195,7 @@ jobs:
             [
               { "title": "Build Number", "value": "${{ env.BUILD_NUMBER }}", "short": true },
               { "title": "Branch", "value": "${{ github.ref_name }}", "short": true },
+              { "title": "Distribution", "value": "${{ env.DISTRIBUTION_NAME }}", "short": true },
               { "title": "Test Results", "value": "${{ env.TEST_SUMMARY }}" },
               { "title": "Action URL", "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" }
             ]
