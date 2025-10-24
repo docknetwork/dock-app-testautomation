@@ -198,20 +198,90 @@ jobs:
           echo "📄 **Full HTML Report**" >> $GITHUB_STEP_SUMMARY
           echo "Download the test-reports artifact to view the detailed HTML report." >> $GITHUB_STEP_SUMMARY
 
-      - name: Send slack notification
+      - name: Prepare Slack notification data
         if: always()
+        run: |
+          # Extract test stats from mochawesome report
+          if [ -f "test-reports/mochawesome/report.json" ]; then
+            TOTAL=$(jq '.stats.tests' test-reports/mochawesome/report.json)
+            PASSES=$(jq '.stats.passes' test-reports/mochawesome/report.json)
+            FAILURES=$(jq '.stats.failures' test-reports/mochawesome/report.json)
+            PENDING=$(jq '.stats.pending' test-reports/mochawesome/report.json)
+            DURATION=$(jq '.stats.duration' test-reports/mochawesome/report.json)
+
+            # Convert duration to seconds
+            DURATION_SEC=$((DURATION / 1000))
+
+            # Build test summary
+            TEST_SUMMARY="✅ $PASSES passed"
+            if [ "$FAILURES" -gt 0 ]; then
+              TEST_SUMMARY="$TEST_SUMMARY | ❌ $FAILURES failed"
+            fi
+            if [ "$PENDING" -gt 0 ]; then
+              TEST_SUMMARY="$TEST_SUMMARY | ⏭️ $PENDING skipped"
+            fi
+            TEST_SUMMARY="$TEST_SUMMARY | ⏱️ ${DURATION_SEC}s"
+
+            # Extract failed test names if any
+            if [ "$FAILURES" -gt 0 ]; then
+              FAILED_TESTS=$(jq -r '.results[].suites[].tests[] | select(.fail == true) | "• " + .title' test-reports/mochawesome/report.json | head -n 5)
+              NUM_FAILED_LINES=$(echo "$FAILED_TESTS" | wc -l | xargs)
+              if [ "$NUM_FAILED_LINES" -lt "$FAILURES" ]; then
+                FAILED_TESTS="$FAILED_TESTS"$'\n'"... and $((FAILURES - NUM_FAILED_LINES)) more"
+              fi
+            else
+              FAILED_TESTS=""
+            fi
+
+            echo "TEST_SUMMARY=$TEST_SUMMARY" >> $GITHUB_ENV
+            echo "FAILURES=$FAILURES" >> $GITHUB_ENV
+            echo "TOTAL_TESTS=$TOTAL" >> $GITHUB_ENV
+            # Use delimiter for multiline
+            echo "FAILED_TESTS<<EOF" >> $GITHUB_ENV
+            echo "$FAILED_TESTS" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+          else
+            echo "TEST_SUMMARY=⚠️ No test report found" >> $GITHUB_ENV
+            echo "FAILURES=0" >> $GITHUB_ENV
+            echo "TOTAL_TESTS=0" >> $GITHUB_ENV
+            echo "FAILED_TESTS=" >> $GITHUB_ENV
+          fi
+
+      - name: Send slack notification (with failures)
+        if: always() && env.FAILURES != '0'
         uses: edge/simple-slack-notify@master
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
           channel: '#wallet-bot'
           status: ${{ job.status }}
-          success_text: 'Smoke Tests completed successfully'
-          failure_text: 'Smoke Tests failed'
-          cancelled_text: 'Smoke Tests cancelled'
+          success_text: '✅ E2E Tests Passed'
+          failure_text: '❌ E2E Tests Failed'
+          cancelled_text: '⚠️ E2E Tests Cancelled'
           fields: |
             [
-              { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
-              { "title": "Build Number", "value":"${{ env.BUILD_NUMBER }}"},
-              { "title": "Failed Tests", "value":"${env.ALL_FAILED_TESTS}"}
+              { "title": "Build Number", "value": "${{ env.BUILD_NUMBER }}", "short": true },
+              { "title": "Branch", "value": "${{ github.ref_name }}", "short": true },
+              { "title": "Test Results", "value": "${{ env.TEST_SUMMARY }}" },
+              { "title": "Failed Tests", "value": "${{ env.FAILED_TESTS }}" },
+              { "title": "Action URL", "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" }
+            ]
+
+      - name: Send slack notification (without failures)
+        if: always() && env.FAILURES == '0'
+        uses: edge/simple-slack-notify@master
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          channel: '#wallet-bot'
+          status: ${{ job.status }}
+          success_text: '✅ E2E Tests Passed'
+          failure_text: '❌ E2E Tests Failed'
+          cancelled_text: '⚠️ E2E Tests Cancelled'
+          fields: |
+            [
+              { "title": "Build Number", "value": "${{ env.BUILD_NUMBER }}", "short": true },
+              { "title": "Branch", "value": "${{ github.ref_name }}", "short": true },
+              { "title": "Test Results", "value": "${{ env.TEST_SUMMARY }}" },
+              { "title": "Action URL", "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" }
             ]
