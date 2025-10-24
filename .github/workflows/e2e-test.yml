@@ -123,9 +123,24 @@ jobs:
           path: test-reports/screenshots/
           retention-days: 30
 
+      - name: Upload CTRF Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ctrf-report
+          path: ctrf/
+          retention-days: 30
+
       - name: Publish CTRF Test Summary
         if: always()
-        run: npx github-actions-ctrf ctrf/ctrf-report.json
+        run: |
+          if [ -f "ctrf/ctrf-report.json" ]; then
+            npx github-actions-ctrf ctrf/ctrf-report.json
+          else
+            echo "CTRF report not found at ctrf/ctrf-report.json"
+            echo "Checking if reporter was installed..."
+            npm list mocha-ctrf-json-reporter || echo "mocha-ctrf-json-reporter not installed"
+          fi
 
       - name: Publish Test Results
         if: always()

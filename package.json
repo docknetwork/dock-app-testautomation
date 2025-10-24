@@ -20,7 +20,8 @@
     "mocha": "^10.2.0",
     "mochawesome": "^7.1.3",
     "mocha-multi-reporters": "^1.5.1",
-    "mocha-junit-reporter": "^2.2.1"
+    "mocha-junit-reporter": "^2.2.1",
+    "mocha-ctrf-json-reporter": "^0.0.9"
   },
   "dependencies": {}
 }
