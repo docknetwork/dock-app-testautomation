@@ -75,8 +75,10 @@ jobs:
           appium driver install uiautomator2
 
       - name: Run E2E Tests
-        timeout-minutes: 40
-        continue-on-error: true
+        # TODO: workaround to get faster reports
+        # The emulator is not closing properly, so we need to timeout the job until we find a fix for that
+        # will be testing fixes in the next iterations
+        timeout-minutes: 8
         uses: ReactiveCircus/android-emulator-runner@v2
         env:
           ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 3
