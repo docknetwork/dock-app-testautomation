@@ -7,6 +7,10 @@ on:
         description: 'Build number e.g v1.7.0 build-904'
         required: false
         default: 'v1.7.0 build-904'
+      distribution-name:
+        description: 'Distribution name matching the S3 bucket pattern app-{name}-distribution (e.g., truvera for app-truvera-distribution, bank-demo for app-bank-demo-distribution)'
+        required: false
+        default: 'truvera'
 
 # Auto cancels previous running CI jobs in this PR on each new commit
 concurrency:
@@ -45,6 +49,14 @@ jobs:
 
       - name: Determine build number and directory name
         run: |
+          # Set distribution name (default to truvera if not provided)
+          DISTRIBUTION_NAME="${{ github.event.inputs.distribution-name }}"
+          if [ -z "$DISTRIBUTION_NAME" ]; then
+            DISTRIBUTION_NAME="truvera"
+          fi
+          echo "DISTRIBUTION_NAME=$DISTRIBUTION_NAME" >> "$GITHUB_ENV"
+          echo "Using distribution name: $DISTRIBUTION_NAME"
+
           # Check if build_number was provided via workflow_dispatch
           if [ -n "${{ github.event.inputs.build_number }}" ]; then
             BUILD_NUMBER="${{ github.event.inputs.build_number }}"
@@ -52,7 +64,7 @@ jobs:
           else
             # Fetch the latest folder from S3
             echo "No build number provided, fetching latest from S3..."
-            LATEST_FOLDER=$(aws s3 ls s3://dock-wallet/app-truvera-distribution/ | grep PRE | awk '{print $2}' | sed 's/\///' | sort -V | tail -n 1)
+            LATEST_FOLDER=$(aws s3 ls s3://dock-wallet/app-${DISTRIBUTION_NAME}-distribution/ | grep PRE | awk '{print $2}' | sed 's/\///' | sort -V | tail -n 1)
             BUILD_NUMBER="$LATEST_FOLDER"
             echo "Using latest build from S3: $BUILD_NUMBER"
           fi
@@ -65,8 +77,8 @@ jobs:
 
       - name: Download file from S3
         run: |
-          echo "Downloading APK from s3://dock-wallet/app-truvera-distribution/${{ env.DIRECTORY_NAME }}/dock-wallet.apk"
-          aws s3 cp s3://dock-wallet/app-truvera-distribution/${{ env.DIRECTORY_NAME }}/dock-wallet.apk ./app/truvera-wallet.apk
+          echo "Downloading APK from s3://dock-wallet/app-${{ env.DISTRIBUTION_NAME }}-distribution/${{ env.DIRECTORY_NAME }}/dock-wallet.apk"
+          aws s3 cp s3://dock-wallet/app-${{ env.DISTRIBUTION_NAME }}-distribution/${{ env.DIRECTORY_NAME }}/dock-wallet.apk ./app/truvera-wallet.apk
 
       - name: Install Dependencies
         run: |
