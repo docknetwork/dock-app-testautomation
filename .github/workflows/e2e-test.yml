@@ -119,6 +119,7 @@ jobs:
           arch: x86_64
           profile: pixel_7_pro
           force-avd-creation: false
+          continue-on-error: true
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -memory 4096
           disable-animations: true
           # emulator-options: -no-snapshot-save -no-snapshot-load -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim 
