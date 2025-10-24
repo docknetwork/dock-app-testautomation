@@ -1,0 +1,186 @@
+name: "Smoke tests"
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      build_number:
+        description: 'Build number e.g v1.7.0 build-904'
+        required: false
+        default: 'v1.7.0 build-904'
+
+# Auto cancels previous running CI jobs in this PR on each new commit
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+  
+jobs:
+  start-test:
+    runs-on: ubuntu-latest
+    name: "Start Test"
+    steps:
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # setup nodejs
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5.1.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Determine build number and directory name
+        run: |
+          # Check if build_number was provided via workflow_dispatch
+          if [ -n "${{ github.event.inputs.build_number }}" ]; then
+            BUILD_NUMBER="${{ github.event.inputs.build_number }}"
+            echo "Using provided build number: $BUILD_NUMBER"
+          else
+            # Fetch the latest folder from S3
+            echo "No build number provided, fetching latest from S3..."
+            LATEST_FOLDER=$(aws s3 ls s3://dock-wallet/app-truvera-distribution/ | grep PRE | awk '{print $2}' | sed 's/\///' | sort -V | tail -n 1)
+            BUILD_NUMBER="$LATEST_FOLDER"
+            echo "Using latest build from S3: $BUILD_NUMBER"
+          fi
+
+          # Format directory name (replace spaces with underscores)
+          DIRECTORY_NAME=$(echo "$BUILD_NUMBER" | sed 's/ /_/g')
+
+          echo "BUILD_NUMBER=$BUILD_NUMBER" >> "$GITHUB_ENV"
+          echo "DIRECTORY_NAME=$DIRECTORY_NAME" >> "$GITHUB_ENV"
+
+      - name: Download file from S3
+        run: |
+          echo "Downloading APK from s3://dock-wallet/app-truvera-distribution/${{ env.DIRECTORY_NAME }}/dock-wallet.apk"
+          aws s3 cp s3://dock-wallet/app-truvera-distribution/${{ env.DIRECTORY_NAME }}/dock-wallet.apk ./app/truvera-wallet.apk
+
+      - name: Install Dependencies
+        run: |
+          npm install --force
+          yarn global add appium
+          appium driver install uiautomator2
+
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v3
+        
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-30
+
+      - name: Start Appium Server
+        run: |
+          appium &>/dev/null &
+          APPIUM_PID=$!
+
+      - name: Run Smoke Tests
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          arch: x86_64
+          profile: pixel_7_pro
+          force-avd-creation: false
+          continue-on-error: true
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -memory 4096
+          disable-animations: true
+          script: |
+            adb install -g ./app/truvera-wallet.apk
+            adb shell pm grant com.truvera.app android.permission.WRITE_EXTERNAL_STORAGE
+            npm run test
+
+      - name: Force Kill Emulator
+        if: always()
+        continue-on-error: true
+        run: |
+          pkill -9 qemu-system-x86_64 || true
+          pkill -9 adb || true
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: test-reports/
+          retention-days: 30
+
+      - name: Upload Screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: test-reports/screenshots/
+          retention-days: 30
+
+      - name: Upload CTRF Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ctrf-report
+          path: ctrf/
+          retention-days: 30
+
+      - name: Publish CTRF Test Summary
+        if: always()
+        run: |
+          if [ -f "ctrf/ctrf-report.json" ]; then
+            npx github-actions-ctrf ctrf/ctrf-report.json
+          else
+            echo "CTRF report not found at ctrf/ctrf-report.json"
+            echo "Checking if reporter was installed..."
+            npm list mocha-ctrf-json-reporter || echo "mocha-ctrf-json-reporter not installed"
+          fi
+
+      - name: Publish Test Results
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: test-reports/junit/results.xml
+          check_name: Smoke Tests Results
+          comment_title: Smoke Tests Results
+
+      - name: Generate Test Summary
+        if: always()
+        run: |
+
+          echo "📸 **Screenshots**" >> $GITHUB_STEP_SUMMARY
+          echo "Screenshots are available in the artifacts section above." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📄 **Full HTML Report**" >> $GITHUB_STEP_SUMMARY
+          echo "Download the test-reports artifact to view the detailed HTML report." >> $GITHUB_STEP_SUMMARY
+
+      - name: Send slack notification (without failures)
+        if: always()
+        uses: edge/simple-slack-notify@master
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          channel: '#wallet-bot'
+          status: ${{ job.status }}
+          success_text: '✅ Smoke Tests Passed'
+          failure_text: '❌ Smoke Tests Failed'
+          cancelled_text: '⚠️ Smoke Tests Cancelled'
+          fields: |
+            [
+              { "title": "Build Number", "value": "${{ env.BUILD_NUMBER }}", "short": true },
+              { "title": "Branch", "value": "${{ github.ref_name }}", "short": true },
+              { "title": "Test Results", "value": "${{ env.TEST_SUMMARY }}" },
+              { "title": "Action URL", "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" }
+            ]

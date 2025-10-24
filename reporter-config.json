@@ -1,0 +1,28 @@
+{
+  "reporterEnabled": "spec, mochawesome, mocha-junit-reporter, mocha-ctrf-json-reporter",
+  "mochawesomeReporterOptions": {
+    "reportDir": "test-reports/mochawesome",
+    "reportFilename": "report",
+    "html": true,
+    "json": true,
+    "overwrite": false,
+    "timestamp": "isoDateTime",
+    "charts": true,
+    "embeddedScreenshots": true,
+    "inlineAssets": true
+  },
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "test-reports/junit/results.xml",
+    "suiteTitleSeparatedBy": " > ",
+    "testCaseSwitchClassnameAndName": false,
+    "rootSuiteTitle": "Truvera Wallet Smoke Tests",
+    "toConsole": false
+  },
+  "mochaCtrfJsonReporterReporterOptions": {
+    "outputDir": "ctrf",
+    "outputFile": "ctrf-report.json",
+    "minimal": false,
+    "appName": "Truvera Wallet Smoke Tests",
+    "appVersion": "1.0.0"
+  }
+}
