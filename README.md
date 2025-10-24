@@ -1,6 +1,6 @@
 # Truvera Wallet E2E Test Automation
 
-Automated end-to-end testing suite for the Truvera Wallet mobile application using Appium, WebdriverIO, and Mocha.
+Smoke test suite for the Truvera Wallet mobile application using Appium, WebdriverIO, and Mocha.
 
 ## Table of Contents
 
