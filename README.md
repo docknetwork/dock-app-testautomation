@@ -1,4 +1,4 @@
-# Truvera Wallet E2E Test Automation
+# Truvera Wallet Smoke Tests
 
 Smoke test suite for the Truvera Wallet mobile application using Appium, WebdriverIO, and Mocha.
 
