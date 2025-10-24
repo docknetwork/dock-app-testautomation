@@ -74,31 +74,58 @@ jobs:
           yarn global add appium
           appium driver install uiautomator2
 
+          - name: Enable KVM
+          run: |
+            echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+            sudo udevadm control --reload-rules
+            sudo udevadm trigger --name-match=kvm
+  
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v3
+        
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Start Appium Server
+        run: |
+          appium &>/dev/null &
+          APPIUM_PID=$!
+          sleep 5
+
       - name: Run E2E Tests
         # TODO: workaround to get faster reports
         # The emulator is not closing properly, so we need to timeout the job until we find a fix for that
         # will be testing fixes in the next iterations
         timeout-minutes: 8
         uses: ReactiveCircus/android-emulator-runner@v2
-        env:
-          ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 3
         with:
           api-level: 30
           arch: x86_64
           profile: pixel_7_pro
-          emulator-options: -no-snapshot-save -no-snapshot-load -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -memory 4096
-          disable-animations: true
           force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -memory 4096
+          disable-animations: true
+          # emulator-options: -no-snapshot-save -no-snapshot-load -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim 
           script: |
-            appium &>/dev/null &
-            APPIUM_PID=$!
-            sleep 5
             adb install -g ./app/truvera-wallet.apk
             adb shell pm grant com.truvera.app android.permission.WRITE_EXTERNAL_STORAGE
             npm run test
-            TEST_EXIT_CODE=$?
-            kill $APPIUM_PID 2>/dev/null || true
-            exit $TEST_EXIT_CODE
 
       - name: Force Kill Emulator
         if: always()
