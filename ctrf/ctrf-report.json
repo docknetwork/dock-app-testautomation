@@ -1,0 +1,113 @@
+{
+  "results": {
+    "tool": {
+      "name": "mocha"
+    },
+    "summary": {
+      "tests": 8,
+      "passed": 7,
+      "failed": 1,
+      "pending": 0,
+      "skipped": 0,
+      "other": 0,
+      "start": 1761916601274,
+      "stop": 1761916739149
+    },
+    "tests": [
+      {
+        "name": "Feature: Network Switching should setup new wallet",
+        "status": "failed",
+        "duration": 31377,
+        "retries": 0,
+        "flaky": false,
+        "filePath": "/Users/mayconmellos/dev/dock/dock-app-testautomation/test/features/import-oid4vc-credential.test.js",
+        "rawStatus": "failed",
+        "start": 1761916669724,
+        "stop": 1761916701101,
+        "message": "Error Wallet setup failed: element (\"~CreateWalletBtn\") still not displayed after 30000ms",
+        "trace": "Error: Wallet setup failed: element (\"~CreateWalletBtn\") still not displayed after 30000ms\n    at createWallet (test/fixtures/wallet-setup.js:84:11)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (test/features/import-oid4vc-credential.test.js:35:5)"
+      },
+      {
+        "name": "Feature: Wallet Creation should display Create Wallet button on app launch",
+        "status": "passed",
+        "duration": 5576,
+        "retries": 0,
+        "flaky": false,
+        "filePath": "/Users/mayconmellos/dev/dock/dock-app-testautomation/test/features/wallet-creation.test.js",
+        "rawStatus": "passed",
+        "start": 1761916713831,
+        "stop": 1761916719407
+      },
+      {
+        "name": "Feature: Wallet Creation should navigate to setup screen when Create Wallet is clicked",
+        "status": "passed",
+        "duration": 2397,
+        "retries": 0,
+        "flaky": false,
+        "filePath": "/Users/mayconmellos/dev/dock/dock-app-testautomation/test/features/wallet-creation.test.js",
+        "rawStatus": "passed",
+        "start": 1761916719971,
+        "stop": 1761916722368
+      },
+      {
+        "name": "Feature: Wallet Creation should display Setup Passcode button",
+        "status": "passed",
+        "duration": 205,
+        "retries": 0,
+        "flaky": false,
+        "filePath": "/Users/mayconmellos/dev/dock/dock-app-testautomation/test/features/wallet-creation.test.js",
+        "rawStatus": "passed",
+        "start": 1761916723454,
+        "stop": 1761916723659
+      },
+      {
+        "name": "Feature: Wallet Creation should navigate to passcode screen when Setup Passcode is clicked",
+        "status": "passed",
+        "duration": 226,
+        "retries": 0,
+        "flaky": false,
+        "filePath": "/Users/mayconmellos/dev/dock/dock-app-testautomation/test/features/wallet-creation.test.js",
+        "rawStatus": "passed",
+        "start": 1761916724456,
+        "stop": 1761916724682
+      },
+      {
+        "name": "Feature: Wallet Creation should enter passcode successfully",
+        "status": "passed",
+        "duration": 8030,
+        "retries": 0,
+        "flaky": false,
+        "filePath": "/Users/mayconmellos/dev/dock/dock-app-testautomation/test/features/wallet-creation.test.js",
+        "rawStatus": "passed",
+        "start": 1761916725395,
+        "stop": 1761916733425
+      },
+      {
+        "name": "Feature: Wallet Creation should confirm passcode successfully",
+        "status": "passed",
+        "duration": 1857,
+        "retries": 0,
+        "flaky": false,
+        "filePath": "/Users/mayconmellos/dev/dock/dock-app-testautomation/test/features/wallet-creation.test.js",
+        "rawStatus": "passed",
+        "start": 1761916733900,
+        "stop": 1761916735757
+      },
+      {
+        "name": "Feature: Wallet Creation should navigate to credentials screen after passcode setup",
+        "status": "passed",
+        "duration": 1451,
+        "retries": 0,
+        "flaky": false,
+        "filePath": "/Users/mayconmellos/dev/dock/dock-app-testautomation/test/features/wallet-creation.test.js",
+        "rawStatus": "passed",
+        "start": 1761916736345,
+        "stop": 1761916737796
+      }
+    ],
+    "environment": {
+      "appName": "Truvera Wallet Smoke Tests",
+      "appVersion": "1.0.0"
+    }
+  }
+}

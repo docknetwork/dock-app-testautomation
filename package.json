@@ -4,8 +4,12 @@
   "description": "Appium test automation with Node.js and WebdriverIO",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/android.test.js --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
-    "test:android": "mocha test/android.test.js --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json"
+    "test": "mocha 'test/features/**/*.test.js' --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
+    "test:all": "mocha 'test/features/**/*.test.js' --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
+    "test:wallet-creation": "mocha test/features/wallet-creation.test.js --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
+    "test:import-oid4vc-credential": "mocha test/features/import-oid4vc-credential.test.js --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
+    "test:legacy": "mocha test/android.test.js --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
+    "test:oid4vc": "node test/helpers/test-oid4vc.js"
   },
   "keywords": [
     "appium",
@@ -16,12 +20,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "webdriverio": "^8.11.2",
+    "dotenv": "^17.2.3",
     "mocha": "^10.2.0",
-    "mochawesome": "^7.1.3",
-    "mocha-multi-reporters": "^1.5.1",
+    "mocha-ctrf-json-reporter": "^0.0.9",
     "mocha-junit-reporter": "^2.2.1",
-    "mocha-ctrf-json-reporter": "^0.0.9"
+    "mocha-multi-reporters": "^1.5.1",
+    "mochawesome": "^7.1.3",
+    "webdriverio": "^8.11.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^1.12.2"
+  }
 }
