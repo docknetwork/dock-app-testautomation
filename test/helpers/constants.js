@@ -22,8 +22,17 @@ module.exports = {
     SETUP_PASSCODE_SCREEN: '~SetupPasscodeScreen',
     CREDENTIALS_SCREEN: '~CredentialsScreen',
     KEYBOARD_NUMBER_1: '~keyboardNumber1',
-    QR_CODE_BTN: '~QRCodeBtn',
-    SCAN_QR_CODE_BTN: '~ScanQRCodeBtn',
+
+    // TODO: replace with proper testId
+    NAV_CREDENTIALS_BTN: '//android.widget.TextView[@text="Credentials"]',
+    NAV_SCAN_BTN: '//android.widget.TextView[@text="Scan"]',
+    NAV_SETTINGS_BTN: '//android.widget.TextView[@text="Settings"]',
+    SETTINGS_TEST_MODE_BTN: '//android.widget.TextView[@text="Test mode"]',
+    TEST_MODE_SWITCH: '//android.widget.Switch',
+    TEST_MODE_BADGE: '//android.widget.TextView[@text="Test mode"]',
+    PROCESSING_CREDENTIAL: '//android.widget.TextView[@text="Processing credential..."]',
+
+    SCAN_QR_CODE_BTN: '~pasteToScan',
     IMPORT_SUCCESS: '~ImportSuccess',
   },
 };

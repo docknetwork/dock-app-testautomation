@@ -23,6 +23,38 @@ const requestOptions = {
 const apiClient = axios.create({
   baseURL: API_URL,
   headers: requestOptions.headers,
+  timeout: 30000,
+});
+
+apiClient.interceptors.response.use(undefined, async (error) => {
+  const { config } = error;
+
+  // Initialize retry config if not present
+  if (!config || !config.retry) {
+    config.retry = { count: 0, limit: 3, delay: 1000 };
+  }
+
+  config.retry.count += 1;
+
+  // Check if we've exceeded retry limit
+  if (config.retry.count >= config.retry.limit) {
+    console.error(`Max retries (${config.retry.limit}) exceeded for ${config.url}`);
+    return Promise.reject(error);
+  }
+
+  // Don't retry on 4xx errors (except 408 timeout and 429 rate limit)
+  if (error.response && error.response.status >= 400 && error.response.status < 500) {
+    if (error.response.status !== 408 && error.response.status !== 429) {
+      return Promise.reject(error);
+    }
+  }
+
+  // Calculate exponential backoff delay
+  const delay = config.retry.delay * Math.pow(2, config.retry.count - 1);
+  console.log(`Retry attempt ${config.retry.count}/${config.retry.limit} for ${config.url} in ${delay}ms...`);
+
+  await new Promise(resolve => setTimeout(resolve, delay));
+  return apiClient(config);
 });
 
 async function createOpenIDIssuer() {
@@ -49,8 +81,8 @@ async function createOpenIDIssuer() {
     console.log(`OpenID issuer ${response.data.id} was created.`);
     return response.data;
   } catch (error) {
-    debugger;
-    console.error("Failed to create OpenID issuer:", error);
+    console.error("Failed to create OpenID issuer:", error.message || error);
+    throw error;
   }
 }
 

@@ -24,6 +24,8 @@ const getCapabilities = (options = {}) => {
     // Timeouts
     'appium:newCommandTimeout': TIMEOUTS.SESSION_COMMAND,
     'appium:androidInstallTimeout': TIMEOUTS.ANDROID_INSTALL,
+    // clipboard 
+    'appium:clipboardPermission': true,
   };
 };
 
@@ -68,9 +70,33 @@ async function closeDriver(driver) {
   }
 }
 
+/**
+ * Set clipboard content on Android device
+ * @param {WebdriverIO.Browser} driver
+ * @param {string} text - Text to copy to clipboard
+ */
+async function setClipboard(driver, text) {
+  await driver.execute('mobile: setClipboard', {
+    content: Buffer.from(text).toString('base64'),
+    contentType: 'plaintext'
+  });
+}
+
+/**
+ * Get clipboard content from Android device
+ * @param {WebdriverIO.Browser} driver
+ * @returns {Promise<string>} Clipboard content
+ */
+async function getClipboard(driver) {
+  const base64Content = await driver.execute('mobile: getClipboard');
+  return Buffer.from(base64Content, 'base64').toString('utf-8');
+}
+
 module.exports = {
   initializeDriver,
   closeDriver,
   getCapabilities,
   getWebDriverOptions,
+  setClipboard,
+  getClipboard,
 };
