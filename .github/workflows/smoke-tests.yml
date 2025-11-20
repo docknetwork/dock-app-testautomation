@@ -109,6 +109,7 @@ jobs:
           CERTS_API_KEY: ${{ secrets.CERTS_API_KEY }}
           CERTS_API_URL: ${{ secrets.CERTS_API_URL }}
           ISSUER_DID: ${{ secrets.ISSUER_DID }}
+          TEST_CREDENTIALS: ${{ secrets.TEST_CREDENTIALS }}
         with:
           api-level: 30
           arch: x86_64
@@ -120,6 +121,7 @@ jobs:
           script: |
             adb install -g ./app/truvera-wallet.apk
             adb shell pm grant com.truvera.app android.permission.WRITE_EXTERNAL_STORAGE
+            echo "$TEST_CREDENTIALS" > test-credentials.json
             npm run test
 
       - name: Force Kill Emulator
