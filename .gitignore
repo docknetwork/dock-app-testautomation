@@ -37,3 +37,4 @@ test-reports/
 # Build
 dist/
 build/
+test-credentials.json

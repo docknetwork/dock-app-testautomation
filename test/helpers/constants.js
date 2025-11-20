@@ -31,6 +31,14 @@ module.exports = {
     TEST_MODE_SWITCH: '//android.widget.Switch',
     TEST_MODE_BADGE: '//android.widget.TextView[@text="Test mode"]',
     PROCESSING_CREDENTIAL: '//android.widget.TextView[@text="Processing credential..."]',
+    CREDENTIAL_RECEIVED: '//android.widget.TextView[@text="Credential received"]',
+    CREDENTIAL_TYPE_CITY_RESIDENT: '//android.widget.TextView[@text="City Resident"]',
+    CREDENTIAL_IS_VALID: '//android.widget.TextView[@text="Valid"]',
+
+    // Password modal selectors
+    PASSWORD_MODAL_TITLE: '//android.widget.TextView[@text="Enter password"]',
+    PASSWORD_INPUT_FIELD: '//android.widget.EditText[@hint="Password" or @text="Password"]',
+    PASSWORD_MODAL_OK_BTN: '//android.widget.TextView[@text="OK"]',
 
     SCAN_QR_CODE_BTN: '~pasteToScan',
     IMPORT_SUCCESS: '~ImportSuccess',
