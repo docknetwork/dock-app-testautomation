@@ -1,0 +1,8 @@
+{
+  "timeout": 300000,
+  "retries": 4,
+  "reporter": "mocha-multi-reporters",
+  "reporter-option": [
+    "configFile=reporter-config.json"
+  ]
+}
