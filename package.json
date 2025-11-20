@@ -8,7 +8,6 @@
     "test:all": "mocha 'test/features/**/*.test.js' --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
     "test:wallet-creation": "mocha test/features/wallet-creation.test.js --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
     "test:import-oid4vc-credential": "mocha test/features/import-oid4vc-credential.test.js --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
-    "test:legacy": "mocha test/android.test.js --timeout 300000 --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
     "test:oid4vc": "node test/helpers/test-oid4vc.js"
   },
   "keywords": [
