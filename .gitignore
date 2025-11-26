@@ -26,7 +26,7 @@ npm-debug.log*
 # OS
 .DS_Store
 Thumbs.db
-
+ctrf/
 # Test results
 test-results/
 allure-results/
@@ -37,3 +37,4 @@ test-reports/
 # Build
 dist/
 build/
+test-credentials.json

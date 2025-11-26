@@ -14,7 +14,7 @@ on:
 
 # Auto cancels previous running CI jobs in this PR on each new commit
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.inputs.distribution-name }}
   cancel-in-progress: true
   
 jobs:
@@ -105,6 +105,11 @@ jobs:
 
       - name: Run Smoke Tests
         uses: ReactiveCircus/android-emulator-runner@v2
+        env:
+          CERTS_API_KEY: ${{ secrets.CERTS_API_KEY }}
+          CERTS_API_URL: ${{ secrets.CERTS_API_URL }}
+          ISSUER_DID: ${{ secrets.ISSUER_DID }}
+          TEST_CREDENTIALS: ${{ secrets.TEST_CREDENTIALS }}
         with:
           api-level: 30
           arch: x86_64
@@ -116,6 +121,7 @@ jobs:
           script: |
             adb install -g ./app/truvera-wallet.apk
             adb shell pm grant com.truvera.app android.permission.WRITE_EXTERNAL_STORAGE
+            echo "$TEST_CREDENTIALS" > test-credentials.json
             npm run test
 
       - name: Force Kill Emulator
@@ -171,7 +177,9 @@ jobs:
       - name: Generate Test Summary
         if: always()
         run: |
-
+          echo "📦 **Distribution**" >> $GITHUB_STEP_SUMMARY
+          echo "Distribution name: ${{ env.DISTRIBUTION_NAME }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "📸 **Screenshots**" >> $GITHUB_STEP_SUMMARY
           echo "Screenshots are available in the artifacts section above." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -193,6 +201,7 @@ jobs:
             [
               { "title": "Build Number", "value": "${{ env.BUILD_NUMBER }}", "short": true },
               { "title": "Branch", "value": "${{ github.ref_name }}", "short": true },
+              { "title": "Distribution", "value": "${{ env.DISTRIBUTION_NAME }}", "short": true },
               { "title": "Test Results", "value": "${{ env.TEST_SUMMARY }}" },
               { "title": "Action URL", "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" }
             ]
