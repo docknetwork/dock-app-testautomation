@@ -22,31 +22,35 @@ module.exports = {
     SETUP_PASSCODE_SCREEN: '~SetupPasscodeScreen',
     CREDENTIALS_SCREEN: '~CredentialsScreen',
     KEYBOARD_NUMBER_1: '~keyboardNumber1',
-
+    
     // TODO: replace with proper testId
     NAV_CREDENTIALS_BTN: '//android.widget.TextView[@text="Credentials"]',
     NAV_SCAN_BTN: '//android.widget.TextView[@text="Scan"]',
+    NAV_DID_BTN: '//android.widget.TextView[@text="DIDs"]',
     NAV_SETTINGS_BTN: '//android.widget.TextView[@text="Settings"]',
     SETTINGS_TEST_MODE_BTN: '//android.widget.TextView[@text="Test mode"]',
     TEST_MODE_SWITCH: '//android.widget.Switch',
     TEST_MODE_BADGE: '//android.widget.TextView[@text="Test mode"]',
-    PROCESSING_CREDENTIAL: '//android.widget.TextView[@text="Processing credential..."]',
-    CREDENTIAL_RECEIVED: '//android.widget.TextView[@text="Credential received"]',
+    PROCESSING_CREDENTIAL: '~LoadingScreen',
+    CREDENTIAL_RECEIVED: '~credential-received',
     CREDENTIAL_TYPE_CITY_RESIDENT: '//android.widget.TextView[@text="City Resident"]',
     CREDENTIAL_TYPE_CREDIT_SCORE: '//android.widget.TextView[@text="Credit Score"]',
 
     CREDENTIAL_IS_VALID: '//android.widget.TextView[@text="Valid"]',
 
     // Password modal selectors
-    PASSWORD_MODAL_TITLE: '//android.widget.TextView[@text="Enter password"]',
-    PASSWORD_INPUT_FIELD: '//android.widget.EditText[@hint="Password" or @text="Password"]',
-    PASSWORD_MODAL_OK_BTN: '//android.widget.TextView[@text="OK"]',
+    PASSWORD_MODAL_TITLE: '~input-prompt-modal',
+    PASSWORD_INPUT_FIELD: '~modal-input',
+    PASSWORD_MODAL_OK_BTN: '~modal-confirm-button',
 
     // import credential modal
-    IMPORT_CREDENTIAL_MODAL: '//android.widget.TextView[@text="Import Credential"]',
-    IMPORT_CREDENTIAL_OK_BTN: '//android.widget.TextView[@text="OK"]',
+    IMPORT_CREDENTIAL_MODAL: '~confirmationModalContent',
+    IMPORT_CREDENTIAL_OK_BTN: '~confirmButton',
 
     SCAN_QR_CODE_BTN: '~pasteToScan',
     IMPORT_SUCCESS: '~ImportSuccess',
+
+    // credential offer screen
+    SUBMIT_CLAIMS_BTN: '~submitClaims',
   },
 };

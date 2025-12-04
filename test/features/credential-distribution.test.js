@@ -3,18 +3,18 @@ const { takeScreenshot } = require("../helpers/screenshot");
 const { createWallet } = require("../helpers/wallet-setup");
 const { waitForElement } = require("../helpers/waiters");
 const { SELECTORS } = require("../helpers/constants");
-const { issueOpenIDCredential } = require("../helpers/credentials");
+const { issueOpenIDCredential } = require("../helpers/oid4vc");
 const { selectWalletNetwork } = require("../helpers/network-switch");
 const { scanQRCode } = require("../helpers/qr-code");
 
 let driver;
 
-describe("Feature: Import OID4VC Credential", function () {
+describe("Feature: Credential Distribution", function () {
   this.timeout(300000); // 5 minutes timeout
 
   before(async function () {
     console.log("\n========================================");
-    console.log("FEATURE: Import OID4VC Credential");
+    console.log("FEATURE: Credential Distribution");
     console.log("========================================\n");
     driver = await initializeDriver({ noReset: false, fullReset: false });
   });
@@ -33,10 +33,21 @@ describe("Feature: Import OID4VC Credential", function () {
 
     // Generate credential offer URL
     console.log("Generating OID4VC credential offer...");
-    const oid4vcCredentialOfferUrl = await issueOpenIDCredential();
-    console.log(`✓ Credential offer URL: ${oid4vcCredentialOfferUrl}\n`);
 
-    await scanQRCode(driver, oid4vcCredentialOfferUrl);
+    // navigate to did screen
+    await waitAndClick(driver, SELECTORS.NAV_DID_BTN);
+
+    // find text starting with did:key:
+    const did = await waitForElement(driver, '//android.widget.TextView[@text="did:key:"]', 30000);
+    console.log("✓ DID found");
+
+    const didText = await did.getText();
+    console.log("✓ DID text:", didText);
+
+    issueCredential({
+      subjectDID: didText,
+      distribute: true
+    });
 
     // Verify import success
     console.log("Verifying import...");
