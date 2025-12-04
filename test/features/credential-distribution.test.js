@@ -3,9 +3,8 @@ const { takeScreenshot } = require("../helpers/screenshot");
 const { createWallet } = require("../helpers/wallet-setup");
 const { waitForElement } = require("../helpers/waiters");
 const { SELECTORS } = require("../helpers/constants");
-const { issueOpenIDCredential } = require("../helpers/oid4vc");
+const { issueCredential } = require("../helpers/credentials");
 const { selectWalletNetwork } = require("../helpers/network-switch");
-const { scanQRCode } = require("../helpers/qr-code");
 
 let driver;
 

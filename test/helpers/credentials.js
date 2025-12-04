@@ -162,4 +162,6 @@ module.exports = {
   createOpenIDIssuer,
   generateOID4VCOffer,
   issueOpenIDCredential,
+  requestClaims,
+  issueCredential,
 };
