@@ -135,7 +135,7 @@ async function requestClaims() {
   return response.data.qrUrl;
 }
 
-export function issueCredential({ subjectDID, distribute }) {
+async function issueCredential({ subjectDID, distribute }) {
   return apiClient
     .post("/credentials", {
       anchor: false,
