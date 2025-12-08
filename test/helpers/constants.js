@@ -39,13 +39,13 @@ module.exports = {
     CREDENTIAL_IS_VALID: '//android.widget.TextView[@text="Valid"]',
 
     // Password modal selectors
-    PASSWORD_MODAL_TITLE: '~input-prompt-modal',
-    PASSWORD_INPUT_FIELD: '~modal-input',
-    PASSWORD_MODAL_OK_BTN: '~modal-confirm-button',
+    PASSWORD_MODAL_TITLE: '//android.widget.TextView[@text="Enter password"]',
+    PASSWORD_INPUT_FIELD: '//android.widget.EditText[@hint="Password" or @text="Password"]',
+    PASSWORD_MODAL_OK_BTN: '//android.widget.TextView[@text="OK"]',
 
     // import credential modal
-    IMPORT_CREDENTIAL_MODAL: '~confirmationModalContent',
-    IMPORT_CREDENTIAL_OK_BTN: '~confirmButton',
+    IMPORT_CREDENTIAL_MODAL: '//android.widget.TextView[@text="Import Credential"]',
+    IMPORT_CREDENTIAL_OK_BTN: '//android.widget.TextView[@text="OK"]',
 
     SCAN_QR_CODE_BTN: '~pasteToScan',
     IMPORT_SUCCESS: '~ImportSuccess',

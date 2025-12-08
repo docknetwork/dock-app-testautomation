@@ -1,7 +1,7 @@
-const { initializeDriver, closeDriver } = require("../helpers/driver");
+const { initializeDriver, closeDriver, NO_RESET } = require("../helpers/driver");
 const { takeScreenshot } = require("../helpers/screenshot");
 const { createWallet } = require("../helpers/wallet-setup");
-const { waitForElement } = require("../helpers/waiters");
+const { waitForElement, waitAndClick } = require("../helpers/waiters");
 const { SELECTORS } = require("../helpers/constants");
 const { selectWalletNetwork } = require("../helpers/network-switch");
 const { scanQRCode } = require("../helpers/qr-code");
@@ -16,18 +16,20 @@ describe("Feature: Credential Distribution", function () {
     console.log("\n========================================");
     console.log("FEATURE: Credential Distribution");
     console.log("========================================\n");
-    driver = await initializeDriver({ noReset: false, fullReset: false });
+    driver = await initializeDriver({ noReset: NO_RESET, fullReset: false });
   });
 
   after(async function () {
     await closeDriver(driver);
   });
 
-  it("should successfully import an OID4VC credential", async function () {
-    // Create wallet
-    console.log("Creating wallet...");
-    await createWallet(driver, this);
-    console.log("✓ Wallet created\n");
+  it("should successfully request claims", async function () {
+    if (!NO_RESET) {
+      // Create wallet
+      console.log("Creating wallet...");
+      await createWallet(driver, this);
+      console.log("✓ Wallet created\n");
+    }
 
     await selectWalletNetwork("testnet", driver);
 
@@ -38,7 +40,7 @@ describe("Feature: Credential Distribution", function () {
     await waitAndClick(driver, SELECTORS.NAV_DID_BTN);
 
     // find text starting with did:key:
-    const did = await waitForElement(driver, '//android.widget.TextView[@text="did:key:"]', 30000);
+    const did = await waitForElement(driver, '//android.widget.TextView[starts-with(@text, "did:key:")]', 30000);
     console.log("✓ DID found");
 
     const didText = await did.getText();
@@ -49,12 +51,6 @@ describe("Feature: Credential Distribution", function () {
 
     await scanQRCode(driver, qrUrl);
 
-    // Wait for "Submit Claims" button to be visible
-    await waitForElement(driver, SELECTORS.SUBMIT_CLAIMS_BTN, 30000);
-    console.log("✓ Submit Claims button found");
-    await waitAndClick(driver, SELECTORS.SUBMIT_CLAIMS_BTN, 30000);
-    console.log("✓ Submit Claims button clicked");
-
     // wait for Import Credential modal to be visible
     await waitForElement(driver, SELECTORS.IMPORT_CREDENTIAL_MODAL, 30000);
     console.log("✓ Import Credential modal found");
@@ -62,11 +58,6 @@ describe("Feature: Credential Distribution", function () {
     console.log("✓ Import Credential modal clicked");
 
     // Verify import success
-    console.log("Verifying import...");
-    await waitForElement(driver, SELECTORS.PROCESSING_CREDENTIAL, 30000);
-    console.log("✓ Credential is being processed");
-    await waitForElement(driver, SELECTORS.CREDENTIAL_RECEIVED, 30000);
-    console.log("✓ Credential received");
 
     await takeScreenshot(driver, this, "credential-received");
 

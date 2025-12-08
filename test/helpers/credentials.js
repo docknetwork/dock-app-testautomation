@@ -140,6 +140,7 @@ async function issueCredential({ subjectDID, distribute }) {
     .post("/credentials", {
       anchor: false,
       persist: false,
+      schema: "https://schema.truvera.io/CityResident-V1-1753885626252.json",
       credential: {
         type: ["VerifiableCredential", "CityResident"],
         issuer: ISSUER_DID,
