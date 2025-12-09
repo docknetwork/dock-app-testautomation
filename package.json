@@ -9,7 +9,9 @@
     "test:wallet-creation": "mocha test/features/wallet-creation.test.js",
     "test:import-oid4vc-credential": "mocha test/features/import-oid4vc-credential.test.js",
     "test:oid4vc": "node test/helpers/test-oid4vc.js",
-    "test:import-persisted-credential": "mocha test/features/import-persisted-credential.test.js"
+    "test:import-persisted-credential": "mocha test/features/import-persisted-credential.test.js",
+    "test:credential-offer": "mocha test/features/credential-offer.test.js",
+    "test:credential-distribution": "mocha test/features/credential-distribution.test.js"
   },
   "keywords": [
     "appium",

@@ -1,6 +1,8 @@
 const { remote } = require('webdriverio');
 const path = require('path');
 const { TIMEOUTS } = require('./constants');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Android capabilities for APK testing
 const getCapabilities = (options = {}) => {
@@ -92,7 +94,10 @@ async function getClipboard(driver) {
   return Buffer.from(base64Content, 'base64').toString('utf-8');
 }
 
+const NO_RESET = process.env.NO_RESET === 'true' || false;
+
 module.exports = {
+  NO_RESET,
   initializeDriver,
   closeDriver,
   getCapabilities,

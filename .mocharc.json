@@ -1,6 +1,6 @@
 {
   "timeout": 300000,
-  "retries": 4,
+  "retries": 1,
   "parallel": false,
   "jobs": 1,
   "reporter": "mocha-multi-reporters",

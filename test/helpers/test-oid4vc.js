@@ -3,7 +3,7 @@
  * Run with: node test/helpers/test-oid4vc.js
  */
 
-const { issueOpenIDCredential } = require('./oid4vc');
+const { issueOpenIDCredential } = require('./credentials');
 
 async function runTest() {
   console.log('Testing OID4VC credential issuance...\n');

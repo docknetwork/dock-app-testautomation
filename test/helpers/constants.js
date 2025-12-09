@@ -22,16 +22,17 @@ module.exports = {
     SETUP_PASSCODE_SCREEN: '~SetupPasscodeScreen',
     CREDENTIALS_SCREEN: '~CredentialsScreen',
     KEYBOARD_NUMBER_1: '~keyboardNumber1',
-
+    
     // TODO: replace with proper testId
     NAV_CREDENTIALS_BTN: '//android.widget.TextView[@text="Credentials"]',
     NAV_SCAN_BTN: '//android.widget.TextView[@text="Scan"]',
+    NAV_DID_BTN: '//android.widget.TextView[@text="DIDs"]',
     NAV_SETTINGS_BTN: '//android.widget.TextView[@text="Settings"]',
     SETTINGS_TEST_MODE_BTN: '//android.widget.TextView[@text="Test mode"]',
     TEST_MODE_SWITCH: '//android.widget.Switch',
     TEST_MODE_BADGE: '//android.widget.TextView[@text="Test mode"]',
-    PROCESSING_CREDENTIAL: '//android.widget.TextView[@text="Processing credential..."]',
-    CREDENTIAL_RECEIVED: '//android.widget.TextView[@text="Credential received"]',
+    PROCESSING_CREDENTIAL: '~LoadingScreen',
+    CREDENTIAL_RECEIVED: '~credential-received',
     CREDENTIAL_TYPE_CITY_RESIDENT: '//android.widget.TextView[@text="City Resident"]',
     CREDENTIAL_TYPE_CREDIT_SCORE: '//android.widget.TextView[@text="Credit Score"]',
 
@@ -48,5 +49,8 @@ module.exports = {
 
     SCAN_QR_CODE_BTN: '~pasteToScan',
     IMPORT_SUCCESS: '~ImportSuccess',
+
+    // credential offer screen
+    SUBMIT_CLAIMS_BTN: '~submitClaims',
   },
 };
