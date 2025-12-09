@@ -52,9 +52,9 @@ describe("Feature: Credential Distribution", function () {
     await scanQRCode(driver, qrUrl);
 
     // wait for Import Credential modal to be visible
-    await waitForElement(driver, SELECTORS.IMPORT_CREDENTIAL_MODAL, 30000);
+    await waitForElement(driver, SELECTORS.IMPORT_CREDENTIAL_MODAL);
     console.log("✓ Import Credential modal found");
-    await waitAndClick(driver, SELECTORS.IMPORT_CREDENTIAL_OK_BTN, 30000);
+    await waitAndClick(driver, SELECTORS.IMPORT_CREDENTIAL_OK_BTN);
     console.log("✓ Import Credential modal clicked");
 
     // check if credential is in the credentials screen
@@ -65,7 +65,7 @@ describe("Feature: Credential Distribution", function () {
       30000
     );
     console.log("✓ Credential type is City Resident");
-    await waitForElement(driver, SELECTORS.CREDENTIAL_IS_VALID, 30000);
+    await waitForElement(driver, SELECTORS.CREDENTIAL_IS_VALID);
     console.log("✓ Credential is valid");
 
     await takeScreenshot(driver, this, "credential-received");

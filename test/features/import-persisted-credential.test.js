@@ -45,15 +45,15 @@ describe("Feature: Import Persisted Credential", function () {
     await enterCredentialPassword(driver, credentialPassword, this);
     console.log("✓ Credential password entered\n");
 
-    await waitForElement(driver, SELECTORS.IMPORT_CREDENTIAL_MODAL, 30000);
-    await waitAndClick(driver, SELECTORS.IMPORT_CREDENTIAL_OK_BTN, 30000);
+    await waitForElement(driver, SELECTORS.IMPORT_CREDENTIAL_MODAL);
+    await waitAndClick(driver, SELECTORS.IMPORT_CREDENTIAL_OK_BTN);
     console.log("✓ Credential received");
 
     await takeScreenshot(driver, this, "credential-received");
 
-    await waitForElement(driver, SELECTORS.CREDENTIAL_TYPE_CREDIT_SCORE, 30000);
+    await waitForElement(driver, SELECTORS.CREDENTIAL_TYPE_CREDIT_SCORE);
     console.log("✓ Credential type is Credit Score");
-    await waitForElement(driver, SELECTORS.CREDENTIAL_IS_VALID, 30000);
+    await waitForElement(driver, SELECTORS.CREDENTIAL_IS_VALID);
     console.log("✓ Credential is valid");
 
     await takeScreenshot(driver, this, "credential-imported");

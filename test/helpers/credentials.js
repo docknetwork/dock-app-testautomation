@@ -12,6 +12,11 @@ if (!API_KEY || !API_URL || !ISSUER_DID) {
   );
 }
 
+const CREDENTIAL_ALGORITHMS = {
+  DOCKBBS: "dockbbs",
+  ED25519: "ed25519",
+};
+
 const requestOptions = {
   headers: {
     "Content-Type": "application/json",
@@ -65,7 +70,7 @@ apiClient.interceptors.response.use(undefined, async (error) => {
   return apiClient(config);
 });
 
-async function createOpenIDIssuer() {
+async function createOpenIDIssuer(algorithm = CREDENTIAL_ALGORITHMS.DOCKBBS) {
   try {
     const response = await apiClient.post("/openid/issuers", {
       credentialOptions: {
@@ -82,7 +87,7 @@ async function createOpenIDIssuer() {
             country: "USA",
           },
         },
-        algorithm: "dockbbs",
+        algorithm,
       },
       singleUse: false,
     });
@@ -105,12 +110,11 @@ async function generateOID4VCOffer(issuerID) {
   }
 }
 
-async function issueOpenIDCredential() {
-  const openIDIssuer = await createOpenIDIssuer();
+async function issueOpenIDCredential(algorithm) {
+  const openIDIssuer = await createOpenIDIssuer(algorithm);
   const url = await generateOID4VCOffer(openIDIssuer.id);
   return url;
 }
-
 
 async function requestClaims() {
   const response = await apiClient.post("/credentials/request-claims", {
@@ -159,10 +163,50 @@ async function issueCredential({ subjectDID, distribute }) {
     .then((response) => response.data);
 }
 
+async function createProofRequest() {
+  const proofRequest = await apiClient
+    .post("/proof-requests", {
+      did: ISSUER_DID,
+      name: "Wallet Smoke Tests",
+      request: {
+        name: "Wallet Smoke Tests",
+        purpose: "Wallet Smoke Tests",
+        input_descriptors: [
+          {
+            id: "Credential 1",
+            name: "Wallet Smoke Tests",
+            purpose: "Wallet Smoke Tests",
+            constraints: {
+              fields: [
+                {
+                  path: ["$.id"],
+                },
+              ],
+            },
+          },
+        ],
+      },
+    })
+    .then((res) => res.data);
+
+  const proofRequestID = proofRequest.id;
+  const { data: openIdVpResponse } = await apiClient.post(
+    `/openid/vp/${proofRequestID}/request-url`,
+    {
+      withRequestURI: true,
+      verifierDID: ISSUER_DID,
+    }
+  );
+
+  return openIdVpResponse.url;
+}
+
 module.exports = {
   createOpenIDIssuer,
   generateOID4VCOffer,
   issueOpenIDCredential,
   requestClaims,
   issueCredential,
+  createProofRequest,
+  CREDENTIAL_ALGORITHMS,
 };
