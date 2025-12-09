@@ -45,7 +45,7 @@ describe("Feature: Credential Distribution", function () {
     const didText = await did.getText();
     console.log("✓ DID text:", didText);
 
-    issueCredential({
+    await issueCredential({
       subjectDID: didText,
       distribute: true
     });
