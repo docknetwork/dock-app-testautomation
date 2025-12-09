@@ -32,7 +32,7 @@ describe("Feature: Verification ed25519", function () {
     await closeDriver(driver);
   });
 
-  it("should successfully distribute a credential", async function () {
+  it("should successfully verify a bbs credential", async function () {
     // Create wallet
     if (!NO_RESET) {
       console.log("Creating wallet...");

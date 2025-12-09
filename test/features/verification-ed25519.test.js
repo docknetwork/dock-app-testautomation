@@ -32,7 +32,7 @@ describe("Feature: Verification ed25519", function () {
     await closeDriver(driver);
   });
 
-  it("should successfully distribute a credential", async function () {
+  it("should successfully verify an ed25519 credential", async function () {
     // Create wallet
     if (!NO_RESET) {
       console.log("Creating wallet...");
