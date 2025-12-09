@@ -18,12 +18,12 @@ const { scanQRCode } = require("../helpers/qr-code");
 
 let driver;
 
-describe("Feature: Verification ed25519", function () {
+describe("Feature: Verification BBS", function () {
   this.timeout(300000); // 5 minutes timeout
 
   before(async function () {
     console.log("\n========================================");
-    console.log("FEATURE: Verification ed25519");
+    console.log("FEATURE: Verification BBS");
     console.log("========================================\n");
     driver = await initializeDriver({ noReset: NO_RESET, fullReset: false });
   });
