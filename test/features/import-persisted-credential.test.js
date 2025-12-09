@@ -55,5 +55,7 @@ describe("Feature: Import Persisted Credential", function () {
     console.log("✓ Credential type is Credit Score");
     await waitForElement(driver, SELECTORS.CREDENTIAL_IS_VALID, 30000);
     console.log("✓ Credential is valid");
+
+    await takeScreenshot(driver, this, "credential-imported");
   });
 });

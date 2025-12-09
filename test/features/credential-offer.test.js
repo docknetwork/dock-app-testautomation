@@ -57,10 +57,6 @@ describe("Feature: Credential Distribution", function () {
     await waitAndClick(driver, SELECTORS.IMPORT_CREDENTIAL_OK_BTN, 30000);
     console.log("✓ Import Credential modal clicked");
 
-    // Verify import success
-
-    await takeScreenshot(driver, this, "credential-received");
-
     // check if credential is in the credentials screen
     console.log("Verifying credential...");
     await waitForElement(
@@ -71,5 +67,7 @@ describe("Feature: Credential Distribution", function () {
     console.log("✓ Credential type is City Resident");
     await waitForElement(driver, SELECTORS.CREDENTIAL_IS_VALID, 30000);
     console.log("✓ Credential is valid");
+
+    await takeScreenshot(driver, this, "credential-received");
   });
 });

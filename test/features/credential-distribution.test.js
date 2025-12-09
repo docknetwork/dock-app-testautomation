@@ -63,5 +63,7 @@ describe("Feature: Credential Distribution", function () {
     console.log("✓ Credential type is City Resident");
     await waitForElement(driver, SELECTORS.CREDENTIAL_IS_VALID, 30000);
     console.log("✓ Credential is valid");
+
+    await takeScreenshot(driver, this, "credential-distributed");
   });
 });
