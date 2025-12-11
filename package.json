@@ -11,7 +11,9 @@
     "test:oid4vc": "node test/helpers/test-oid4vc.js",
     "test:import-persisted-credential": "mocha test/features/import-persisted-credential.test.js",
     "test:credential-offer": "mocha test/features/credential-offer.test.js",
-    "test:credential-distribution": "mocha test/features/credential-distribution.test.js"
+    "test:credential-distribution": "mocha test/features/credential-distribution.test.js",
+    "test:verification-ed25519": "mocha test/features/verification-ed25519.test.js",
+    "test:verification-bbs": "mocha test/features/verification-bbs.test.js"
   },
   "keywords": [
     "appium",

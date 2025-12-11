@@ -1,4 +1,5 @@
 const { TIMEOUTS } = require('./constants');
+const { takeScreenshot } = require('./screenshot');
 
 /**
  * Wait for an element to be displayed
@@ -19,9 +20,15 @@ async function waitForElement(driver, selector, timeout = TIMEOUTS.ELEMENT_DISPL
  * @param {string} selector - Element selector
  * @param {number} timeout - Timeout in milliseconds
  */
-async function waitAndClick(driver, selector, timeout = TIMEOUTS.ELEMENT_DISPLAY) {
-  const element = await waitForElement(driver, selector, timeout);
+async function waitAndClick(driver, selector, options = { timeout: TIMEOUTS.ELEMENT_DISPLAY, screenshotName: null }) {
+  const element = await waitForElement(driver, selector, options.timeout || TIMEOUTS.ELEMENT_DISPLAY);
+
+  if (options.screenshotName) {
+    await takeScreenshot(driver, options.screenshotName);
+  }
+
   await element.click();
+
   console.log(`✓ Clicked element: ${selector}`);
 }
 

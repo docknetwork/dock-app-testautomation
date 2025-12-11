@@ -52,5 +52,15 @@ module.exports = {
 
     // credential offer screen
     SUBMIT_CLAIMS_BTN: '~submitClaims',
+
+    // verification
+    VERIFICATION_PURPOSE: '//android.widget.TextView[contains(@text, "Wallet Smoke Tests")]',
+    VERIFICATION_CHECKBOX: '//android.widget.CheckBox',
+    VERIFICATION_CONTINUE_BTN: '//android.widget.TextView[@text="Continue"]',
+    VERIFICATION_SHARE_BTN: '//android.widget.TextView[@text="Share"]',
+    VERIFICATION_SELECT_DETAILS_TO_SHARE: '//android.widget.TextView[@text="Select which details to share"]',
+    VERIFICATION_WAIT_FOR_VERIFIER: '//android.widget.TextView[@text="Waiting for Verification"]',
+    VERIFICATION_SUCCESS: '//android.widget.TextView[@text="Verification Successful"]',
+    VERIFICATION_SELECT_ALL: '//android.widget.TextView[@text="Select all"]',
   },
 };
