@@ -49,10 +49,10 @@ jobs:
 
       - name: Determine build number and directory name
         run: |
-          # Set distribution name (default to truvera if not provided)
+          # Set distribution name (default to bank-demo if not provided)
           DISTRIBUTION_NAME="${{ github.event.inputs.distribution-name }}"
           if [ -z "$DISTRIBUTION_NAME" ]; then
-            DISTRIBUTION_NAME="truvera"
+            DISTRIBUTION_NAME="bank-demo"
           fi
           echo "DISTRIBUTION_NAME=$DISTRIBUTION_NAME" >> "$GITHUB_ENV"
           echo "Using distribution name: $DISTRIBUTION_NAME"
@@ -240,6 +240,5 @@ jobs:
               { "title": "Build Number", "value": "${{ env.BUILD_NUMBER }}", "short": true },
               { "title": "Branch", "value": "${{ github.ref_name }}", "short": true },
               { "title": "Distribution", "value": "${{ env.DISTRIBUTION_NAME }}", "short": true },
-              { "title": "Test Results", "value": "${{ env.TEST_SUMMARY }}" },
               { "title": "Action URL", "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" }
             ]
