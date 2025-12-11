@@ -19,7 +19,7 @@ module.exports = {
   SELECTORS: {
     CREATE_WALLET_BTN: '~CreateWalletBtn',
     SETUP_PASSCODE_BTN: '~CreateWalletBtn', // TODO: rename in app
-    SETUP_PASSCODE_SCREEN: '~SetupPasscodeScreen',
+    SETUP_PASSCODE_SCREEN: '//android.widget.TextView[@text="Create your passcode"]',
     CREDENTIALS_SCREEN: '~CredentialsScreen',
     KEYBOARD_NUMBER_1: '~keyboardNumber1',
     
@@ -34,6 +34,9 @@ module.exports = {
     PROCESSING_CREDENTIAL: '~LoadingScreen',
     CREDENTIAL_RECEIVED: '~credential-received',
     CREDENTIAL_TYPE_CITY_RESIDENT: '//android.widget.TextView[@text="City Resident"]',
+    CREDENTIAL_FOR_SURE_BIOMETRIC: '//android.widget.TextView[@text="For Sur Biometric"]',
+    CREDENTIAL_QUOTIENT_BANK_IDENTITY: '//android.widget.TextView[@text="Quotient Bank Identity"]',
+    CREDENTIAL_EQUALNET_CREDIT_SCORE: '//android.widget.TextView[@text="Equi Net Credit Score"]',
     CREDENTIAL_TYPE_CREDIT_SCORE: '//android.widget.TextView[@text="Credit Score"]',
 
     CREDENTIAL_IS_VALID: '//android.widget.TextView[@text="Valid"]',

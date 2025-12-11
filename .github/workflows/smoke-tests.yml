@@ -6,7 +6,7 @@ on:
       build_number:
         description: 'Build number e.g v1.7.0 build-904'
         required: false
-        default: 'v1.7.0 build-904'
+        default: 'v1.7.4 build-340'
       distribution-name:
         description: 'Distribution name matching the S3 bucket pattern app-{name}-distribution (e.g., truvera for app-truvera-distribution, bank-demo for app-bank-demo-distribution)'
         required: false
