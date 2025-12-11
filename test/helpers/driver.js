@@ -12,7 +12,7 @@ const getCapabilities = (options = {}) => {
     'appium:deviceName': 'Android',
 
     // Path to APK file
-    'appium:app': path.join(__dirname, '..', '..', 'app', 'truvera-wallet.apk'),
+    'appium:app': path.join(__dirname, '..', '..', 'app', options.app || 'truvera-wallet.apk'),
 
     // Test behavior - configurable for different test scenarios
     'appium:noReset': options.noReset || false,

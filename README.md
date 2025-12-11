@@ -105,7 +105,7 @@ Before you begin, ensure you have the following installed:
 
 ## Running Tests
 
-### Local Execution
+### Mobile-Only Tests (Appium + Mocha)
 
 1. **Start Appium server:**
    ```bash
@@ -124,10 +124,29 @@ Before you begin, ensure you have the following installed:
 
 3. **Run tests:**
    ```bash
-   # Run all tests
+   # Run all mobile tests
    npm test
 
+   # Run specific test
+   npm run test:wallet-creation
    ```
+
+### Integration Tests (Playwright + Appium)
+
+Integration tests combine web automation (Playwright) with mobile automation (Appium) to test complete flows between bank-demo.truvera.io and the Android wallet.
+
+1. **Ensure Appium and Android emulator are running** (see steps above)
+
+2. **Run integration tests:**
+   ```bash
+   # Run all integration tests
+   npm run test:integration
+
+   # Run with browser visible
+   npm run test:integration:headed
+   ```
+
+See [test/integration/README.md](test/integration/README.md) for detailed integration test documentation.
 
 ## Test Reports
 
