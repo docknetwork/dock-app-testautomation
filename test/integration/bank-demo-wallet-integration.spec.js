@@ -137,15 +137,4 @@ test.describe('Bank Demo + Wallet Integration', () => {
 
     console.log('\n=== Integration Test Completed Successfully ===');
   });
-
-  // test('should handle bank account opening flow errors gracefully', async ({ page }) => {
-  //   console.log('\n=== Testing Error Handling ===');
-
-  //   const bankDemo = new BankDemoPage(page);
-  //   await bankDemo.navigate();
-
-  //   // Verify we can start the flow
-  //   await expect(page.getByRole('button', { name: 'New Bank Account' })).toBeVisible();
-  //   console.log('✓ Bank demo page loaded correctly');
-  // });
 });
