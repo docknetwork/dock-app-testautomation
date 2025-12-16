@@ -34,6 +34,10 @@ allure-report/
 screenshots/
 test-reports/
 
+# Playwright
+playwright-report/
+playwright/.cache/
+
 # Build
 dist/
 build/
