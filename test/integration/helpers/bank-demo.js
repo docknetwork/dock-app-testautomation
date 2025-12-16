@@ -50,8 +50,8 @@ class BankDemoPage {
     await this.clickButton('Start Capture');
     console.log('✓ Clicked "Start Capture"');
 
-    // Step 5: Wait for capture to complete (5 seconds)
-    await this.page.waitForTimeout(5000);
+    // Step 5: Wait for capture to complete.Look for "Capture Complete" text on the page
+    await this.waitForText('Capture Complete');
     console.log('✓ Capture completed');
 
     // Step 6: Click "Submit Application"
