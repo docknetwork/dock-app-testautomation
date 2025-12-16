@@ -114,7 +114,7 @@ test.describe('Bank Demo + Wallet Integration', () => {
     // wait for credential to be visible
     await waitForElement(
       mobileDriver,
-      SELECTORS.CREDENTIAL_FOR_SURE_BIOMETRIC,
+      SELECTORS.CREDENTIAL_FOR_SUR_BIOMETRIC,
       30000
     );
 
