@@ -50,8 +50,8 @@ class BankDemoPage {
     await this.clickButton('Start Capture');
     console.log('✓ Clicked "Start Capture"');
 
-    // Step 5: Wait for capture to complete (5 seconds)
-    await this.page.waitForTimeout(5000);
+    // Step 5: Wait for capture to complete.Look for "Capture Complete" text on the page
+    await this.waitForText('Capture Complete');
     console.log('✓ Capture completed');
 
     // Step 6: Click "Submit Application"
@@ -62,6 +62,18 @@ class BankDemoPage {
     // Step 7: Wait for success message
     await this.waitForText('Your account has been opened!');
     console.log('✓ Account opened successfully!');
+  }
+
+  async obtainAutoLoan() {
+    // navigate to https://bank-demo.truvera.io/
+    await this.page.goto('https://bank-demo.truvera.io/');
+
+    // click on "Obtain Auto Loan"
+    await this.clickButton('Obtain Auto Loan');
+
+    // wait for qr code to be visible
+    await this.waitForQRCode();
+
   }
 
   /**
