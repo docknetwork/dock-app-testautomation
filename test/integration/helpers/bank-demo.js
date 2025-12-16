@@ -64,6 +64,18 @@ class BankDemoPage {
     console.log('✓ Account opened successfully!');
   }
 
+  async obtainAutoLoan() {
+    // navigate to https://bank-demo.truvera.io/
+    await this.page.goto('https://bank-demo.truvera.io/');
+
+    // click on "Obtain Auto Loan"
+    await this.clickButton('Obtain Auto Loan');
+
+    // wait for qr code to be visible
+    await this.waitForQRCode();
+
+  }
+
   /**
    * Click a button by text or role
    * @param {string} text - Button text
