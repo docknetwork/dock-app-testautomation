@@ -62,14 +62,14 @@ test.describe('Bank Demo + Wallet Integration', () => {
     // Navigate to bank demo
     await bankDemo.navigate();
 
-    // // Complete the bank account opening flow
+    // Complete the bank account opening flow
     await bankDemo.openBankAccount();
 
-    // // Take screenshot of success page
+    // Take screenshot of success page
     await bankDemo.screenshot('bank-account-opened');
     console.log('✓ Bank account opened successfully');
 
-    // // Wait for QR code to be visible
+    // Wait for QR code to be visible
     await bankDemo.waitForQRCode();
 
     // Extract QR code from the page
