@@ -1,0 +1,12 @@
+name: Trigger White Label Deployment
+on:
+  repository_dispatch:
+    types: [bank-demo-test-trigger]
+
+
+jobs:
+  run-white-label-build:
+    uses: ./.github/workflows/bank-demo-test.yml
+    with:
+      distribution-name: ${{ github.event.client_payload.distribution_name }}
+    secrets: inherit
