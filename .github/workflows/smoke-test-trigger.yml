@@ -1,4 +1,4 @@
-name: Trigger White Label Deployment
+name: Trigger Smoke Tests
 on:
   repository_dispatch:
     types: [trigger-smoke-tests]

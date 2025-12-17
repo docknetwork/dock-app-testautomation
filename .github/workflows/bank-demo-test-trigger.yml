@@ -1,4 +1,4 @@
-name: Trigger White Label Deployment
+name: Trigger Bank Demo Test
 on:
   repository_dispatch:
     types: [bank-demo-test-trigger]
