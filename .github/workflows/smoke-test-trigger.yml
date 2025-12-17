@@ -1,0 +1,12 @@
+name: Trigger Smoke Tests
+on:
+  repository_dispatch:
+    types: [trigger-smoke-tests]
+
+
+jobs:
+  trigger-smoke-tests:
+    uses: ./.github/workflows/smoke-tests.yml
+    with:
+      distribution-name: ${{ github.event.client_payload.distribution_name }}
+    secrets: inherit
