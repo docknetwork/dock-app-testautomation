@@ -5,7 +5,7 @@ on:
 
 
 jobs:
-  run-white-label-build:
+  trigger-bank-demo-test:
     uses: ./.github/workflows/bank-demo-test.yml
     with:
       distribution-name: ${{ github.event.client_payload.distribution_name }}
