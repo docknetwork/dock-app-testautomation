@@ -1,12 +1,11 @@
-name: Trigger Bank Demo Test
+name: Trigger Bank Demo Tests
 on:
   repository_dispatch:
-    types: [bank-demo-test-trigger]
-
+    types: [trigger-bank-demo-tests]
 
 jobs:
-  trigger-bank-demo-test:
-    uses: ./.github/workflows/bank-demo-test.yml
+  trigger-bank-demo-tests:
+    uses: ./.github/workflows/bank-demo-tests.yml
     with:
       distribution-name: ${{ github.event.client_payload.distribution_name }}
     secrets: inherit
