@@ -20,7 +20,10 @@ async function waitForElement(driver, selector, timeout = TIMEOUTS.ELEMENT_DISPL
  * @param {string} selector - Element selector
  * @param {number} timeout - Timeout in milliseconds
  */
-async function waitAndClick(driver, selector, options = { timeout: TIMEOUTS.ELEMENT_DISPLAY, screenshotName: null }) {
+async function waitAndClick(driver, selector, options = {}) {
+  if (typeof options === 'number') {
+    options = { timeout: options };
+  }
   const element = await waitForElement(driver, selector, options.timeout || TIMEOUTS.ELEMENT_DISPLAY);
 
   if (options.screenshotName) {
