@@ -26,6 +26,7 @@ module.exports = {
     
     // TODO: replace with proper testId
     NAV_CREDENTIALS_BTN: '//android.widget.TextView[@text="Credentials"]',
+    NAV_BACK_BTN: '//android.widget.TextView[@text="Back"]',
     NAV_SCAN_BTN: '//android.widget.TextView[@text="Scan"]',
     NAV_SETTINGS_BTN: '//android.widget.TextView[@text="Settings"]',
     SETTINGS_TEST_MODE_BTN: '//android.widget.TextView[@text="Test mode"]',

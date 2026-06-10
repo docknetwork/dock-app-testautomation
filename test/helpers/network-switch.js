@@ -16,6 +16,8 @@ async function tapTestModeSwitch(driver) {
   await waitAndClick(driver, SELECTORS.TEST_MODE_SWITCH);
   console.log("✓ Test mode switch clicked");
 
+  await waitAndClick(driver, SELECTORS.NAV_BACK_BTN);
+
   await waitAndClick(driver, SELECTORS.NAV_CREDENTIALS_BTN);
   console.log("✓ Navigated back to credentials");
 }

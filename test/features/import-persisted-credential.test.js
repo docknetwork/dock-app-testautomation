@@ -1,7 +1,7 @@
-const { initializeDriver, closeDriver, NO_RESET } = require("../helpers/driver");
+const { initializeDriver, closeDriver } = require("../helpers/driver");
 const { takeScreenshot } = require("../helpers/screenshot");
 const { createWallet } = require("../helpers/wallet-setup");
-const { waitForElement, waitAndClick, unlockWallet } = require("../helpers/waiters");
+const { waitForElement, waitAndClick } = require("../helpers/waiters");
 const { SELECTORS } = require("../helpers/constants");
 const { selectWalletNetwork } = require("../helpers/network-switch");
 const { scanQRCode } = require("../helpers/qr-code");
@@ -17,14 +17,12 @@ describe("Feature: Import Persisted Credential", function () {
     console.log("\n========================================");
     console.log("FEATURE: Import Persisted Credential");
     console.log("========================================\n");
-    driver = await initializeDriver({ noReset: NO_RESET, fullReset: false });
+    driver = await initializeDriver({ noReset: false, fullReset: true });
 
-    // Create wallet
-    if (!NO_RESET) {
-      console.log("Creating wallet...");
-      await createWallet(driver, this);
-      console.log("✓ Wallet created\n");
-    }
+    console.log("Creating wallet...");
+    await createWallet(driver, this);
+    console.log("✓ Wallet created\n");
+  
     console.log("✓ Wallet created\n");
   });
 
@@ -33,8 +31,6 @@ describe("Feature: Import Persisted Credential", function () {
   });
 
   it("should successfully import a persisted credential using credential password", async function () {
-    await unlockWallet(driver);
-
     await selectWalletNetwork("testnet", driver);
 
     const credentialURL = testCredentials.testnet.bbs.url;

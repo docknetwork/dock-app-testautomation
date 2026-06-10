@@ -1,6 +1,8 @@
 name: "Bank Demo tests"
 on:
   push:
+    branches:
+      - master
   workflow_dispatch:
     inputs:
       build_number:
