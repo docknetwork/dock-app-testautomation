@@ -1,10 +1,10 @@
 const { initializeDriver, closeDriver, NO_RESET } = require("../helpers/driver");
 const { takeScreenshot } = require("../helpers/screenshot");
 const { createWallet } = require("../helpers/wallet-setup");
-const { waitForElement, waitAndClick } = require("../helpers/waiters");
+const { waitForElement, waitAndClick, unlockWallet } = require("../helpers/waiters");
 const { SELECTORS } = require("../helpers/constants");
 const { issueCredential } = require("../helpers/credentials");
-const { selectWalletNetwork } = require("../helpers/network-switch");
+const { selectWalletNetwork, navigateToDIDs } = require("../helpers/network-switch");
 
 let driver;
 
@@ -30,13 +30,15 @@ describe("Feature: Credential Distribution", function () {
       console.log("✓ Wallet created\n");
     }
 
+    await unlockWallet(driver);
+
     await selectWalletNetwork("testnet", driver);
 
     // Generate credential offer URL
     console.log("Generating OID4VC credential offer...");
 
-    // navigate to did screen
-    await waitAndClick(driver, SELECTORS.NAV_DID_BTN);
+    // navigate to did screen (Settings -> DIDs)
+    await navigateToDIDs(driver);
 
     // find text starting with did:key:
     const did = await waitForElement(driver, '//android.widget.TextView[starts-with(@text, "did:key:")]', 30000);

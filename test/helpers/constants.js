@@ -20,15 +20,16 @@ module.exports = {
     CREATE_WALLET_BTN: '~CreateWalletBtn',
     SETUP_PASSCODE_BTN: '~CreateWalletBtn', // TODO: rename in app
     SETUP_PASSCODE_SCREEN: '//android.widget.TextView[@text="Create your passcode"]',
+    UNLOCK_WALLET_SCREEN: '~unlockWalletScreen',
     CREDENTIALS_SCREEN: '~CredentialsScreen',
     KEYBOARD_NUMBER_1: '~keyboardNumber1',
     
     // TODO: replace with proper testId
     NAV_CREDENTIALS_BTN: '//android.widget.TextView[@text="Credentials"]',
     NAV_SCAN_BTN: '//android.widget.TextView[@text="Scan"]',
-    NAV_DID_BTN: '//android.widget.TextView[@text="DIDs"]',
     NAV_SETTINGS_BTN: '//android.widget.TextView[@text="Settings"]',
     SETTINGS_TEST_MODE_BTN: '//android.widget.TextView[@text="Test mode"]',
+    SETTINGS_DID_BTN: '//*[@resource-id="did_management_option"]',
     TEST_MODE_SWITCH: '//android.widget.Switch',
     TEST_MODE_BADGE: '//android.widget.TextView[@text="Test mode"]',
     PROCESSING_CREDENTIAL: '~LoadingScreen',

@@ -5,7 +5,7 @@ const {
 } = require("../helpers/driver");
 const { takeScreenshot } = require("../helpers/screenshot");
 const { createWallet } = require("../helpers/wallet-setup");
-const { waitForElement, waitAndClick } = require("../helpers/waiters");
+const { waitForElement, waitAndClick, unlockWallet } = require("../helpers/waiters");
 const { SELECTORS } = require("../helpers/constants");
 const {
   issueCredential,
@@ -33,6 +33,8 @@ describe("Feature: Verification ed25519", function () {
   });
 
   it("should successfully verify an ed25519 credential", async function () {
+    await unlockWallet(driver);
+
     // Create wallet
     if (!NO_RESET) {
       console.log("Creating wallet...");
