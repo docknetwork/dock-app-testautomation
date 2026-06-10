@@ -35,6 +35,7 @@ module.exports = {
     PROCESSING_CREDENTIAL: '~LoadingScreen',
     CREDENTIAL_RECEIVED: '~credential-received',
     CREDENTIAL_TYPE_CITY_RESIDENT: '//android.widget.TextView[@text="City Resident"]',
+    APPROVE_AND_SHARE: '//android.widget.TextView[@text="Approve and share"]',
     CREDENTIAL_FOR_SUR_BIOMETRIC: '//android.widget.TextView[@text="For Sur Biometric"]',
     CREDENTIAL_QUOTIENT_BANK_IDENTITY: '//android.widget.TextView[@text="Quotient Bank Identity"]',
     CREDENTIAL_EQUALNET_CREDIT_SCORE: '//android.widget.TextView[@text="Equi Net Credit Score"]',

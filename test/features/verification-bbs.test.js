@@ -33,9 +33,6 @@ describe("Feature: Verification BBS", function () {
   });
 
   it("should successfully verify a bbs credential", async function () {
-    await unlockWallet(driver);
-
-    // Create wallet
     if (!NO_RESET) {
       console.log("Creating wallet...");
       await createWallet(driver, this);
@@ -61,6 +58,8 @@ describe("Feature: Verification BBS", function () {
       );
   
       await takeScreenshot(driver, this, "credential-received");
+    } else {
+      unlockWallet(driver);
     }
 
     const proofRequestUrl = await createProofRequest();
@@ -68,41 +67,15 @@ describe("Feature: Verification BBS", function () {
 
     await scanQRCode(driver, proofRequestUrl);
 
-    // check if credential is in the credentials screen
     await waitForElement(driver, SELECTORS.VERIFICATION_PURPOSE, 30000);
 
     await takeScreenshot(driver, this, "verification-started");
 
-    // should see the credential in the verification screen
-    await waitForElement(
-      driver,
-      SELECTORS.CREDENTIAL_TYPE_CITY_RESIDENT,
-      30000
-    );
-
-    // select credential and click continue
-    await waitAndClick(driver, SELECTORS.VERIFICATION_CHECKBOX);
-    await waitAndClick(driver, SELECTORS.VERIFICATION_CONTINUE_BTN);
-
-    // Wait for attribute selection
-    await waitForElement(
-      driver,
-      SELECTORS.VERIFICATION_SELECT_DETAILS_TO_SHARE,
-      30000
-    );
+    await waitAndClick(driver, SELECTORS.APPROVE_AND_SHARE);
 
     await takeScreenshot(driver, this, "verification-select-details-to-share");
 
-    // select attributes to share
-    await waitAndClick(driver, SELECTORS.VERIFICATION_SELECT_ALL, { screenshotName: "verification-select-all" });
-    // click continue 
-    await waitAndClick(driver, SELECTORS.VERIFICATION_CONTINUE_BTN, { screenshotName: "verification-continue" });
-    // click share
-    await waitAndClick(driver, SELECTORS.VERIFICATION_SHARE_BTN, { screenshotName: "verification-share" });
-
-
-
-    // // wait for verification message
+    // wait for verification message
     await waitForElement(
       driver,
       SELECTORS.VERIFICATION_WAIT_FOR_VERIFIER,

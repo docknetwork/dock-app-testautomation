@@ -33,8 +33,6 @@ describe("Feature: Verification ed25519", function () {
   });
 
   it("should successfully verify an ed25519 credential", async function () {
-    await unlockWallet(driver);
-
     // Create wallet
     if (!NO_RESET) {
       console.log("Creating wallet...");
@@ -61,6 +59,8 @@ describe("Feature: Verification ed25519", function () {
       );
 
       await takeScreenshot(driver, this, "credential-received");
+    } else {
+      await unlockWallet(driver);
     }
 
     const proofRequestUrl = await createProofRequest();
@@ -73,28 +73,8 @@ describe("Feature: Verification ed25519", function () {
 
     await takeScreenshot(driver, this, "verification-started");
 
-    // should see the credential in the verification screen
-    await waitForElement(
-      driver,
-      SELECTORS.CREDENTIAL_TYPE_CITY_RESIDENT,
-      30000
-    );
-
     // select credential and click continue
-    await waitAndClick(driver, SELECTORS.VERIFICATION_CHECKBOX);
-    await waitAndClick(driver, SELECTORS.VERIFICATION_CONTINUE_BTN);
-
-    // check if verification is successful
-    await waitForElement(
-      driver,
-      SELECTORS.VERIFICATION_SELECT_DETAILS_TO_SHARE,
-      30000
-    );
-
-    await takeScreenshot(driver, this, "verification-select-details-to-share");
-
-    // click continue 
-    await waitAndClick(driver, SELECTORS.VERIFICATION_CONTINUE_BTN);
+    await waitAndClick(driver, SELECTORS.APPROVE_AND_SHARE);
 
     // wait for verification message
     await waitForElement(
