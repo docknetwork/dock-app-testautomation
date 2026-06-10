@@ -1,4 +1,4 @@
-const { waitForElement, waitAndClick, waitForTransition } = require('./waiters');
+const { waitForElement, waitForTransition } = require('./waiters');
 const { SELECTORS, TIMEOUTS } = require('./constants');
 const { takeScreenshot } = require('./screenshot');
 
@@ -43,10 +43,9 @@ async function enterCredentialPassword(driver, password, testContext = null) {
       await takeScreenshot(driver, testContext, 'password-entered');
     }
 
-    // Click the OK button
-    console.log('Clicking OK button...');
-    await waitAndClick(driver, SELECTORS.PASSWORD_MODAL_OK_BTN, TIMEOUTS.ELEMENT_DISPLAY);
-    console.log('✓ OK button clicked');
+    console.log('Submitting password with Enter key...');
+    await driver.pressKeyCode(66);
+    console.log('✓ Password submitted');
 
     // Wait for modal to close/dismiss
     await waitForTransition(driver, 2000);
