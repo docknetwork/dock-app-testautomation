@@ -106,7 +106,7 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-30
+          key: avd-34-google-apis
 
       - name: Start Appium Server
         run: |
@@ -121,7 +121,11 @@ jobs:
           ISSUER_DID: ${{ secrets.ISSUER_DID }}
           TEST_CREDENTIALS: ${{ secrets.TEST_CREDENTIALS }}
         with:
-          api-level: 30
+          # api-level 34 + google_apis: the v1.9.0 app runs its wallet SDK in the
+          # system WebView and needs a newer Chromium than the frozen WebView in
+          # the api-30 AOSP image (app hangs on splash there)
+          api-level: 34
+          target: google_apis
           arch: x86_64
           profile: pixel_7_pro
           force-avd-creation: false
@@ -130,16 +134,11 @@ jobs:
           disable-animations: true
           script: |
             adb install -g ./app/truvera-wallet.apk
-            adb shell pm grant com.truvera.app android.permission.WRITE_EXTERNAL_STORAGE
+            adb shell pm grant com.truvera.app android.permission.WRITE_EXTERNAL_STORAGE || true
             echo "$TEST_CREDENTIALS" > test-credentials.json
             adb logcat -G 16M || true
             adb logcat -c || true
-            set +e
-            npm run test
-            TEST_EXIT=$?
-            adb logcat -d > logcat.txt
-            adb shell pm list packages | grep -iE 'dock|truvera' > packages.txt || true
-            exit $TEST_EXIT
+            npm run test; TEST_EXIT=$?; adb logcat -d > logcat.txt; adb shell pm list packages | grep -iE 'dock|truvera' > packages.txt; exit $TEST_EXIT
 
       - name: Force Kill Emulator
         if: always()
