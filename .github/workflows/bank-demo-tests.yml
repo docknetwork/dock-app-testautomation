@@ -2,7 +2,7 @@ name: "Bank Demo tests"
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
     inputs:
       build_number:
@@ -105,13 +105,40 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         
       - name: AVD cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         id: avd-cache
         with:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-30
+          key: avd-34-default
+
+      # Boot the emulator once without -no-snapshot-save so a settled boot
+      # snapshot is written, then cache it BEFORE tests run — the regular
+      # actions/cache post step only saves on job success, so a failing test
+      # run would otherwise leave every subsequent run on a cold first boot
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: default
+          arch: x86_64
+          profile: pixel_7_pro
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -memory 4096
+          disable-animations: false
+          script: |
+            sleep 60
+
+      - name: Save AVD cache
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-34-default
 
       - name: Start Appium Server
         run: |
@@ -126,7 +153,11 @@ jobs:
           ISSUER_DID: ${{ secrets.ISSUER_DID }}
           TEST_CREDENTIALS: ${{ secrets.TEST_CREDENTIALS }}
         with:
-          api-level: 30
+          # api-level 34 + AOSP "default" target: modern system WebView for the
+          # wallet SDK, without the Pixel Launcher / Play services churn of
+          # google_apis images that ANRs on slow CI runners
+          api-level: 34
+          target: default
           arch: x86_64
           profile: pixel_7_pro
           force-avd-creation: false
@@ -135,9 +166,11 @@ jobs:
           disable-animations: true
           script: |
             adb install -g ./app/quotient-wallet.apk
-            adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE
+            adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE || true
             echo "$TEST_CREDENTIALS" > test-credentials.json
-            npm run test:bank-demo
+            adb logcat -G 16M || true
+            adb logcat -c || true
+            npm run test:bank-demo; TEST_EXIT=$?; adb logcat -d > logcat.txt; adb shell pm list packages | grep -iE 'dock|quotient' > packages.txt; exit $TEST_EXIT
 
       - name: Force Kill Emulator
         if: always()
@@ -145,6 +178,16 @@ jobs:
         run: |
           pkill -9 qemu-system-x86_64 || true
           pkill -9 adb || true
+
+      - name: Upload Logcat
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logcat
+          path: |
+            logcat.txt
+            packages.txt
+          retention-days: 30
 
       - name: Upload Test Reports
         if: always()
@@ -237,22 +280,22 @@ jobs:
           echo "## 🔗 Links" >> $GITHUB_STEP_SUMMARY
           echo "- [View Full Test Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
 
-      - name: Send Slack Notification
-        if: always()
-        uses: edge/simple-slack-notify@master
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        with:
-          channel: '#wallet-bot'
-          status: ${{ job.status }}
-          success_text: '✅ Bank Demo Integration Tests Passed'
-          failure_text: '❌ Bank Demo Integration Tests Failed'
-          cancelled_text: '⚠️ Bank Demo Integration Tests Cancelled'
-          fields: |
-            [
-              { "title": "Test Type", "value": "🏦 Bank Demo Integration", "short": true },
-              { "title": "Build Number", "value": "${{ env.BUILD_NUMBER }}", "short": true },
-              { "title": "Branch", "value": "${{ github.ref_name }}", "short": true },
-              { "title": "Distribution", "value": "${{ env.DISTRIBUTION_NAME }}", "short": true },
-              { "title": "Action URL", "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" }
-            ]
+      # - name: Send Slack Notification
+      #   if: always()
+      #   uses: edge/simple-slack-notify@master
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #   with:
+      #     channel: '#wallet-bot'
+      #     status: ${{ job.status }}
+      #     success_text: '✅ Bank Demo Integration Tests Passed'
+      #     failure_text: '❌ Bank Demo Integration Tests Failed'
+      #     cancelled_text: '⚠️ Bank Demo Integration Tests Cancelled'
+      #     fields: |
+      #       [
+      #         { "title": "Test Type", "value": "🏦 Bank Demo Integration", "short": true },
+      #         { "title": "Build Number", "value": "${{ env.BUILD_NUMBER }}", "short": true },
+      #         { "title": "Branch", "value": "${{ github.ref_name }}", "short": true },
+      #         { "title": "Distribution", "value": "${{ env.DISTRIBUTION_NAME }}", "short": true },
+      #         { "title": "Action URL", "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" }
+      #       ]
