@@ -111,10 +111,6 @@ jobs:
             ~/.android/adb*
           key: avd-34-default
 
-      # Boot the emulator once without -no-snapshot-save so a settled boot
-      # snapshot is written, then cache it BEFORE tests run — the regular
-      # actions/cache post step only saves on job success, so a failing test
-      # run would otherwise leave every subsequent run on a cold first boot
       - name: Create AVD and generate snapshot for caching
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: ReactiveCircus/android-emulator-runner@v2
@@ -151,9 +147,6 @@ jobs:
           ISSUER_DID: ${{ secrets.ISSUER_DID }}
           TEST_CREDENTIALS: ${{ secrets.TEST_CREDENTIALS }}
         with:
-          # api-level 34 + AOSP "default" target: modern system WebView for the
-          # wallet SDK, without the Pixel Launcher / Play services churn of
-          # google_apis images that ANRs on slow CI runners
           api-level: 34
           target: default
           arch: x86_64

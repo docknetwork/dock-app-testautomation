@@ -2,7 +2,7 @@
 module.exports = {
   // Timeouts
   TIMEOUTS: {
-    APP_LAUNCH: 90000, // first launch on a cold CI emulator can exceed 30s
+    APP_LAUNCH: 90000,
     ELEMENT_DISPLAY: 30000,
     SCREEN_TRANSITION: 5000,
     KEYPRESS_DELAY: 200,
