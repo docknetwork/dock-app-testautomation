@@ -1,8 +1,6 @@
 name: "Bank Demo tests"
 on:
   push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       build_number:
@@ -280,22 +278,22 @@ jobs:
           echo "## 🔗 Links" >> $GITHUB_STEP_SUMMARY
           echo "- [View Full Test Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
 
-      # - name: Send Slack Notification
-      #   if: always()
-      #   uses: edge/simple-slack-notify@master
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      #   with:
-      #     channel: '#wallet-bot'
-      #     status: ${{ job.status }}
-      #     success_text: '✅ Bank Demo Integration Tests Passed'
-      #     failure_text: '❌ Bank Demo Integration Tests Failed'
-      #     cancelled_text: '⚠️ Bank Demo Integration Tests Cancelled'
-      #     fields: |
-      #       [
-      #         { "title": "Test Type", "value": "🏦 Bank Demo Integration", "short": true },
-      #         { "title": "Build Number", "value": "${{ env.BUILD_NUMBER }}", "short": true },
-      #         { "title": "Branch", "value": "${{ github.ref_name }}", "short": true },
-      #         { "title": "Distribution", "value": "${{ env.DISTRIBUTION_NAME }}", "short": true },
-      #         { "title": "Action URL", "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" }
-      #       ]
+      - name: Send Slack Notification
+        if: always()
+        uses: edge/simple-slack-notify@master
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          channel: '#wallet-bot'
+          status: ${{ job.status }}
+          success_text: '✅ Bank Demo Integration Tests Passed'
+          failure_text: '❌ Bank Demo Integration Tests Failed'
+          cancelled_text: '⚠️ Bank Demo Integration Tests Cancelled'
+          fields: |
+            [
+              { "title": "Test Type", "value": "🏦 Bank Demo Integration", "short": true },
+              { "title": "Build Number", "value": "${{ env.BUILD_NUMBER }}", "short": true },
+              { "title": "Branch", "value": "${{ github.ref_name }}", "short": true },
+              { "title": "Distribution", "value": "${{ env.DISTRIBUTION_NAME }}", "short": true },
+              { "title": "Action URL", "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" }
+            ]
