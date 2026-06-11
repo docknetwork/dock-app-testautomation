@@ -100,13 +100,40 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         
       - name: AVD cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         id: avd-cache
         with:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-34-google-apis
+          key: avd-34-default
+
+      # Boot the emulator once without -no-snapshot-save so a settled boot
+      # snapshot is written, then cache it BEFORE tests run — the regular
+      # actions/cache post step only saves on job success, so a failing test
+      # run would otherwise leave every subsequent run on a cold first boot
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: default
+          arch: x86_64
+          profile: pixel_7_pro
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -memory 4096
+          disable-animations: false
+          script: |
+            sleep 60
+
+      - name: Save AVD cache
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-34-default
 
       - name: Start Appium Server
         run: |
@@ -121,11 +148,13 @@ jobs:
           ISSUER_DID: ${{ secrets.ISSUER_DID }}
           TEST_CREDENTIALS: ${{ secrets.TEST_CREDENTIALS }}
         with:
-          # api-level 34 + google_apis: the v1.9.0 app runs its wallet SDK in the
-          # system WebView and needs a newer Chromium than the frozen WebView in
-          # the api-30 AOSP image (app hangs on splash there)
+          # api-level 34: the v1.9.0 app runs its wallet SDK in the system
+          # WebView and needs a newer Chromium than the frozen WebView in the
+          # api-30 image (app hangs on splash there). AOSP "default" target
+          # rather than google_apis — same modern WebView without the Pixel
+          # Launcher / Play services churn that ANRs on slow CI runners
           api-level: 34
-          target: google_apis
+          target: default
           arch: x86_64
           profile: pixel_7_pro
           force-avd-creation: false
