@@ -16,6 +16,8 @@ async function tapTestModeSwitch(driver) {
   await waitAndClick(driver, SELECTORS.TEST_MODE_SWITCH);
   console.log("✓ Test mode switch clicked");
 
+  await waitAndClick(driver, SELECTORS.NAV_BACK_BTN);
+
   await waitAndClick(driver, SELECTORS.NAV_CREDENTIALS_BTN);
   console.log("✓ Navigated back to credentials");
 }
@@ -48,6 +50,19 @@ async function selectWalletNetwork(networkId, driver) {
   }
 }
 
+/**
+ * Navigate to the DIDs management screen.
+ * @param {*} driver
+ */
+async function navigateToDIDs(driver) {
+  await waitAndClick(driver, SELECTORS.NAV_SETTINGS_BTN);
+  console.log("✓ Settings screen opened");
+
+  await waitAndClick(driver, SELECTORS.SETTINGS_DID_BTN);
+  console.log("✓ DIDs screen opened");
+}
+
 module.exports = {
   selectWalletNetwork,
+  navigateToDIDs,
 };

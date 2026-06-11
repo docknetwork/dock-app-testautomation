@@ -79,23 +79,7 @@ test.describe('Bank Demo + Wallet Integration', () => {
     // click continue button
     await waitAndClick(mobileDriver, SELECTORS.VERIFICATION_CONTINUE_BTN);
 
-    // select credential and click continue
-    await waitAndClick(mobileDriver, SELECTORS.VERIFICATION_CHECKBOX);
-    await waitAndClick(mobileDriver, SELECTORS.VERIFICATION_CONTINUE_BTN);
-
-    // select attributes to share
-    await waitAndClick(mobileDriver, SELECTORS.VERIFICATION_SELECT_ALL, { screenshotName: "verification-select-all" });
-    // click continue 
-    await waitAndClick(mobileDriver, SELECTORS.VERIFICATION_CONTINUE_BTN, { screenshotName: "verification-continue" });
-    // click share
-    await waitAndClick(mobileDriver, SELECTORS.VERIFICATION_SHARE_BTN, { screenshotName: "verification-share" });
-
-    // // wait for verification message
-    await waitForElement(
-      mobileDriver,
-      SELECTORS.VERIFICATION_WAIT_FOR_VERIFIER,
-      30000
-    );
+    await waitAndClick(mobileDriver, SELECTORS.APPROVE_AND_SHARE);
 
     await takeScreenshot(mobileDriver, this, "verification-waiting-for-verifier");
 

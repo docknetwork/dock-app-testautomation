@@ -1,7 +1,7 @@
 const { initializeDriver, closeDriver, NO_RESET } = require("../helpers/driver");
 const { takeScreenshot } = require("../helpers/screenshot");
 const { createWallet } = require("../helpers/wallet-setup");
-const { waitForElement } = require("../helpers/waiters");
+const { waitForElement, unlockWallet } = require("../helpers/waiters");
 const { SELECTORS } = require("../helpers/constants");
 const { issueOpenIDCredential } = require("../helpers/credentials");
 const { selectWalletNetwork } = require("../helpers/network-switch");
@@ -30,6 +30,8 @@ describe("Feature: Import OID4VC Credential", function () {
       await createWallet(driver, this);
       console.log("✓ Wallet created\n");
     }
+
+    await unlockWallet(driver);
 
     await selectWalletNetwork("testnet", driver);
 

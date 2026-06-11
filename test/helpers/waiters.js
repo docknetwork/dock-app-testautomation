@@ -1,4 +1,4 @@
-const { TIMEOUTS } = require('./constants');
+const { TIMEOUTS, SELECTORS, TEST_DATA } = require('./constants');
 const { takeScreenshot } = require('./screenshot');
 
 /**
@@ -20,7 +20,10 @@ async function waitForElement(driver, selector, timeout = TIMEOUTS.ELEMENT_DISPL
  * @param {string} selector - Element selector
  * @param {number} timeout - Timeout in milliseconds
  */
-async function waitAndClick(driver, selector, options = { timeout: TIMEOUTS.ELEMENT_DISPLAY, screenshotName: null }) {
+async function waitAndClick(driver, selector, options = {}) {
+  if (typeof options === 'number') {
+    options = { timeout: options };
+  }
   const element = await waitForElement(driver, selector, options.timeout || TIMEOUTS.ELEMENT_DISPLAY);
 
   if (options.screenshotName) {
@@ -60,9 +63,33 @@ async function enterPasscode(driver, passcode, keyboardSelector = '~keyboardNumb
   }
 }
 
+/**
+ * Unlock the wallet if the unlock screen is shown.
+ * @param {WebdriverIO.Browser} driver - WebDriver instance
+ * @param {string} passcode - Passcode to enter (default: TEST_DATA.DEFAULT_PASSCODE)
+ */
+async function unlockWallet(driver, passcode = TEST_DATA.DEFAULT_PASSCODE) {
+  const unlockScreen = await driver.$(SELECTORS.UNLOCK_WALLET_SCREEN);
+  const isLocked = await unlockScreen
+    .waitForDisplayed({ timeout: TIMEOUTS.SCREEN_TRANSITION })
+    .then(() => true)
+    .catch(() => false);
+
+  if (!isLocked) {
+    console.log('✓ Wallet already unlocked');
+    return;
+  }
+
+  console.log('Unlocking wallet...');
+  await enterPasscode(driver, passcode);
+  await waitForElement(driver, SELECTORS.CREDENTIALS_SCREEN, TIMEOUTS.ELEMENT_DISPLAY);
+  console.log('✓ Wallet unlocked');
+}
+
 module.exports = {
   waitForElement,
   waitAndClick,
   waitForTransition,
   enterPasscode,
+  unlockWallet,
 };

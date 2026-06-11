@@ -43,6 +43,9 @@ async function enterCredentialPassword(driver, password, testContext = null) {
       await takeScreenshot(driver, testContext, 'password-entered');
     }
 
+    // Press the Enter key to submit the password
+    await driver.pressKeyCode(66);
+
     // Click the OK button
     console.log('Clicking OK button...');
     await waitAndClick(driver, SELECTORS.PASSWORD_MODAL_OK_BTN, TIMEOUTS.ELEMENT_DISPLAY);

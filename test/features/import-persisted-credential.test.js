@@ -1,4 +1,4 @@
-const { initializeDriver, closeDriver, NO_RESET } = require("../helpers/driver");
+const { initializeDriver, closeDriver } = require("../helpers/driver");
 const { takeScreenshot } = require("../helpers/screenshot");
 const { createWallet } = require("../helpers/wallet-setup");
 const { waitForElement, waitAndClick } = require("../helpers/waiters");
@@ -17,14 +17,12 @@ describe("Feature: Import Persisted Credential", function () {
     console.log("\n========================================");
     console.log("FEATURE: Import Persisted Credential");
     console.log("========================================\n");
-    driver = await initializeDriver({ noReset: NO_RESET, fullReset: false });
+    driver = await initializeDriver({ noReset: false, fullReset: true });
 
-    // Create wallet
-    if (!NO_RESET) {
-      console.log("Creating wallet...");
-      await createWallet(driver, this);
-      console.log("✓ Wallet created\n");
-    }
+    console.log("Creating wallet...");
+    await createWallet(driver, this);
+    console.log("✓ Wallet created\n");
+  
     console.log("✓ Wallet created\n");
   });
 

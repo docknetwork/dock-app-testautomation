@@ -103,13 +103,36 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         
       - name: AVD cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         id: avd-cache
         with:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-30
+          key: avd-34-default
+
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: default
+          arch: x86_64
+          profile: pixel_7_pro
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -memory 4096
+          disable-animations: false
+          script: |
+            sleep 60
+
+      - name: Save AVD cache
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-34-default
 
       - name: Start Appium Server
         run: |
@@ -124,7 +147,8 @@ jobs:
           ISSUER_DID: ${{ secrets.ISSUER_DID }}
           TEST_CREDENTIALS: ${{ secrets.TEST_CREDENTIALS }}
         with:
-          api-level: 30
+          api-level: 34
+          target: default
           arch: x86_64
           profile: pixel_7_pro
           force-avd-creation: false
@@ -133,9 +157,11 @@ jobs:
           disable-animations: true
           script: |
             adb install -g ./app/quotient-wallet.apk
-            adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE
+            adb shell pm grant com.dockapp android.permission.WRITE_EXTERNAL_STORAGE || true
             echo "$TEST_CREDENTIALS" > test-credentials.json
-            npm run test:bank-demo
+            adb logcat -G 16M || true
+            adb logcat -c || true
+            npm run test:bank-demo; TEST_EXIT=$?; adb logcat -d > logcat.txt; adb shell pm list packages | grep -iE 'dock|quotient' > packages.txt; exit $TEST_EXIT
 
       - name: Force Kill Emulator
         if: always()
@@ -143,6 +169,16 @@ jobs:
         run: |
           pkill -9 qemu-system-x86_64 || true
           pkill -9 adb || true
+
+      - name: Upload Logcat
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logcat
+          path: |
+            logcat.txt
+            packages.txt
+          retention-days: 30
 
       - name: Upload Test Reports
         if: always()
