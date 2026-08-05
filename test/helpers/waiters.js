@@ -1,6 +1,25 @@
 const { TIMEOUTS, SELECTORS, TEST_DATA } = require('./constants');
 const { takeScreenshot } = require('./screenshot');
 
+const ANR_WAIT_BTN = 'android:id/aerr_wait';
+
+/**
+ * Dismiss the system "isn't responding" (ANR) dialog if present, by tapping "Wait".
+ * The emulator can raise this on the launcher/app under CPU pressure, and it sits on
+ * top of the app blocking every element lookup until dismissed.
+ * @param {WebdriverIO.Browser} driver - WebDriver instance
+ * @returns {Promise<boolean>} whether the dialog was found and dismissed
+ */
+async function dismissAnrDialogIfPresent(driver) {
+  const waitBtn = await driver.$(`id=${ANR_WAIT_BTN}`);
+  if (!(await waitBtn.isDisplayed().catch(() => false))) {
+    return false;
+  }
+  console.log('⚠ ANR dialog detected, tapping "Wait"');
+  await waitBtn.click().catch(() => {});
+  return true;
+}
+
 /**
  * Wait for an element to be displayed
  * @param {WebdriverIO.Browser} driver - WebDriver instance
@@ -10,7 +29,16 @@ const { takeScreenshot } = require('./screenshot');
  */
 async function waitForElement(driver, selector, timeout = TIMEOUTS.ELEMENT_DISPLAY) {
   const element = await driver.$(selector);
-  await element.waitForDisplayed({ timeout });
+  await driver.waitUntil(
+    async () => {
+      if (await element.isDisplayed().catch(() => false)) {
+        return true;
+      }
+      await dismissAnrDialogIfPresent(driver);
+      return false;
+    },
+    { timeout, interval: 1000, timeoutMsg: `element ("${selector}") still not displayed after ${timeout}ms` }
+  );
   return element;
 }
 
@@ -55,8 +83,7 @@ async function enterPasscode(driver, passcode, keyboardSelector = '~keyboardNumb
   for (let i = 0; i < passcode.length; i++) {
     const digit = passcode[i];
     const selector = `${keyboardSelector}${digit}`;
-    const button = await driver.$(selector);
-    await button.waitForDisplayed({ timeout: TIMEOUTS.ELEMENT_DISPLAY });
+    const button = await waitForElement(driver, selector, TIMEOUTS.ELEMENT_DISPLAY);
     await button.click();
     await driver.pause(TIMEOUTS.KEYPRESS_DELAY);
     console.log(`✓ Entered digit ${i + 1}/${passcode.length}`);
@@ -92,4 +119,5 @@ module.exports = {
   waitForTransition,
   enterPasscode,
   unlockWallet,
+  dismissAnrDialogIfPresent,
 };
