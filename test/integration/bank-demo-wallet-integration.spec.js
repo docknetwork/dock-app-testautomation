@@ -16,7 +16,9 @@ const { selectWalletNetwork } = require('../helpers/network-switch');
 const { createWallet } = require('../helpers/wallet-setup');
 const { SELECTORS } = require('../helpers/constants');
 const { waitAndClick, waitForElement } = require('../helpers/waiters');
-const { takeScreenshot } = require('../helpers/screenshot');
+const { takeScreenshot, screenshotsDir } = require('../helpers/screenshot');
+const fs = require('fs');
+const path = require('path');
 
 test.describe('Bank Demo + Wallet Integration', () => {
   let mobileDriver;
@@ -25,6 +27,28 @@ test.describe('Bank Demo + Wallet Integration', () => {
     // Initialize mobile driver once for all tests
     console.log('\n=== Starting Mobile Driver ===');
     mobileDriver = await initializeDriver({ app: 'quotient-wallet.apk' });
+  });
+
+  test.afterEach(async ({}, testInfo) => {
+    // On failure, capture the phone screen and UI hierarchy so we can see
+    // what the wallet was actually showing (Playwright only captures the browser).
+    if (testInfo.status === testInfo.expectedStatus || !mobileDriver) return;
+
+    const name = `failure-wallet-retry${testInfo.retry}`;
+    const screenshotPath = await takeScreenshot(mobileDriver, null, name);
+    if (screenshotPath) {
+      await testInfo.attach('wallet-screenshot', { path: screenshotPath, contentType: 'image/png' });
+    }
+
+    try {
+      const pageSource = await mobileDriver.getPageSource();
+      const sourcePath = path.join(screenshotsDir, `${name}-page-source.xml`);
+      fs.writeFileSync(sourcePath, pageSource);
+      await testInfo.attach('wallet-page-source', { path: sourcePath, contentType: 'application/xml' });
+      console.log(`✓ Wallet page source saved: ${path.basename(sourcePath)}`);
+    } catch (error) {
+      console.error(`Failed to capture wallet page source: ${error.message}`);
+    }
   });
 
   test.afterAll(async () => {
