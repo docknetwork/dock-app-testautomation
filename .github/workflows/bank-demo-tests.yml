@@ -31,7 +31,7 @@ concurrency:
   
 jobs:
   bank-demo-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     name: "Start Test"
     steps:
       - name: Enable KVM
